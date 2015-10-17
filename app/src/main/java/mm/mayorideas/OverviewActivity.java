@@ -5,31 +5,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-
 
 public class OverviewActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+            IdeaListFragment.IdeaListInteractionListener {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
 
     @Override
@@ -41,7 +29,6 @@ public class OverviewActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -49,17 +36,25 @@ public class OverviewActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, getFragment(position))
                 .commit();
+    }
+
+    private Fragment getFragment(int position) {
+        switch (position) {
+            case 0:
+                return IdeaListFragment.newInstance();
+            default:
+                return PlaceholderFragment.newInstance(position + 1);
+        }
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.app_name);
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
@@ -81,9 +76,6 @@ public class OverviewActivity extends ActionBarActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.overview, menu);
             restoreActionBar();
             return true;
@@ -92,18 +84,8 @@ public class OverviewActivity extends ActionBarActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onFragmentInteraction(String id) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -132,7 +114,8 @@ public class OverviewActivity extends ActionBarActivity
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(LayoutInflater inflater,
+                                 ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
             return rootView;
