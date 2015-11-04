@@ -1,0 +1,40 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="mm.mayorideas.NewIdeaActivity">
+
+    <Button
+        android:id="@+id/photoFromGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From gallery"
+        android:onClick="fromGallery"/>
+
+    <Button
+        android:id="@+id/takePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take a photo"
+        android:layout_toRightOf="@id/photoFromGallery"
+        android:onClick="takePhoto"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GPS"
+        android:layout_toRightOf="@id/takePhoto"
+        android:onClick="getLocation"/>
+
+    <ImageView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/photoFromGallery"/>
+
+</RelativeLayout>
