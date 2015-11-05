@@ -70,4 +70,21 @@
         custom:pb_textError="Error :("
         custom:pb_colorError="@color/red_error" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="From Gallery"
+        android:onClick="fromGallery"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="From Camera"
+        android:onClick="takePhoto"/>
+
+    <ImageView
+        android:id="@+id/imageViewTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

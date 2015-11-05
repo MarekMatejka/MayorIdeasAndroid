@@ -1,5 +1,7 @@
 package mm.mayorideas;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.dd.processbutton.iml.ActionProcessButton;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import mm.mayorideas.api.IdeaAPI;
 
@@ -17,10 +22,7 @@ public class NewIdeaActivity extends ActionBarActivity {
 
     private static final int TAKE_PHOTO = 1;
     private static final int FROM_GALLERY = 2;
-    private Bitmap bitmap;
     private ImageView imageView;
-    private static Uri imageUri;
-    private String imagePath;
     private EditText ideaTitle;
     private EditText ideaDescription;
     private Spinner ideaCategory;
@@ -39,12 +41,13 @@ public class NewIdeaActivity extends ActionBarActivity {
             setFieldsEnabled(true);
         }
     };
+    private File photo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_idea);
-        imageView = (ImageView) findViewById(R.id.result);
+        imageView = (ImageView) findViewById(R.id.imageViewTest);
 
         ideaTitle = (EditText) findViewById(R.id.idea_title);
         ideaDescription = (EditText) findViewById(R.id.idea_description);
@@ -93,19 +96,19 @@ public class NewIdeaActivity extends ActionBarActivity {
         return success;
     }
 
-    /*
-    public void getLocation(View v) {
-        MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
-            @Override
-            public void gotLocation(Location location){
-                //Got the location!
-                Log.e("latitude", ""+location.getLatitude());
-                Log.e("longitude", "" + location.getLongitude());
-            }
-        };
-        MyLocation myLocation = new MyLocation();
-        myLocation.getLocation(this, locationResult);
-    }
+
+//    public void getLocation(View v) {
+//        MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
+//            @Override
+//            public void gotLocation(Location location){
+//                //Got the location!
+//                Log.e("latitude", ""+location.getLatitude());
+//                Log.e("longitude", "" + location.getLongitude());
+//            }
+//        };
+//        MyLocation myLocation = new MyLocation();
+//        myLocation.getLocation(this, locationResult);
+//    }
 
     public void fromGallery(View View) {
         Intent intent = new Intent();
@@ -117,91 +120,13 @@ public class NewIdeaActivity extends ActionBarActivity {
 
     public void takePhoto(View v) {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        File photo = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "mi.png");
-        imageUri = Uri.fromFile(photo);
-        imagePath = photo.getAbsolutePath();
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PHOTO);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        //super.onActivityResult(requestCode, resultCode, intent);
-        InputStream stream = null;
-
-        Uri selectedImage = null;
-        if (requestCode == TAKE_PHOTO) {
-            selectedImage = imageUri;
-            Bitmap thumbImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), 256, 256);
-            imageView.setImageBitmap(thumbImage);
-            return;
-        } else if (requestCode == FROM_GALLERY) {
-            selectedImage = intent.getData();
-        } else {
-            return;
-        }
-
         if (resultCode == Activity.RESULT_OK) {
-            getContentResolver().notifyChange(selectedImage, null);
-            try {
-                if (bitmap != null) {
-                    bitmap.recycle();
-                }
-                stream = getContentResolver().openInputStream(selectedImage);
-//                Bitmap b = MediaStore.Images.Thumbnails.getThumbnail(
-//                        getContentResolver(), selectedImage,
-//                        MediaStore.Images.Thumbnails.MINI_KIND,
-//                        (BitmapFactory.Options) null );
-                bitmap = BitmapFactory.decodeStream(stream);
-
-                imageView.setImageBitmap(createResizedBitmap(bitmap, selectedImage, 1920));
-                bitmap = null;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (stream != null) {
-                    try {
-                        stream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            Picasso.with(this).load(intent.getData()).resize(150, 150).into(imageView);
         }
     }
-
-    private int getOrientation(Uri imageUri) {
-        String[] orientationColumn = {MediaStore.Images.Media.ORIENTATION};
-        Cursor cur = managedQuery(imageUri, orientationColumn, null, null, null);
-        int orientation = 0;
-        if (cur != null && cur.moveToFirst()) {
-            orientation = cur.getInt(cur.getColumnIndex(orientationColumn[0]));
-        }
-        return orientation;
-    }
-
-    private Bitmap createResizedBitmap(Bitmap image, Uri imageUri, int maxSize) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(getOrientation(imageUri));
-
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        float bitmapRatio = (float)width / (float) height;
-        if (bitmapRatio < 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-        Bitmap scaledImage = Bitmap.createScaledBitmap(image, width, height, true);
-        Bitmap b = Bitmap.createBitmap(scaledImage, 0, 0, width, height, matrix, true);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.PNG, 100, out);
-        return BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-    }
-    */
 }

@@ -52,7 +52,6 @@ public class IdeaListAdapter extends ArrayAdapter<IdeaGETGson> {
         IdeaGETGson idea = ideas.get(position);
         String imageUrl = "http://themestudio.net/wp-content/uploads/2015/06/modern-psd-to-html-online-generator-idea.jpg";
 
-
         holder.name.setText(idea.getTitle());
         Picasso.with(context)
                 .load(imageUrl)
