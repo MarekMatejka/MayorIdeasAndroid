@@ -18,7 +18,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import mm.mayorideas.adapters.IdeaListAdapter;
+import mm.mayorideas.api.IdeaAPI;
 import mm.mayorideas.dummy.DummyContent;
+import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Idea;
 
 public class IdeaListFragment extends Fragment implements AbsListView.OnItemClickListener {
@@ -34,15 +36,23 @@ public class IdeaListFragment extends Fragment implements AbsListView.OnItemClic
 
     public IdeaListFragment() {}
 
+    private final IdeaAPI.Get10IdeasListener get10IdeasListener = new IdeaAPI.Get10IdeasListener() {
+        @Override
+        public void onSuccess(List<IdeaGETGson> ideas) {
+            mAdapter = new IdeaListAdapter(getActivity(), ideas);
+            ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        }
+
+        @Override
+        public void onFailure() {
+
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        List<Idea> ideaList = new LinkedList<>();
-        for (int i = 0; i < 10; i++) {
-            ideaList.add(new Idea("Test "+i));
-        }
-        mAdapter = new IdeaListAdapter(getActivity(), ideaList);
+        IdeaAPI.get10Ideas(get10IdeasListener);
     }
 
     @Override
@@ -52,7 +62,6 @@ public class IdeaListFragment extends Fragment implements AbsListView.OnItemClic
         View view = inflater.inflate(R.layout.fragment_idea, container, false);
 
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
         mListView.setOnItemClickListener(this);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.add_idea_fab);

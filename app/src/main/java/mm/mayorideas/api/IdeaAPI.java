@@ -3,6 +3,7 @@ package mm.mayorideas.api;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -10,7 +11,10 @@ import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.List;
 
+import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.gson.NewIdeaPOSTGson;
 
 public class IdeaAPI {
@@ -54,4 +58,40 @@ public class IdeaAPI {
         });
     }
 
+    public interface Get10IdeasListener {
+        void onSuccess(List<IdeaGETGson> ideas);
+        void onFailure();
+    }
+
+    public static void get10Ideas(final Get10IdeasListener listener) {
+        String url = ServerAPIHelper.getServer()+IDEA+"/top10";
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String response) {
+                Log.e("response", response);
+                if (response != null && response.length() > 0) {
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<List<IdeaGETGson>>() {}.getType();
+                    List<IdeaGETGson> ideas = gson.fromJson(response, type);
+
+                    if(listener != null) {
+                        listener.onSuccess(ideas);
+                    }
+                } else {
+                    if (listener != null) {
+                        listener.onFailure();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (listener != null) {
+                    listener.onFailure();
+                }
+            }
+        });
+    }
 }

@@ -18,14 +18,15 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import mm.mayorideas.R;
+import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Idea;
 
-public class IdeaListAdapter extends ArrayAdapter<Idea> {
+public class IdeaListAdapter extends ArrayAdapter<IdeaGETGson> {
 
     private Context context;
-    private List<Idea> ideas;
+    private List<IdeaGETGson> ideas;
 
-    public IdeaListAdapter(Context context, List<Idea> ideas) {
+    public IdeaListAdapter(Context context, List<IdeaGETGson> ideas) {
         super(context, R.layout.idea_list_adapter, ideas);
         this.context = context;
         this.ideas = ideas;
@@ -48,11 +49,13 @@ public class IdeaListAdapter extends ArrayAdapter<Idea> {
             holder = (Holder)convertView.getTag();
         }
 
-        Idea idea = ideas.get(position);
+        IdeaGETGson idea = ideas.get(position);
+        String imageUrl = "http://themestudio.net/wp-content/uploads/2015/06/modern-psd-to-html-online-generator-idea.jpg";
 
-        holder.name.setText(idea.getName());
+
+        holder.name.setText(idea.getTitle());
         Picasso.with(context)
-                .load(idea.getImage())
+                .load(imageUrl)
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.drawable.ic_drawer)
                 .resize(getScreenWidth(), (int) context.getResources().getDimension(R.dimen.overview_idea_height))
