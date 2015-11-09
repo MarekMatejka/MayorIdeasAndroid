@@ -19,7 +19,6 @@ import java.util.List;
 
 import mm.mayorideas.adapters.IdeaListAdapter;
 import mm.mayorideas.api.IdeaAPI;
-import mm.mayorideas.dummy.DummyContent;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Idea;
 
@@ -92,7 +91,7 @@ public class IdeaListFragment extends Fragment implements AbsListView.OnItemClic
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
         }
     }
 

@@ -1,32 +1,36 @@
 package mm.mayorideas;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.dd.processbutton.iml.ActionProcessButton;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
-
+import mm.mayorideas.adapters.IdeaImagesAdapter;
 import mm.mayorideas.api.IdeaAPI;
+
+import static mm.mayorideas.adapters.IdeaImagesAdapter.OnIdeaImageItemClickListener;
 
 public class NewIdeaActivity extends ActionBarActivity {
 
-    private static final int TAKE_PHOTO = 1;
+    private static final int TAKE_PHOTO = 3;
     private static final int FROM_GALLERY = 2;
-    private ImageView imageView;
     private EditText ideaTitle;
     private EditText ideaDescription;
     private Spinner ideaCategory;
     private ActionProcessButton submitIdeaButton;
+    private IdeaImagesAdapter imagesAdapter;
 
     private final IdeaAPI.AddNewIdeaListener addNewIdeaListener = new IdeaAPI.AddNewIdeaListener() {
         @Override
@@ -41,17 +45,32 @@ public class NewIdeaActivity extends ActionBarActivity {
             setFieldsEnabled(true);
         }
     };
-    private File photo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_idea);
-        imageView = (ImageView) findViewById(R.id.imageViewTest);
 
         ideaTitle = (EditText) findViewById(R.id.idea_title);
         ideaDescription = (EditText) findViewById(R.id.idea_description);
         ideaCategory = (Spinner) findViewById(R.id.idea_category);
+
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.idea_image_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        imagesAdapter = new IdeaImagesAdapter(this);
+        imagesAdapter.setListener(new OnIdeaImageItemClickListener() {
+            @Override
+            public void onImageItemClicked(IdeaImagesAdapter.ImageEntity entity) {
+                Log.e("ImageClicked", "Image = " + entity.getImage());
+            }
+
+            @Override
+            public void onAddImageItemClicked(IdeaImagesAdapter.ImageEntity entity) {
+                fromGallery();
+            }
+        });
+        recyclerView.setAdapter(imagesAdapter);
+        imagesAdapter.addEntity(0, new IdeaImagesAdapter.ImageEntity(null));
 
         submitIdeaButton = (ActionProcessButton) findViewById(R.id.btnSignIn);
         submitIdeaButton.setMode(ActionProcessButton.Mode.ENDLESS);
@@ -110,7 +129,7 @@ public class NewIdeaActivity extends ActionBarActivity {
 //        myLocation.getLocation(this, locationResult);
 //    }
 
-    public void fromGallery(View View) {
+    public void fromGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -118,15 +137,16 @@ public class NewIdeaActivity extends ActionBarActivity {
         startActivityForResult(intent, FROM_GALLERY);
     }
 
-    public void takePhoto(View v) {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        startActivityForResult(intent, TAKE_PHOTO);
-    }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent intent) {
         if (resultCode == Activity.RESULT_OK) {
-            Picasso.with(this).load(intent.getData()).resize(150, 150).into(imageView);
+            imagesAdapter.addEntity(
+                    imagesAdapter.getItemCount()-1,
+                    new IdeaImagesAdapter.ImageEntity(intent.getData()));
+
+            if (imagesAdapter.getItemCount() == 4) {
+                imagesAdapter.deleteEntity(3);
+            }
         }
     }
 }
