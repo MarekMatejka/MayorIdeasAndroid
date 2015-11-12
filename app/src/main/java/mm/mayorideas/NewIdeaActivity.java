@@ -57,7 +57,7 @@ public class NewIdeaActivity extends ActionBarActivity {
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.idea_image_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.addItemDecoration(new HorizontalSpaceItemDecoration(5));
+        recyclerView.addItemDecoration(new HorizontalSpaceItemDecoration(this, R.dimen.images_new_idea_horizontal_spacing));
         imagesAdapter = new IdeaImagesAdapter(this);
         imagesAdapter.setListener(new OnIdeaImageItemClickListener() {
             @Override
