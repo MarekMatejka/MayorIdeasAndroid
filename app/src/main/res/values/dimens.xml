@@ -7,5 +7,6 @@
     <dimen name="overview_idea_name">30sp</dimen>
     <dimen name="overview_name_padding_left">7dp</dimen>
     <dimen name="overview_idea_height">400px</dimen>
-    <dimen name="idea_image_size">250dp</dimen>
+    <dimen name="idea_image_size">200dp</dimen>
+    <dimen name="map_height_new_idea">200dp</dimen>
 </resources>

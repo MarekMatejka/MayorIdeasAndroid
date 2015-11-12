@@ -61,6 +61,14 @@
                 android:hint="@string/idea_description" />
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/map_height_new_idea"
+            android:id="@+id/map"
+            tools:context="mm.mayorideas.MapsTestActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
+
         <com.dd.processbutton.iml.ActionProcessButton
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"

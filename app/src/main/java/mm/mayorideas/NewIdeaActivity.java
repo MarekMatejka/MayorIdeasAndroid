@@ -1,12 +1,8 @@
 package mm.mayorideas;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +15,8 @@ import com.dd.processbutton.iml.ActionProcessButton;
 
 import mm.mayorideas.adapters.IdeaImagesAdapter;
 import mm.mayorideas.api.IdeaAPI;
+import mm.mayorideas.maps.MapsHelper;
+import mm.mayorideas.ui.HorizontalSpaceItemDecoration;
 
 import static mm.mayorideas.adapters.IdeaImagesAdapter.OnIdeaImageItemClickListener;
 
@@ -31,6 +29,7 @@ public class NewIdeaActivity extends ActionBarActivity {
     private Spinner ideaCategory;
     private ActionProcessButton submitIdeaButton;
     private IdeaImagesAdapter imagesAdapter;
+    private MapsHelper mapsHelper;
 
     private final IdeaAPI.AddNewIdeaListener addNewIdeaListener = new IdeaAPI.AddNewIdeaListener() {
         @Override
@@ -50,6 +49,7 @@ public class NewIdeaActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_idea);
+        mapsHelper = new MapsHelper(this, R.id.map);
 
         ideaTitle = (EditText) findViewById(R.id.idea_title);
         ideaDescription = (EditText) findViewById(R.id.idea_description);
@@ -57,6 +57,7 @@ public class NewIdeaActivity extends ActionBarActivity {
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.idea_image_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.addItemDecoration(new HorizontalSpaceItemDecoration(5));
         imagesAdapter = new IdeaImagesAdapter(this);
         imagesAdapter.setListener(new OnIdeaImageItemClickListener() {
             @Override
@@ -88,6 +89,16 @@ public class NewIdeaActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mapsHelper == null) {
+            mapsHelper = new MapsHelper(this, R.id.map);
+        } else {
+            mapsHelper.setUpMapIfNeeded(this, R.id.map);
+        }
     }
 
     private void setFieldsEnabled(boolean enabled) {

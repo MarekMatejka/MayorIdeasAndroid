@@ -28,4 +28,5 @@
         <item>Transport</item>
         <item>Infrastructure</item>
     </string-array>
+    <string name="title_activity_maps_test">Map</string>
 </resources>
