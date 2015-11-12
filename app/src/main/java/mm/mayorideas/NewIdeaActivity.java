@@ -99,6 +99,21 @@ public class NewIdeaActivity extends ActionBarActivity {
         } else {
             mapsHelper.setUpMapIfNeeded(this, R.id.map);
         }
+        /*if (mapsHelper.canStartLocationUpdates()) {
+            mapsHelper.startLocationUpdates();
+        }*/
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapsHelper.connectMap();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapsHelper.stopLocationUpdates();
     }
 
     private void setFieldsEnabled(boolean enabled) {
