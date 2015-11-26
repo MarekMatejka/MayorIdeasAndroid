@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.mikepenz.iconics.view.IconicsButton
+            android:id="@+id/idea_action_bar_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="{faw-comment-o}"
+            android:background="@android:color/transparent"
+            android:textColor="@color/comment_action_color_selector"
+            android:textSize="20sp"/>
+
+        <com.mikepenz.iconics.view.IconicsButton
+            android:id="@+id/idea_action_bar_like"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="{faw-thumbs-up}"
+            android:background="@android:color/transparent"
+            android:textColor="@color/thumbs_up_action_color_selector"
+            android:textSize="20sp"/>
+
+        <com.mikepenz.iconics.view.IconicsButton
+            android:id="@+id/idea_action_bar_dislike"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="{faw-thumbs-down}"
+            android:background="@android:color/transparent"
+            android:textColor="@color/thumbs_down_action_color_selector"
+            android:textSize="20sp"/>
+
+        <com.mikepenz.iconics.view.IconicsButton
+            android:id="@+id/idea_action_bar_follow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="{faw-heart-o}"
+            android:background="@android:color/transparent"
+            android:textColor="@color/heart_action_color_selector"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+</merge>

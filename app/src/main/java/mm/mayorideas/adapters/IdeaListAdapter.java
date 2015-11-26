@@ -2,8 +2,6 @@ package mm.mayorideas.adapters;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.net.Uri;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import java.util.List;
 
 import mm.mayorideas.R;
 import mm.mayorideas.gson.IdeaGETGson;
-import mm.mayorideas.objects.Idea;
 
 public class IdeaListAdapter extends ArrayAdapter<IdeaGETGson> {
 
@@ -27,7 +24,7 @@ public class IdeaListAdapter extends ArrayAdapter<IdeaGETGson> {
     private List<IdeaGETGson> ideas;
 
     public IdeaListAdapter(Context context, List<IdeaGETGson> ideas) {
-        super(context, R.layout.idea_list_adapter, ideas);
+        super(context, R.layout.adapter_item_idea_list, ideas);
         this.context = context;
         this.ideas = ideas;
     }
@@ -38,7 +35,7 @@ public class IdeaListAdapter extends ArrayAdapter<IdeaGETGson> {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.idea_list_adapter, parent, false);
+            convertView = inflater.inflate(R.layout.adapter_item_idea_list, parent, false);
 
             holder = new Holder();
             holder.name = (TextView) convertView.findViewById(R.id.idea_name);

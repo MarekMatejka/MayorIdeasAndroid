@@ -42,6 +42,15 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".IdeaDetailActivity"
+            android:label="@string/title_activity_idea_detail"
+            android:parentActivityName=".OverviewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mm.mayorideas.OverviewActivity" />
+        </activity>
     </application>
 
 </manifest>
