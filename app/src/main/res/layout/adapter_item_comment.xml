@@ -29,7 +29,6 @@
             android:layout_below="@id/person_icon"
             android:layout_centerHorizontal="true"
             android:padding="5dp"
-            android:text="Marek M."
             android:textSize="17sp"
             android:textColor="@android:color/darker_gray"
             android:fontFamily="sans-serif-light"/>
@@ -47,7 +46,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="Fri 25.11.2015"
             android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@android:color/darker_gray"
@@ -58,7 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="@string/lorem_ipsum"
             android:textSize="17sp"
             android:textColor="@android:color/black"
             android:fontFamily="sans-serif-light"/>

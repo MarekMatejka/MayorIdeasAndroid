@@ -1,17 +1,27 @@
 package mm.mayorideas;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import mm.mayorideas.adapters.CommentsAdapter;
+import mm.mayorideas.objects.Comment;
 import mm.mayorideas.ui.IdeaActionBarHandler;
 
 
@@ -37,12 +47,31 @@ public class IdeaDetailActivity extends ActionBarActivity {
         mSliderShow.startAutoCycle();
 
         IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this);
+
+        setCommentToView(new Comment("Marek M.", "Ahoj", new Date()), findViewById(R.id.comment1));
+        setCommentToView(new Comment("Matus M.", getString(R.string.lorem_ipsum), new Date()), findViewById(R.id.comment2));
+    }
+
+    private void setCommentToView(Comment comment, View v) {
+        TextView name = (TextView)v.findViewById(R.id.person_name);
+        TextView commentText = (TextView)v.findViewById(R.id.comment_text);
+        TextView commentAdded = (TextView)v.findViewById(R.id.comment_added);
+
+        name.setText(comment.getAuthorName());
+        commentText.setText(comment.getText());
+        commentAdded.setText(comment.getDate());
     }
 
     private void addImageToSlider(SliderLayout sliderShow, String url) {
         DefaultSliderView sliderView = new DefaultSliderView(this);
         sliderView.image(url);
         sliderShow.addSlider(sliderView);
+    }
+
+    public void openAllComments(View v) {
+        Intent i = new Intent(this, CommentsActivity.class);
+        startActivity(i);
+        onStop();
     }
 
     @Override

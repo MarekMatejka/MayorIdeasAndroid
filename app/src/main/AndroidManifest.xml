@@ -51,6 +51,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="mm.mayorideas.OverviewActivity" />
         </activity>
+        <activity
+            android:name=".CommentsActivity"
+            android:label="@string/title_activity_comments" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mm.mayorideas.IdeaDetailActivity" />
+        </activity>
     </application>
 
 </manifest>

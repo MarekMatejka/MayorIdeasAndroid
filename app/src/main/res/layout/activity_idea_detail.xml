@@ -65,14 +65,9 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
 
-            <!--<ListView
-                android:id="@+id/idea_comments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>-->
-
-            <include layout="@layout/adapter_item_comment"/>
-            <include layout="@layout/ui_element_separator"/>
-            <include layout="@layout/adapter_item_comment"/>
+            <include layout="@layout/adapter_item_comment" android:id="@+id/comment1"/>
+            <include layout="@layout/ui_element_thin_list_separator"/>
+            <include layout="@layout/adapter_item_comment" android:id="@+id/comment2"/>
 
             <Button
                 android:id="@+id/see_all_comments"
@@ -81,7 +76,8 @@
                 android:text="See all comments"
                 android:textColor="@color/comment_action_color_selector"
                 android:gravity="center"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:onClick="openAllComments"/>
 
         </LinearLayout>
     </LinearLayout>

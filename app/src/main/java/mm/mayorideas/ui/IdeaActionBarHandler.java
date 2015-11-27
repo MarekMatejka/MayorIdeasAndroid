@@ -1,10 +1,12 @@
 package mm.mayorideas.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 
 import com.mikepenz.iconics.view.IconicsButton;
 
+import mm.mayorideas.CommentsActivity;
 import mm.mayorideas.R;
 
 public class IdeaActionBarHandler {
@@ -20,17 +22,19 @@ public class IdeaActionBarHandler {
         this.mDislikeAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_dislike);
         this.mFollowAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_follow);
 
-        setupCommentAction();
+        setupCommentAction(activity);
         setupLikeAction();
         setupDislikeAction();
         setupFollowAction();
     }
 
-    private void setupCommentAction() {
+    private void setupCommentAction(final Activity activity) {
         mCommentAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //open the comment section for this idea
+                Intent i = new Intent(activity, CommentsActivity.class);
+                activity.startActivity(i);
             }
         });
     }
