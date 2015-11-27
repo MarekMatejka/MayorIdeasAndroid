@@ -2,6 +2,7 @@ package mm.mayorideas.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.mikepenz.iconics.view.IconicsButton;
@@ -16,11 +17,15 @@ public class IdeaActionBarHandler {
     private final IconicsButton mDislikeAction;
     private final IconicsButton mFollowAction;
 
-    public IdeaActionBarHandler(Activity activity) {
+    @Nullable private final IdeaStatusBarHandler mStatusBarHandler;
+
+    public IdeaActionBarHandler(Activity activity, @Nullable IdeaStatusBarHandler statusBarHandler) {
         this.mCommentAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_comment);
         this.mLikeAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_like);
         this.mDislikeAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_dislike);
         this.mFollowAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_follow);
+
+        this.mStatusBarHandler = statusBarHandler;
 
         setupCommentAction(activity);
         setupLikeAction();
@@ -94,18 +99,30 @@ public class IdeaActionBarHandler {
     }
 
     private void addLike() {
+        if (mStatusBarHandler != null) {
+            mStatusBarHandler.addLike();
+        }
         //call HTTP method to add a like to the idea
     }
 
     private void removeLike() {
+        if (mStatusBarHandler != null) {
+            mStatusBarHandler.removeLike();
+        }
         //call HTTP method to remove a like from the idea
     }
 
     private void addDislike() {
+        if (mStatusBarHandler != null) {
+            mStatusBarHandler.addDislike();
+        }
         //call HTTP method to add a dislike to the idea
     }
 
     private void removeDislike() {
+        if (mStatusBarHandler != null) {
+            mStatusBarHandler.removeDislike();
+        }
         //call HTTP method to remove a dislike from the idea
     }
 

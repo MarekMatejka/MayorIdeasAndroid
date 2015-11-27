@@ -23,6 +23,7 @@ import java.util.List;
 import mm.mayorideas.adapters.CommentsAdapter;
 import mm.mayorideas.objects.Comment;
 import mm.mayorideas.ui.IdeaActionBarHandler;
+import mm.mayorideas.ui.IdeaStatusBarHandler;
 
 
 public class IdeaDetailActivity extends ActionBarActivity {
@@ -46,7 +47,8 @@ public class IdeaDetailActivity extends ActionBarActivity {
         mSliderShow.setDuration(5000);
         mSliderShow.startAutoCycle();
 
-        IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this);
+        IdeaStatusBarHandler ideaStatusBarHandler = new IdeaStatusBarHandler(this);
+        IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this, ideaStatusBarHandler);
 
         setCommentToView(new Comment("Marek M.", "Ahoj", new Date()), findViewById(R.id.comment1));
         setCommentToView(new Comment("Matus M.", getString(R.string.lorem_ipsum), new Date()), findViewById(R.id.comment2));
