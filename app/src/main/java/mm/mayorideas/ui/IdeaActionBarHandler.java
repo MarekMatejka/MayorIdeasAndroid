@@ -33,6 +33,20 @@ public class IdeaActionBarHandler {
         setupFollowAction();
     }
 
+    public IdeaActionBarHandler(Activity activity, View v, @Nullable IdeaStatusBarHandler statusBarHandler) {
+        this.mCommentAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_comment);
+        this.mLikeAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_like);
+        this.mDislikeAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_dislike);
+        this.mFollowAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_follow);
+
+        this.mStatusBarHandler = statusBarHandler;
+
+        setupCommentAction(activity);
+        setupLikeAction();
+        setupDislikeAction();
+        setupFollowAction();
+    }
+
     private void setupCommentAction(final Activity activity) {
         mCommentAction.setOnClickListener(new View.OnClickListener() {
             @Override

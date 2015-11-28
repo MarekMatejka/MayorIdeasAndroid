@@ -2,6 +2,7 @@ package mm.mayorideas.ui;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.view.View;
 import android.widget.TextView;
 
 import mm.mayorideas.R;
@@ -23,6 +24,22 @@ public class IdeaStatusBarHandler {
         this.mCommentCountText = (TextView)activity.findViewById(R.id.idea_status_bar_comments);
         this.mScoreText = (TextView)activity.findViewById(R.id.idea_status_bar_score);
         this.mVotesCountText = (TextView)activity.findViewById(R.id.idea_status_bar_votes);
+
+        this.mCommentCount = 15;
+        this.mScore = 0;
+        this.mVotesCount = 123;
+
+        setupCommentCountText();
+        setupScoreText();
+        setupVotesCountText();
+    }
+
+    public IdeaStatusBarHandler(Activity activity, View view) {
+        this.mActivity = activity;
+
+        this.mCommentCountText = (TextView)view.findViewById(R.id.idea_status_bar_comments);
+        this.mScoreText = (TextView)view.findViewById(R.id.idea_status_bar_score);
+        this.mVotesCountText = (TextView)view.findViewById(R.id.idea_status_bar_votes);
 
         this.mCommentCount = 15;
         this.mScore = 0;

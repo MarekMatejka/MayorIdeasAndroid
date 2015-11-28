@@ -1,7 +1,9 @@
 package mm.mayorideas.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,59 +19,57 @@ import java.util.List;
 
 import mm.mayorideas.R;
 import mm.mayorideas.gson.IdeaGETGson;
+import mm.mayorideas.ui.IdeaActionBarHandler;
+import mm.mayorideas.ui.IdeaStatusBarHandler;
 
-public class IdeaListAdapter extends ArrayAdapter<IdeaGETGson> {
+public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAdapter.ViewHolder> {
 
-    private Context context;
-    private List<IdeaGETGson> ideas;
+    private Activity mContext;
 
-    public IdeaListAdapter(Context context, List<IdeaGETGson> ideas) {
-        super(context, R.layout.adapter_item_idea_list, ideas);
-        this.context = context;
-        this.ideas = ideas;
+    public IdeaListAdapter(Activity context) {
+        this.mContext = context;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Holder holder;
-
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_item_idea_list, parent, false);
-
-            holder = new Holder();
-            holder.name = (TextView) convertView.findViewById(R.id.idea_name);
-            holder.image = (ImageView) convertView.findViewById(R.id.idea_background_image);
-            convertView.setTag(holder);
-        }
-        else {
-            holder = (Holder)convertView.getTag();
-        }
-
-        IdeaGETGson idea = ideas.get(position);
-        String imageUrl = "http://themestudio.net/wp-content/uploads/2015/06/modern-psd-to-html-online-generator-idea.jpg";
-
-        holder.name.setText(idea.getTitle());
-        Picasso.with(context)
-                .load(imageUrl)
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.drawable.ic_drawer)
-                .resize(getScreenWidth(), (int) context.getResources().getDimension(R.dimen.overview_idea_height))
-                .centerCrop()
-                .into(holder.image);
-        return convertView;
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        return new ViewHolder(
+                mContext,
+                LayoutInflater.from(mContext)
+                        .inflate(R.layout.adapter_item_idea_card, viewGroup, false));
     }
 
-    private static class Holder {
-        TextView name;
-        ImageView image;
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        viewHolder.bind(mContext, mData.get(position));
     }
 
-    private int getScreenWidth(){
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x;
+    public static class ViewHolder extends RecyclerView.ViewHolder  {
+        private TextView name;
+        private ImageView image;
+        private TextView description;
+
+        public ViewHolder(Activity context, View v) {
+            super(v);
+            name = (TextView) v.findViewById(R.id.idea_card_title);
+            image = (ImageView) v.findViewById(R.id.idea_card_image);
+            description = (TextView) v.findViewById(R.id.idea_card_description);
+
+            IdeaStatusBarHandler statusBarHandler = new IdeaStatusBarHandler(context, v);
+            IdeaActionBarHandler actionBarHandler = new IdeaActionBarHandler(context, v, statusBarHandler);
+        }
+
+        public void bind(Activity context, IdeaGETGson idea) {
+            String imageUrl = "http://themestudio.net/wp-content/uploads/2015/06/modern-psd-to-html-online-generator-idea.jpg";
+
+            name.setText(idea.getTitle());
+            description.setText(context.getString(R.string.lorem_ipsum));
+            Picasso.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.drawable.ic_drawer)
+                    .fit()
+                    .centerCrop()
+                    .into(image);
+        }
     }
 }
