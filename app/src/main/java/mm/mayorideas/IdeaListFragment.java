@@ -1,7 +1,6 @@
 package mm.mayorideas;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,26 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import mm.mayorideas.adapters.IdeaImagesAdapter;
 import mm.mayorideas.adapters.IdeaListAdapter;
 import mm.mayorideas.api.IdeaAPI;
 import mm.mayorideas.gson.IdeaGETGson;
-import mm.mayorideas.objects.Idea;
-import mm.mayorideas.ui.HorizontalSpaceItemDecoration;
 
 public class IdeaListFragment extends Fragment {
 
-    private IdeaListInteractionListener mListener;
     private IdeaListAdapter mAdapter;
 
     public static IdeaListFragment newInstance() {
@@ -59,6 +49,8 @@ public class IdeaListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Top 10 ideas");
+
         View view = inflater.inflate(R.layout.fragment_idea, container, false);
 
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.idea_card_list);
@@ -70,26 +62,5 @@ public class IdeaListFragment extends Fragment {
         fab.attachToRecyclerView(recyclerView);
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (IdeaListInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface IdeaListInteractionListener {
-        void onFragmentInteraction(String id);
     }
 }
