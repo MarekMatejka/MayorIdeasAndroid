@@ -1,8 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="MaterialDrawerTheme.Light.ActionBar">
+        <item name="colorPrimary">@color/mayorideas_blue</item>
+        <item name="colorPrimaryDark">@color/mayorideas_blue</item>
+        <item name="colorAccent">@color/mayorideas_blue</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
     <style name="FloatLabeledEditTextStyle">
@@ -21,8 +24,8 @@
 
     <style name="CommentEditText">
         <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="colorControlActivated">@android:color/holo_blue_light</item>
-        <item name="colorControlHighlight">@android:color/holo_blue_light</item>
+        <item name="colorControlActivated">@color/mayorideas_blue</item>
+        <item name="colorControlHighlight">@color/mayorideas_blue</item>
     </style>
 
 </resources>

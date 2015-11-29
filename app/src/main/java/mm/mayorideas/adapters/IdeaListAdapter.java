@@ -71,7 +71,7 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
             description.setText(context.getString(R.string.lorem_ipsum));
             Picasso.with(context)
                     .load(imageUrl)
-                    .placeholder(R.mipmap.ic_launcher)
+                    .placeholder(R.drawable.ic_launcher)
                     .error(R.drawable.ic_drawer)
                     .fit()
                     .centerCrop()

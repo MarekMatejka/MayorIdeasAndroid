@@ -19,12 +19,15 @@
         android:gravity="center" />
 
     <com.melnykov.fab.FloatingActionButton
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:id="@+id/add_idea_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_24dp"
-        android:onClick="addNewIdea"/>
+        android:onClick="addNewIdea"
+        fab:fab_colorNormal="@color/mayorideas_blue"
+        fab:fab_colorPressed="@color/mayorideas_blue_dark"/>
 
 </FrameLayout>
