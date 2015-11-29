@@ -1,22 +1,17 @@
 package mm.mayorideas.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Point;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
+import mm.mayorideas.IdeaDetailActivity;
 import mm.mayorideas.R;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.ui.IdeaActionBarHandler;
@@ -39,14 +34,23 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         viewHolder.bind(mContext, mData.get(position));
+        viewHolder.ideaCardBody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, IdeaDetailActivity.class);
+                i.putExtra(IdeaDetailActivity.IDEA_ID_TAG, mData.get(position).getId());
+                mContext.startActivity(i);
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
         private TextView name;
         private ImageView image;
         private TextView description;
+        View ideaCardBody;
 
         public ViewHolder(Activity context, View v) {
             super(v);
@@ -56,6 +60,8 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
 
             IdeaStatusBarHandler statusBarHandler = new IdeaStatusBarHandler(context, v);
             IdeaActionBarHandler actionBarHandler = new IdeaActionBarHandler(context, v, statusBarHandler);
+
+            ideaCardBody = v.findViewById(R.id.idea_card_body);
         }
 
         public void bind(Activity context, IdeaGETGson idea) {

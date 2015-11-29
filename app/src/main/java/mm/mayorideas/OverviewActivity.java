@@ -42,12 +42,6 @@ public class OverviewActivity extends ActionBarActivity
                 .commit();
     }
 
-    public void temp(View v) {
-        Intent i = new Intent(this, IdeaDetailActivity.class);
-        startActivity(i);
-        onStop();
-    }
-
     private Fragment getFragment(int position) {
         switch (position) {
             case 0:

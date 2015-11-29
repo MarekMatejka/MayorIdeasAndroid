@@ -3,6 +3,7 @@ package mm.mayorideas;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,12 +29,17 @@ import mm.mayorideas.ui.IdeaStatusBarHandler;
 
 public class IdeaDetailActivity extends ActionBarActivity {
 
+    public static final String IDEA_ID_TAG = "idea_id";
+
     private SliderLayout mSliderShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_idea_detail);
+
+        Intent i = getIntent();
+        int ID = i.getIntExtra(IDEA_ID_TAG, -1);
 
         mSliderShow = (SliderLayout) findViewById(R.id.slider);
         addImageToSlider(mSliderShow, "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
