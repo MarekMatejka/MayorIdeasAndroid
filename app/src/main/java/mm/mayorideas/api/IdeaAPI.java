@@ -7,13 +7,12 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import org.apache.http.Header;
-import org.apache.http.entity.StringEntity;
-
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.gson.NewIdeaPOSTGson;
 
