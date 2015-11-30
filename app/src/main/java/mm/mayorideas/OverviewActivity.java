@@ -11,22 +11,20 @@ import android.view.View;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.holder.BadgeStyle;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 
 public class OverviewActivity extends AppCompatActivity {
 
     private Drawer mResult;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-//        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         createDrawer();
 
@@ -40,14 +38,16 @@ public class OverviewActivity extends AppCompatActivity {
     private void createDrawer() {
         mResult = new DrawerBuilder()
                 .withActivity(this)
-                .withTranslucentStatusBar(false)
-                .withActionBarDrawerToggle(false)
+                .withToolbar(mToolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem()
                                 .withIcon(GoogleMaterial.Icon.gmd_fire)
                                 .withName("10 Hot ideas")
                 )
                 .build();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        mResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
     }
 
     public void addNewIdea(View v) {

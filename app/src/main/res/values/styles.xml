@@ -8,6 +8,19 @@
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
+    <style name="OverviewActivityTheme" parent="MaterialDrawerTheme.Light">
+        <item name="colorPrimary">@color/mayorideas_blue</item>
+        <item name="colorPrimaryDark">@color/mayorideas_blue</item>
+        <item name="colorAccent">@color/mayorideas_blue</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
+    </style>
+
+    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">false</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
     <style name="FloatLabeledEditTextStyle">
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">bold</item>
