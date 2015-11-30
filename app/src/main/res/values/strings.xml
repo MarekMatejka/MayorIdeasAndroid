@@ -22,12 +22,12 @@
     <string name="error">Error :(</string>
     <string name="add_photo">Add a photo</string>
 
-    <string-array name="categories">
-        <item>Environment</item>
-        <item>Culture</item>
-        <item>Transport</item>
-        <item>Infrastructure</item>
-    </string-array>
+    <!-- Categories -->
+    <string name="environment">Environment</string>
+    <string name="culture">Culture</string>
+    <string name="transport">Transport</string>
+    <string name="infrastructure">Infrastructure</string>
+
     <string name="title_activity_maps_test">Map</string>
     <string name="title_activity_idea_detail">IdeaDetailActivity</string>
 

@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 
+import mm.mayorideas.adapters.CategoryAdapter;
 import mm.mayorideas.adapters.IdeaImagesAdapter;
 import mm.mayorideas.api.IdeaAPI;
 import mm.mayorideas.maps.MapsHelper;
@@ -22,7 +23,6 @@ import static mm.mayorideas.adapters.IdeaImagesAdapter.OnIdeaImageItemClickListe
 
 public class NewIdeaActivity extends ActionBarActivity {
 
-    private static final int TAKE_PHOTO = 3;
     private static final int FROM_GALLERY = 2;
     private EditText ideaTitle;
     private EditText ideaDescription;
@@ -54,6 +54,8 @@ public class NewIdeaActivity extends ActionBarActivity {
         ideaTitle = (EditText) findViewById(R.id.idea_title);
         ideaDescription = (EditText) findViewById(R.id.idea_description);
         ideaCategory = (Spinner) findViewById(R.id.idea_category);
+        CategoryAdapter adapter = new CategoryAdapter(this);
+        ideaCategory.setAdapter(adapter);
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.idea_image_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -99,9 +101,6 @@ public class NewIdeaActivity extends ActionBarActivity {
         } else {
             mapsHelper.setUpMapIfNeeded(this, R.id.map);
         }
-        /*if (mapsHelper.canStartLocationUpdates()) {
-            mapsHelper.startLocationUpdates();
-        }*/
     }
 
     @Override
@@ -140,20 +139,6 @@ public class NewIdeaActivity extends ActionBarActivity {
 
         return success;
     }
-
-
-//    public void getLocation(View v) {
-//        MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
-//            @Override
-//            public void gotLocation(Location location){
-//                //Got the location!
-//                Log.e("latitude", ""+location.getLatitude());
-//                Log.e("longitude", "" + location.getLongitude());
-//            }
-//        };
-//        MyLocation myLocation = new MyLocation();
-//        myLocation.getLocation(this, locationResult);
-//    }
 
     public void fromGallery() {
         Intent intent = new Intent();
