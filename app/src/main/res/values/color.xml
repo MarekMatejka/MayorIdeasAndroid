@@ -2,4 +2,7 @@
 <resources>
     <color name="mayorideas_blue">#ff80b3ff</color>
     <color name="mayorideas_blue_dark">#ff5f8dd3</color>
+
+    <color name="yellow">#ffffcc00</color>
+    <color name="flame">#ffE25822</color>
 </resources>

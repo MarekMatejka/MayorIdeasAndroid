@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MayorIdeas</string>
+    <string name="app_name">Mayor Ideas</string>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -32,5 +32,13 @@
     <string name="title_activity_idea_detail">IdeaDetailActivity</string>
 
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <!-- Drawer items / categories -->
     <string name="title_activity_comments">Comments</string>
+    <string name="hot_ideas">Ideas on fire</string>
+    <string name="top_ideas">Top ideas</string>
+    <string name="following">Following</string>
+    <string name="all_categories">All categories</string>
+    <string name="my_ideas">My ideas</string>
+    <string name="about">About</string>
 </resources>

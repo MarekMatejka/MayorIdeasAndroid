@@ -2,52 +2,103 @@ package mm.mayorideas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.typeface.IIcon;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class OverviewActivity extends AppCompatActivity {
 
     private Drawer mResult;
-    private Toolbar mToolbar;
+    private FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        createDrawer();
+        createDrawer(toolbar);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.container, IdeaListFragment.newInstance())
-                .commit();
+        mFragmentManager = getSupportFragmentManager();
+        switchFragments(0);
     }
 
-    private void createDrawer() {
+    private void createDrawer(Toolbar toolbar) {
         mResult = new DrawerBuilder()
                 .withActivity(this)
-                .withToolbar(mToolbar)
+                .withToolbar(toolbar)
                 .addDrawerItems(
-                        new PrimaryDrawerItem()
-                                .withIcon(GoogleMaterial.Icon.gmd_fire)
-                                .withName("10 Hot ideas")
+                        createDrawerItem(GoogleMaterial.Icon.gmd_fire, R.string.hot_ideas, R.color.flame),
+                        createDrawerItem(FontAwesome.Icon.faw_star, R.string.top_ideas, R.color.yellow),
+                        createDrawerItem(GoogleMaterial.Icon.gmd_home, R.string.my_ideas, R.color.mayorideas_blue),
+                        createDrawerItem(FontAwesome.Icon.faw_heart, R.string.following, android.R.color.holo_red_dark),
+                        createDrawerItem(FontAwesome.Icon.faw_tags, R.string.all_categories, R.color.mayorideas_blue_dark),
+                        new DividerDrawerItem(),
+                        createDrawerItem(GoogleMaterial.Icon.gmd_info, R.string.about, android.R.color.darker_gray)
                 )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        switchFragments(position);
+                        return false;
+                    }
+                })
                 .build();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+    }
+
+    private void switchFragments(int position) {
+        mFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, getFragment(position))
+                .commit();
+        getSupportActionBar().setTitle(getFragmentTitle(position));
+    }
+
+    private Fragment getFragment(int position) {
+        switch (position) {
+            case 0: return IdeaListFragment.newInstance();
+            default: return IdeaListFragment.newInstance();
+        }
+    }
+
+    private int getFragmentTitle(int position) {
+        switch (position) {
+            case 0: return R.string.hot_ideas;
+            case 1: return R.string.top_ideas;
+            case 2: return R.string.my_ideas;
+            case 3: return R.string.following;
+            case 4: return R.string.all_categories;
+            //case 5: Divider Item = no action
+            case 6: return R.string.about;
+            default: return R.string.hot_ideas;
+        }
+    }
+
+    private PrimaryDrawerItem createDrawerItem(IIcon icon, int text, int iconColor) {
+        return new PrimaryDrawerItem()
+                .withIcon(icon)
+                .withIconColorRes(iconColor)
+                .withSelectedIconColorRes(iconColor)
+                .withName(getString(text))
+                .withTextColorRes(android.R.color.black)
+                .withSelectedTextColorRes(android.R.color.black);
     }
 
     public void addNewIdea(View v) {
