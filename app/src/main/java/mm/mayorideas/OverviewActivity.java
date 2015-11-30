@@ -77,7 +77,8 @@ public class OverviewActivity extends AppCompatActivity {
                                 .withEmail("marek@matejka.com")
                                 .withIcon(R.drawable.ic_launcher)
                 )
-                .build();
+               .withSelectionListEnabledForSingleProfile(false)
+               .build();
     }
 
     private void switchFragments(int position) {
@@ -135,7 +136,6 @@ public class OverviewActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
