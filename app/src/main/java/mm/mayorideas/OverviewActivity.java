@@ -78,6 +78,7 @@ public class OverviewActivity extends AppCompatActivity {
                                 .withIcon(R.drawable.ic_launcher)
                 )
                .withSelectionListEnabledForSingleProfile(false)
+               .withProfileImagesClickable(false)
                .build();
     }
 
