@@ -12,10 +12,13 @@ import android.view.View;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.typeface.IIcon;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 public class OverviewActivity extends AppCompatActivity {
@@ -41,6 +44,7 @@ public class OverviewActivity extends AppCompatActivity {
         mResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
+                .withAccountHeader(createAccountHeader())
                 .addDrawerItems(
                         createDrawerItem(GoogleMaterial.Icon.gmd_fire, R.string.hot_ideas, R.color.flame),
                         createDrawerItem(FontAwesome.Icon.faw_star, R.string.top_ideas, R.color.yellow),
@@ -61,6 +65,19 @@ public class OverviewActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+    }
+
+    private AccountHeader createAccountHeader() {
+       return new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.color.mayorideas_blue)
+                .addProfiles(
+                        new ProfileDrawerItem()
+                                .withName("Marek Matejka")
+                                .withEmail("marek@matejka.com")
+                                .withIcon(R.drawable.ic_launcher)
+                )
+                .build();
     }
 
     private void switchFragments(int position) {
