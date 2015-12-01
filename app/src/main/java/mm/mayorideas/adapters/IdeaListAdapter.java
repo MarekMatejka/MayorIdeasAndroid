@@ -28,7 +28,6 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         return new ViewHolder(
-                mContext,
                 LayoutInflater.from(mContext)
                         .inflate(R.layout.adapter_item_idea_card, viewGroup, false));
     }
@@ -40,26 +39,26 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(mContext, IdeaDetailActivity.class);
-                i.putExtra(IdeaDetailActivity.IDEA_ID_TAG, mData.get(position).getId());
+                i.putExtra(IdeaDetailActivity.IDEA_ID_TAG, mData.get(position));
                 mContext.startActivity(i);
             }
         });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
+        private final View view;
         private TextView name;
         private ImageView image;
         private TextView description;
         View ideaCardBody;
 
-        public ViewHolder(Activity context, View v) {
+        public ViewHolder(View v) {
             super(v);
+            view = v;
+
             name = (TextView) v.findViewById(R.id.idea_card_title);
             image = (ImageView) v.findViewById(R.id.idea_card_image);
             description = (TextView) v.findViewById(R.id.idea_card_description);
-
-            IdeaStatusBarHandler statusBarHandler = new IdeaStatusBarHandler(context, v);
-            IdeaActionBarHandler actionBarHandler = new IdeaActionBarHandler(context, v, statusBarHandler);
 
             ideaCardBody = v.findViewById(R.id.idea_card_body);
         }
@@ -76,6 +75,9 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
                     .fit()
                     .centerCrop()
                     .into(image);
+
+            IdeaStatusBarHandler statusBarHandler = new IdeaStatusBarHandler(context, view, idea);
+            IdeaActionBarHandler actionBarHandler = new IdeaActionBarHandler(context, view, statusBarHandler);
         }
     }
 }

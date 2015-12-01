@@ -1,8 +1,9 @@
 package mm.mayorideas.gson;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class IdeaGETGson {
+public class IdeaGETGson implements Serializable {
 
     private final int id;
     private final String title;
@@ -70,6 +71,4 @@ public class IdeaGETGson {
     public Timestamp getDateCreated() {
         return dateCreated;
     }
-
-
 }

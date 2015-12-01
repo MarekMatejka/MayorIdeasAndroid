@@ -5,10 +5,15 @@ import android.content.res.Resources;
 import android.view.View;
 import android.widget.TextView;
 
+import com.mikepenz.iconics.view.IconicsImageView;
+
 import mm.mayorideas.R;
+import mm.mayorideas.gson.IdeaGETGson;
+import mm.mayorideas.objects.IdeaCategory;
 
 public class IdeaStatusBarHandler {
 
+    private final IconicsImageView mCategoryIcon;
     private final TextView mCommentCountText;
     private final TextView mScoreText;
     private final TextView mVotesCountText;
@@ -18,9 +23,10 @@ public class IdeaStatusBarHandler {
     private int mScore;
     private int mVotesCount;
 
-    public IdeaStatusBarHandler(Activity activity) {
+    public IdeaStatusBarHandler(Activity activity, IdeaGETGson idea) {
         this.mActivity = activity;
 
+        this.mCategoryIcon = (IconicsImageView)activity.findViewById(R.id.idea_status_bar_category);
         this.mCommentCountText = (TextView)activity.findViewById(R.id.idea_status_bar_comments);
         this.mScoreText = (TextView)activity.findViewById(R.id.idea_status_bar_score);
         this.mVotesCountText = (TextView)activity.findViewById(R.id.idea_status_bar_votes);
@@ -29,14 +35,16 @@ public class IdeaStatusBarHandler {
         this.mScore = 0;
         this.mVotesCount = 123;
 
+        setupCategoryIcon(idea.getCategoryID());
         setupCommentCountText();
         setupScoreText();
         setupVotesCountText();
     }
 
-    public IdeaStatusBarHandler(Activity activity, View view) {
+    public IdeaStatusBarHandler(Activity activity, View view, IdeaGETGson idea) {
         this.mActivity = activity;
 
+        this.mCategoryIcon = (IconicsImageView)view.findViewById(R.id.idea_status_bar_category);
         this.mCommentCountText = (TextView)view.findViewById(R.id.idea_status_bar_comments);
         this.mScoreText = (TextView)view.findViewById(R.id.idea_status_bar_score);
         this.mVotesCountText = (TextView)view.findViewById(R.id.idea_status_bar_votes);
@@ -45,13 +53,20 @@ public class IdeaStatusBarHandler {
         this.mScore = 0;
         this.mVotesCount = 123;
 
+        setupCategoryIcon(idea.getCategoryID());
         setupCommentCountText();
         setupScoreText();
         setupVotesCountText();
     }
 
+    private void setupCategoryIcon(int categoryID) {
+        IdeaCategory category = IdeaCategory.getIdeaCategory(categoryID);
+        mCategoryIcon.setIcon(category.getIcon());
+        mCategoryIcon.setColorRes(category.getIconColorRes());
+    }
+
     private void setupCommentCountText() {
-        this.mCommentCountText.setText(""+mCommentCount);
+        this.mCommentCountText.setText("" + mCommentCount);
     }
 
     private void setupScoreText() {

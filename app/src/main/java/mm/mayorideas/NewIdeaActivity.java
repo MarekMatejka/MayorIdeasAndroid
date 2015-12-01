@@ -3,7 +3,7 @@ package mm.mayorideas;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +21,7 @@ import mm.mayorideas.ui.HorizontalSpaceItemDecoration;
 
 import static mm.mayorideas.adapters.IdeaImagesAdapter.OnIdeaImageItemClickListener;
 
-public class NewIdeaActivity extends ActionBarActivity {
+public class NewIdeaActivity extends AppCompatActivity {
 
     private static final int FROM_GALLERY = 2;
     private EditText ideaTitle;

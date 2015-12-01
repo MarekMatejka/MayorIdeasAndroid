@@ -1,27 +1,19 @@
 package mm.mayorideas;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AnticipateInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import mm.mayorideas.adapters.CommentsAdapter;
+import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Comment;
 import mm.mayorideas.ui.IdeaActionBarHandler;
 import mm.mayorideas.ui.IdeaStatusBarHandler;
@@ -38,8 +30,7 @@ public class IdeaDetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_idea_detail);
 
-        Intent i = getIntent();
-        int ID = i.getIntExtra(IDEA_ID_TAG, -1);
+        IdeaGETGson idea = (IdeaGETGson) getIntent().getSerializableExtra(IDEA_ID_TAG);
 
         mSliderShow = (SliderLayout) findViewById(R.id.slider);
         addImageToSlider(mSliderShow, "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
@@ -53,7 +44,7 @@ public class IdeaDetailActivity extends ActionBarActivity {
         mSliderShow.setDuration(5000);
         mSliderShow.startAutoCycle();
 
-        IdeaStatusBarHandler ideaStatusBarHandler = new IdeaStatusBarHandler(this);
+        IdeaStatusBarHandler ideaStatusBarHandler = new IdeaStatusBarHandler(this, idea);
         IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this, ideaStatusBarHandler);
 
         setCommentToView(new Comment("Marek M.", "Ahoj", new Date()), findViewById(R.id.comment1));

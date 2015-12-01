@@ -25,6 +25,15 @@ public enum IdeaCategory {
         this.iconColorRes = iconColorRes;
     }
 
+    public static IdeaCategory getIdeaCategory(int ID) {
+        for (IdeaCategory category : IdeaCategory.values()) {
+            if (ID == category.id) {
+                return category;
+            }
+        }
+        return null;
+    }
+
     public int getNameRes() {
         return name;
     }
