@@ -2,7 +2,7 @@ package mm.mayorideas;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
@@ -18,8 +18,7 @@ import mm.mayorideas.objects.Comment;
 import mm.mayorideas.ui.IdeaActionBarHandler;
 import mm.mayorideas.ui.IdeaStatusBarHandler;
 
-
-public class IdeaDetailActivity extends ActionBarActivity {
+public class IdeaDetailActivity extends AppCompatActivity {
 
     public static final String IDEA_ID_TAG = "idea_id";
 

@@ -48,6 +48,7 @@ public class OverviewActivity extends AppCompatActivity {
                 .addDrawerItems(
                         createDrawerItem(GoogleMaterial.Icon.gmd_fire, R.string.hot_ideas, R.color.flame),
                         createDrawerItem(FontAwesome.Icon.faw_star, R.string.top_ideas, R.color.yellow),
+                        createDrawerItem(GoogleMaterial.Icon.gmd_pin, R.string.ideas_on_map, R.color.holo_green_light),
                         createDrawerItem(GoogleMaterial.Icon.gmd_home, R.string.my_ideas, R.color.mayorideas_blue),
                         createDrawerItem(FontAwesome.Icon.faw_heart, R.string.following, android.R.color.holo_red_dark),
                         createDrawerItem(FontAwesome.Icon.faw_tags, R.string.all_categories, R.color.mayorideas_blue_dark),
@@ -101,11 +102,12 @@ public class OverviewActivity extends AppCompatActivity {
         switch (position) {
             case 0: return R.string.hot_ideas;
             case 1: return R.string.top_ideas;
-            case 2: return R.string.my_ideas;
-            case 3: return R.string.following;
-            case 4: return R.string.all_categories;
-            //case 5: Divider Item = no action
-            case 6: return R.string.about;
+            case 2: return R.string.ideas_on_map;
+            case 3: return R.string.my_ideas;
+            case 4: return R.string.following;
+            case 5: return R.string.all_categories;
+            //case 6: Divider Item = no action
+            case 7: return R.string.about;
             default: return R.string.hot_ideas;
         }
     }
