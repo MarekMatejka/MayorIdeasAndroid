@@ -94,6 +94,7 @@ public class OverviewActivity extends AppCompatActivity {
     private Fragment getFragment(int position) {
         switch (position) {
             case 0: return IdeaListFragment.newInstance();
+            case 3: return MapIdeasFragment.newInstance();
             default: return IdeaListFragment.newInstance();
         }
     }

@@ -42,4 +42,7 @@
     <string name="my_ideas">My ideas</string>
     <string name="about">About</string>
     <string name="ideas_on_map">Ideas on a map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
