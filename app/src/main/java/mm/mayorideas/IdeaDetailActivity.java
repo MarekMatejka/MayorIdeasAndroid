@@ -44,7 +44,7 @@ public class IdeaDetailActivity extends AppCompatActivity {
         mSliderShow.startAutoCycle();
 
         IdeaStatusBarHandler ideaStatusBarHandler = new IdeaStatusBarHandler(this, idea);
-        IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this, ideaStatusBarHandler);
+        IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this, idea, ideaStatusBarHandler);
 
         setCommentToView(new Comment("Marek M.", "Ahoj", new Date()), findViewById(R.id.comment1));
         setCommentToView(new Comment("Matus M.", getString(R.string.lorem_ipsum), new Date()), findViewById(R.id.comment2));

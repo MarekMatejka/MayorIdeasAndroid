@@ -15,6 +15,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.gson.NewIdeaPOSTGson;
+import mm.mayorideas.objects.User;
 
 public class IdeaAPI {
 
@@ -64,6 +65,8 @@ public class IdeaAPI {
 
     public static void get10Ideas(final Get10IdeasListener listener) {
         String url = ServerAPIHelper.getServer()+IDEA+"/top10";
+
+        url += "?user_id="+User.getUserId();
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new TextHttpResponseHandler() {

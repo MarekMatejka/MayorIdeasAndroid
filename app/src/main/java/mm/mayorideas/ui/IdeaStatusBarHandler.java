@@ -31,9 +31,9 @@ public class IdeaStatusBarHandler {
         this.mScoreText = (TextView)activity.findViewById(R.id.idea_status_bar_score);
         this.mVotesCountText = (TextView)activity.findViewById(R.id.idea_status_bar_votes);
 
-        this.mCommentCount = 15;
-        this.mScore = 0;
-        this.mVotesCount = 123;
+        this.mCommentCount = idea.getNumOfComments();
+        this.mScore = idea.getScore();
+        this.mVotesCount = idea.getNumOfVotes();
 
         setupCategoryIcon(idea.getCategoryID());
         setupCommentCountText();
@@ -49,9 +49,9 @@ public class IdeaStatusBarHandler {
         this.mScoreText = (TextView)view.findViewById(R.id.idea_status_bar_score);
         this.mVotesCountText = (TextView)view.findViewById(R.id.idea_status_bar_votes);
 
-        this.mCommentCount = 15;
-        this.mScore = 0;
-        this.mVotesCount = 123;
+        this.mCommentCount = idea.getNumOfComments();
+        this.mScore = idea.getScore();
+        this.mVotesCount = idea.getNumOfVotes();
 
         setupCategoryIcon(idea.getCategoryID());
         setupCommentCountText();

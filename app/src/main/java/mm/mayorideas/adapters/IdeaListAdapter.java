@@ -77,7 +77,7 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
                     .into(image);
 
             IdeaStatusBarHandler statusBarHandler = new IdeaStatusBarHandler(context, view, idea);
-            IdeaActionBarHandler actionBarHandler = new IdeaActionBarHandler(context, view, statusBarHandler);
+            IdeaActionBarHandler actionBarHandler = new IdeaActionBarHandler(context, idea, view, statusBarHandler);
         }
     }
 }

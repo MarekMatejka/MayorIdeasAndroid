@@ -9,6 +9,11 @@ import com.mikepenz.iconics.view.IconicsButton;
 
 import mm.mayorideas.CommentsActivity;
 import mm.mayorideas.R;
+import mm.mayorideas.api.FollowAPI;
+import mm.mayorideas.api.VoteAPI;
+import mm.mayorideas.gson.IdeaGETGson;
+import mm.mayorideas.objects.User;
+import mm.mayorideas.objects.Vote;
 
 public class IdeaActionBarHandler {
 
@@ -19,32 +24,49 @@ public class IdeaActionBarHandler {
 
     @Nullable private final IdeaStatusBarHandler mStatusBarHandler;
 
-    public IdeaActionBarHandler(Activity activity, @Nullable IdeaStatusBarHandler statusBarHandler) {
+    private IdeaGETGson mIdea;
+
+    public IdeaActionBarHandler(Activity activity, IdeaGETGson idea, @Nullable IdeaStatusBarHandler statusBarHandler) {
         this.mCommentAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_comment);
         this.mLikeAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_like);
         this.mDislikeAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_dislike);
         this.mFollowAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_follow);
 
+        this.mIdea = idea;
         this.mStatusBarHandler = statusBarHandler;
 
-        setupCommentAction(activity);
-        setupLikeAction();
-        setupDislikeAction();
-        setupFollowAction();
+        setupActionBar(activity);
     }
 
-    public IdeaActionBarHandler(Activity activity, View v, @Nullable IdeaStatusBarHandler statusBarHandler) {
+    public IdeaActionBarHandler(Activity activity, IdeaGETGson idea, View v, @Nullable IdeaStatusBarHandler statusBarHandler) {
         this.mCommentAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_comment);
         this.mLikeAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_like);
         this.mDislikeAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_dislike);
         this.mFollowAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_follow);
 
+        this.mIdea = idea;
         this.mStatusBarHandler = statusBarHandler;
 
+        setupActionBar(activity);
+    }
+
+    private void setupActionBar(Activity activity) {
         setupCommentAction(activity);
         setupLikeAction();
         setupDislikeAction();
         setupFollowAction();
+        setupUserValues();
+    }
+
+    private void setupUserValues() {
+        int userVote = mIdea.getUserVote();
+        mLikeAction.setSelected(userVote == 1);
+        mDislikeAction.setSelected(userVote == -1);
+
+        if(mIdea.isUserFollowing()) {
+            mFollowAction.setSelected(true);
+            mFollowAction.setText("{faw-heart}");
+        }
     }
 
     private void setupCommentAction(final Activity activity) {
@@ -117,6 +139,7 @@ public class IdeaActionBarHandler {
             mStatusBarHandler.addLike();
         }
         //call HTTP method to add a like to the idea
+        VoteAPI.castVote(User.getUserId(), mIdea.getId(), Vote.LIKE);
     }
 
     private void removeLike() {
@@ -124,6 +147,7 @@ public class IdeaActionBarHandler {
             mStatusBarHandler.removeLike();
         }
         //call HTTP method to remove a like from the idea
+        VoteAPI.deleteVote(User.getUserId(), mIdea.getId());
     }
 
     private void addDislike() {
@@ -131,6 +155,7 @@ public class IdeaActionBarHandler {
             mStatusBarHandler.addDislike();
         }
         //call HTTP method to add a dislike to the idea
+        VoteAPI.castVote(User.getUserId(), mIdea.getId(), Vote.DISLIKE);
     }
 
     private void removeDislike() {
@@ -138,13 +163,16 @@ public class IdeaActionBarHandler {
             mStatusBarHandler.removeDislike();
         }
         //call HTTP method to remove a dislike from the idea
+        VoteAPI.deleteVote(User.getUserId(), mIdea.getId());
     }
 
     private void addFollowing() {
         //add the idea to the list of ideas the user is following
+        FollowAPI.followIdea(User.getUserId(), mIdea.getId());
     }
 
     private void removeFollowing() {
         //remove the idea from the list of ideas the user is following
+        FollowAPI.unfollowIdea(User.getUserId(), mIdea.getId());
     }
 }

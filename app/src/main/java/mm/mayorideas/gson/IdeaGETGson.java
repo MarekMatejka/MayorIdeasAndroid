@@ -14,6 +14,11 @@ public class IdeaGETGson implements Serializable {
     private final int authorID;
     private final String authorName;
     private final Timestamp dateCreated;
+    private final int score;
+    private final int numOfVotes;
+    private final int numOfComments;
+    private final int userVote;
+    private final boolean isUserFollowing;
 
     public IdeaGETGson(
             int id,
@@ -24,7 +29,12 @@ public class IdeaGETGson implements Serializable {
             String location,
             int authorID,
             String authorName,
-            Timestamp dateCreated) {
+            Timestamp dateCreated,
+            int score,
+            int numOfVotes,
+            int numOfComments,
+            int userVote,
+            boolean isUserFollowing) {
         this.id = id;
         this.title = title;
         this.categoryID = categoryID;
@@ -34,6 +44,11 @@ public class IdeaGETGson implements Serializable {
         this.authorID = authorID;
         this.authorName = authorName;
         this.dateCreated = dateCreated;
+        this.score = score;
+        this.numOfVotes = numOfVotes;
+        this.numOfComments = numOfComments;
+        this.userVote = userVote;
+        this.isUserFollowing = isUserFollowing;
     }
 
     public int getId() {
@@ -70,5 +85,25 @@ public class IdeaGETGson implements Serializable {
 
     public Timestamp getDateCreated() {
         return dateCreated;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getNumOfVotes() {
+        return numOfVotes;
+    }
+
+    public int getNumOfComments() {
+        return numOfComments;
+    }
+
+    public int getUserVote() {
+        return userVote;
+    }
+
+    public boolean isUserFollowing() {
+        return isUserFollowing;
     }
 }
