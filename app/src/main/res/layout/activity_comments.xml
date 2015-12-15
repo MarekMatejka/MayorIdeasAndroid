@@ -32,10 +32,10 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:padding="5dp"
             android:text="{gmd-mail-send}"
             android:textColor="@color/comment_send_action_color_selector"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:onClick="addComment"/>
 
     </LinearLayout>
 

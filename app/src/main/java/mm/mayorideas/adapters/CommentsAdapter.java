@@ -42,9 +42,9 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
         }
 
         Comment comment = comments.get(position);
-        holder.personName.setText(comment.getAuthorName());
+        holder.personName.setText(comment.getUserName());
         holder.commentText.setText(comment.getText());
-        holder.commentAdded.setText(comment.getDate());
+        holder.commentAdded.setText(comment.getDateCreated());
 
         return convertView;
     }

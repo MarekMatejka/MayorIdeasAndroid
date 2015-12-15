@@ -1,31 +1,49 @@
 package mm.mayorideas.objects;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class Comment {
 
-    private final String authorName;
+    private final int ID;
+    private final int userID;
+    private final int ideaID;
+    private final String userName;
     private final String text;
-    private final Date date;
+    private final Timestamp dateCreated;
 
-    public Comment(String authorName, String text, Date date) {
-        this.authorName = authorName;
+    public Comment(int ID, int userID, int ideaID, String userName, String text, Timestamp dateCreated) {
+        this.ID = ID;
+        this.userID = userID;
+        this.ideaID = ideaID;
+        this.userName = userName;
         this.text = text;
-        this.date = date;
+        this.dateCreated = dateCreated;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public int getID() {
+        return ID;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public int getIdeaID() {
+        return ideaID;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public String getText() {
         return text;
     }
 
-    public String getDate() {
+    public String getDateCreated() {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EEE, d MMM yyyy", Locale.getDefault());
-        return formatter.format(date);
+        return formatter.format(dateCreated);
     }
 }

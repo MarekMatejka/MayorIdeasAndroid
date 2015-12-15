@@ -75,6 +75,7 @@ public class IdeaActionBarHandler {
             public void onClick(View v) {
                 //open the comment section for this idea
                 Intent i = new Intent(activity, CommentsActivity.class);
+                i.putExtra(CommentsActivity.IDEA_ID_TAG, mIdea);
                 activity.startActivity(i);
             }
         });

@@ -1,34 +1,70 @@
 package mm.mayorideas;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
 import mm.mayorideas.adapters.CommentsAdapter;
+import mm.mayorideas.api.CommentAPI;
+import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Comment;
+import mm.mayorideas.objects.User;
 
+public class CommentsActivity extends AppCompatActivity implements
+        CommentAPI.GetCommentsForIdeaListener {
 
-public class CommentsActivity extends ActionBarActivity {
+    public static final String IDEA_ID_TAG = "idea_id";
+
+    private CommentsAdapter adapter;
+    private IdeaGETGson mIdea;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-        List<Comment> comments = new LinkedList<>();
-        comments.add(new Comment("Marek M.", getString(R.string.lorem_ipsum), new Date()));
-        comments.add(new Comment("Marek M.", "Ahoj Marek ako sa mas?", new Date()));
-        comments.add(new Comment("Marek M.", getString(R.string.lorem_ipsum), new Date()));
-        comments.add(new Comment("Marek M.", "test listu", new Date()));
+        mIdea = (IdeaGETGson) getIntent().getSerializableExtra(IDEA_ID_TAG);
 
         ListView listView = (ListView)findViewById(R.id.comments_list);
-        CommentsAdapter adapter = new CommentsAdapter(this, comments);
+        adapter = new CommentsAdapter(this, new LinkedList<Comment>());
         listView.setAdapter(adapter);
+
+        CommentAPI.getAllCommentsForIdea(mIdea.getId(), this);
+    }
+
+    public void addComment(View v) {
+        EditText commentBox = (EditText) findViewById(R.id.comment_text_box);
+        String commentText = commentBox.getText().toString();
+        if (commentText.length() > 0) {
+            CommentAPI.addComment(User.getUserId(), mIdea.getId(), commentText);
+            adapter.insert(
+                    new Comment(
+                            -1,
+                            User.getUserId(),
+                            mIdea.getId(),
+                            User.getUserName(),
+                            commentText,
+                            new Timestamp(System.currentTimeMillis())),
+                    0);
+            commentBox.setText("");
+        }
+    }
+
+    @Override
+    public void onSuccess(List<Comment> comments) {
+        adapter.addAll(comments);
+    }
+
+    @Override
+    public void onFailure() {
+        Log.e("Error", "downloading all comments");
     }
 }
