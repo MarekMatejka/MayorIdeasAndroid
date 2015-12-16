@@ -25,7 +25,6 @@ public class CommentsActivity extends AppCompatActivity implements
     private CommentsAdapter adapter;
     private IdeaGETGson mIdea;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

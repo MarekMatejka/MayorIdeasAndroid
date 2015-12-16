@@ -47,6 +47,7 @@
         <activity
             android:name=".IdeaDetailActivity"
             android:label="@string/title_activity_idea_detail"
+            android:launchMode="singleTop"
             android:parentActivityName=".OverviewActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
