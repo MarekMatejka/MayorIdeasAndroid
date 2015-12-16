@@ -15,6 +15,7 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import java.util.List;
 
 import mm.mayorideas.api.CommentAPI;
+import mm.mayorideas.api.listeners.SimpleNumberValueListener;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Comment;
 import mm.mayorideas.ui.IdeaActionBarHandler;
@@ -26,7 +27,8 @@ public class IdeaDetailActivity extends AppCompatActivity
     public static final String IDEA_ID_TAG = "idea_id";
 
     private SliderLayout mSliderShow;
-    private static IdeaGETGson mIdea;
+    private IdeaGETGson mIdea;
+    private IdeaStatusBarHandler mIdeaStatusBarHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,8 @@ public class IdeaDetailActivity extends AppCompatActivity
         mSliderShow.setDuration(5000);
         mSliderShow.startAutoCycle();
 
-        IdeaStatusBarHandler ideaStatusBarHandler = new IdeaStatusBarHandler(this, mIdea);
-        IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this, mIdea, ideaStatusBarHandler);
-
-        CommentAPI.getLast2CommentsForIdea(mIdea.getId(), this);
+        mIdeaStatusBarHandler = new IdeaStatusBarHandler(this, mIdea);
+        IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this, mIdea, mIdeaStatusBarHandler);
     }
 
     private void setCommentToView(Comment comment, View v) {
@@ -80,6 +80,23 @@ public class IdeaDetailActivity extends AppCompatActivity
     public void onStop() {
         mSliderShow.stopAutoCycle();
         super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CommentAPI.getLast2CommentsForIdea(mIdea.getId(), this);
+        CommentAPI.getNumberOfCommentsForIdea(mIdea.getId(), new SimpleNumberValueListener() {
+            @Override
+            public void onSuccess(int value) {
+                mIdeaStatusBarHandler.setCommentCount(value);
+            }
+
+            @Override
+            public void onFailure() {
+                Log.e("Error", "getting nummber of comments");
+            }
+        });
     }
 
     @Override

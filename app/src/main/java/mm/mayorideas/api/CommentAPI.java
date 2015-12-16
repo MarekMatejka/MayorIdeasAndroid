@@ -13,6 +13,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import mm.mayorideas.api.listeners.SimpleNumberValueListener;
 import mm.mayorideas.gson.NewCommentPOSTGson;
 import mm.mayorideas.objects.Comment;
 
@@ -107,6 +108,35 @@ public class CommentAPI {
 
                     if(listener != null) {
                         listener.onSuccess(comments);
+                    }
+                } else {
+                    if (listener != null) {
+                        listener.onFailure();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (listener != null) {
+                    listener.onFailure();
+                }
+            }
+        });
+    }
+
+    public static void getNumberOfCommentsForIdea(
+            int ideaID,
+            final SimpleNumberValueListener listener) {
+        String url = ServerAPIHelper.getServer()+COMMENT+"/idea/count/"+ideaID;
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String response) {
+                if (response != null && response.length() > 0 && !response.equals("null")) {
+                    if(listener != null) {
+                        listener.onSuccess(Integer.parseInt(response));
                     }
                 } else {
                     if (listener != null) {

@@ -117,4 +117,9 @@ public class IdeaStatusBarHandler {
         setupScoreText();
         setupVotesCountText();
     }
+
+    public void setCommentCount(int commentCount) {
+        this.mCommentCount = commentCount;
+        setupCommentCountText();
+    }
 }
