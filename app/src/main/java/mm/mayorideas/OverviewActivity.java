@@ -58,7 +58,7 @@ public class OverviewActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        switchFragments(position);
+                        switchFragments(position-1);
                         return false;
                     }
                 })
@@ -94,7 +94,7 @@ public class OverviewActivity extends AppCompatActivity {
     private Fragment getFragment(int position) {
         switch (position) {
             case 0: return IdeaListFragment.newInstance();
-            case 3: return MapIdeasFragment.newInstance();
+            case 2: return MapIdeasFragment.newInstance();
             default: return IdeaListFragment.newInstance();
         }
     }

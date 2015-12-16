@@ -35,7 +35,7 @@
 
     <!-- Drawer items / categories -->
     <string name="title_activity_comments">Comments</string>
-    <string name="hot_ideas">Ideas on fire</string>
+    <string name="hot_ideas">Trending</string>
     <string name="top_ideas">Top ideas</string>
     <string name="following">Following</string>
     <string name="all_categories">All categories</string>
