@@ -69,4 +69,8 @@ public abstract class AbstractListAdapter<V, K extends RecyclerView.ViewHolder>
         }
         return -1;
     }
+
+    public List<V> getData() {
+        return mData;
+    }
 }

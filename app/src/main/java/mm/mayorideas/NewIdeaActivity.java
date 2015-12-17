@@ -10,12 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 
 import mm.mayorideas.adapters.CategoryAdapter;
 import mm.mayorideas.adapters.IdeaImagesAdapter;
 import mm.mayorideas.api.IdeaAPI;
+import mm.mayorideas.api.ImagesAPI;
+import mm.mayorideas.api.listeners.SimpleNumberValueListener;
 import mm.mayorideas.maps.MapsHelper;
 import mm.mayorideas.ui.HorizontalSpaceItemDecoration;
 
@@ -30,12 +33,12 @@ public class NewIdeaActivity extends AppCompatActivity {
     private ActionProcessButton submitIdeaButton;
     private IdeaImagesAdapter imagesAdapter;
     private MapsHelper mapsHelper;
+    private int mUploadingImages;
 
     private final IdeaAPI.AddNewIdeaListener addNewIdeaListener = new IdeaAPI.AddNewIdeaListener() {
         @Override
         public void onSuccess(int ideaID) {
-            submitIdeaButton.setProgress(100);
-            finish();
+            sendImages(ideaID);
         }
 
         @Override
@@ -45,10 +48,28 @@ public class NewIdeaActivity extends AppCompatActivity {
         }
     };
 
+    private final SimpleNumberValueListener addImageListener = new SimpleNumberValueListener() {
+        @Override
+        public void onSuccess(int id) {
+            mUploadingImages--;
+            if (mUploadingImages == 0) {
+                submitIdeaButton.setProgress(100);
+                finish();
+            }
+        }
+
+        @Override
+        public void onFailure() {
+            submitIdeaButton.setProgress(-1);
+            setFieldsEnabled(true);
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_idea);
+        mUploadingImages = 0;
         mapsHelper = new MapsHelper(this, R.id.map);
 
         ideaTitle = (EditText) findViewById(R.id.idea_title);
@@ -93,6 +114,15 @@ public class NewIdeaActivity extends AppCompatActivity {
         });
     }
 
+    private void sendImages(int ideaID) {
+        for (IdeaImagesAdapter.ImageEntity image : imagesAdapter.getData()) {
+            if (image.hasImage()) {
+                mUploadingImages++;
+                ImagesAPI.sendImage(ideaID, image.getImage(), this, addImageListener);
+            }
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -127,13 +157,18 @@ public class NewIdeaActivity extends AppCompatActivity {
 
         String title = ideaTitle.getText().toString().trim();
         if (title.equals("")) {
-            ideaTitle.setError("Title must not be empty!");
+            ideaTitle.setError(getString(R.string.empty_title_error));
             success = false;
         }
 
         String description = ideaDescription.getText().toString().trim();
         if (description.equals("")) {
-            ideaDescription.setError("Description must not be empty!");
+            ideaDescription.setError(getString(R.string.empty_description_error));
+            success = false;
+        }
+
+        if (imagesAdapter.getImageItemCount() == 0) {
+            Toast.makeText(this, R.string.no_picture_error, Toast.LENGTH_LONG).show();
             success = false;
         }
 

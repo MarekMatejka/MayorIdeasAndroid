@@ -45,4 +45,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_title_error">Title must not be empty!</string>
+    <string name="empty_description_error">Description must not be empty!</string>
+    <string name="no_picture_error">Every idea must have at least one picture.</string>
 </resources>
