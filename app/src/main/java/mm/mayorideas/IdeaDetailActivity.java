@@ -15,6 +15,8 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import java.util.List;
 
 import mm.mayorideas.api.CommentAPI;
+import mm.mayorideas.api.ImagesAPI;
+import mm.mayorideas.api.listeners.SimpleNumberListListener;
 import mm.mayorideas.api.listeners.SimpleNumberValueListener;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Comment;
@@ -38,9 +40,28 @@ public class IdeaDetailActivity extends AppCompatActivity
         mIdea = (IdeaGETGson) getIntent().getSerializableExtra(IDEA_ID_TAG);
 
         mSliderShow = (SliderLayout) findViewById(R.id.slider);
-        addImageToSlider(mSliderShow, "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
-        addImageToSlider(mSliderShow, "http://4.bp.blogspot.com/-zMD8rPGL3PU/VEP2Dis9tyI/AAAAAAABiIA/7cx90zLWVlw/s1600/TBBT%2Bheader%2B1.jpg");
-        addImageToSlider(mSliderShow, "http://cdn.traileraddict.com/content/20th-century-fox/martian2015-2.jpg");
+        ImagesAPI.getImageIdsForIdea(mIdea.getId(), new SimpleNumberListListener() {
+            @Override
+            public void onSuccess(List<Integer> values) {
+                //TODO: DELETE ONCE ALL IDEAS HAVE IMAGES
+                if (values.isEmpty()) {
+                    values.add(109);
+                }
+
+                if (values.size() == 1) {
+                    mSliderShow.stopAutoCycle();
+                }
+
+                for (Integer id : values) {
+                    addImageToSlider(mSliderShow, ImagesAPI.getImageUrl(id));
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                Log.e("Error", "getting image ids");
+            }
+        });
 
         mSliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mSliderShow.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);

@@ -6,14 +6,19 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.io.File;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.FileEntity;
+import mm.mayorideas.api.listeners.SimpleNumberListListener;
 import mm.mayorideas.api.listeners.SimpleNumberValueListener;
 
 public class ImagesAPI {
@@ -68,5 +73,35 @@ public class ImagesAPI {
 
     public static String getImageUrl(int imageID) {
         return ServerAPIHelper.getServer()+IMAGE+"get/"+imageID;
+    }
+
+    public static void getImageIdsForIdea(int ideaID, final SimpleNumberListListener listener) {
+        String url = ServerAPIHelper.getServer()+IMAGE+"/get/idea/"+ideaID;
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String response) {
+                if (response != null && response.length() > 0 && !response.equals("null")) {
+                    if(listener != null) {
+                        Gson gson = new Gson();
+                        Type type = new TypeToken<List<Integer>>() {}.getType();
+                        List<Integer> ids = gson.fromJson(response, type);
+                        listener.onSuccess(ids);
+                    }
+                } else {
+                    if (listener != null) {
+                        listener.onFailure();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (listener != null) {
+                    listener.onFailure();
+                }
+            }
+        });
     }
 }
