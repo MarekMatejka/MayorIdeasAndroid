@@ -32,12 +32,14 @@ public class IdeaDetailActivity extends AppCompatActivity
     private SliderLayout mSliderShow;
     private IdeaGETGson mIdea;
     private IdeaStatusBarHandler mIdeaStatusBarHandler;
+    private int mImagesCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_idea_detail);
 
+        mImagesCount = 0;
         mIdea = (IdeaGETGson) getIntent().getSerializableExtra(IDEA_ID_TAG);
 
         mSliderShow = (SliderLayout) findViewById(R.id.slider);
@@ -48,8 +50,8 @@ public class IdeaDetailActivity extends AppCompatActivity
                 if (values.isEmpty()) {
                     values.add(109);
                 }
-
-                if (values.size() == 1) {
+                mImagesCount = values.size();
+                if (mImagesCount == 1) {
                     mSliderShow.stopAutoCycle();
                 }
 
@@ -121,6 +123,10 @@ public class IdeaDetailActivity extends AppCompatActivity
                 Log.e("Error", "getting nummber of comments");
             }
         });
+
+        if (mImagesCount > 1) {
+            mSliderShow.startAutoCycle();
+        }
     }
 
     @Override
