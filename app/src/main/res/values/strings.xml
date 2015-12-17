@@ -48,4 +48,9 @@
     <string name="empty_title_error">Title must not be empty!</string>
     <string name="empty_description_error">Description must not be empty!</string>
     <string name="no_picture_error">Every idea must have at least one picture.</string>
+    <string name="latest_comments">Latest comments</string>
+    <string name="no_comments_at_present">There are no comments at the moment.</string>
+    <string name="add_first_comment">Add the first one!</string>
+    <string name="see_all_comments">See all comments</string>
+    <string name="loading">Loading data</string>
 </resources>

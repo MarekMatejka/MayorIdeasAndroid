@@ -46,6 +46,20 @@
         android:layout_above="@id/add_comment_section"
         android:background="@android:color/darker_gray" />
 
+    <include layout="@layout/ui_element_loading"
+        android:id="@+id/loading_comments_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/comment_section_separator"
+        android:layout_alignParentTop="true"/>
+
+    <include layout="@layout/ui_element_no_comments"
+        android:id="@+id/no_comments_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/comment_section_separator"
+        android:layout_alignParentTop="true"/>
+
     <ListView
         android:id="@+id/comments_list"
         android:layout_width="match_parent"

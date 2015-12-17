@@ -36,7 +36,14 @@ public class CommentsActivity extends AppCompatActivity implements
         adapter = new CommentsAdapter(this, new LinkedList<Comment>());
         listView.setAdapter(adapter);
 
+        showOrHideComments(false, false);
         CommentAPI.getAllCommentsForIdea(mIdea.getId(), this);
+    }
+
+    private void showOrHideComments(boolean show, boolean hasComments) {
+        findViewById(R.id.loading_comments_list).setVisibility(show ? View.GONE : View.VISIBLE);
+        findViewById(R.id.comments_list).setVisibility((show && hasComments) ? View.VISIBLE : View.GONE);
+        findViewById(R.id.no_comments_list).setVisibility((show && !hasComments) ? View.VISIBLE : View.GONE);
     }
 
     public void addComment(View v) {
@@ -60,6 +67,7 @@ public class CommentsActivity extends AppCompatActivity implements
     @Override
     public void onSuccess(List<Comment> comments) {
         adapter.addAll(comments);
+        showOrHideComments(true, comments.size() > 0);
     }
 
     @Override

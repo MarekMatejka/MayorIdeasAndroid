@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.Indicators.PagerIndicator;
@@ -106,6 +107,8 @@ public class IdeaDetailActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        findViewById(R.id.loading_comments).setVisibility(View.VISIBLE);
+        findViewById(R.id.last_2_comments).setVisibility(View.GONE);
         CommentAPI.getLast2CommentsForIdea(mIdea.getId(), this);
         CommentAPI.getNumberOfCommentsForIdea(mIdea.getId(), new SimpleNumberValueListener() {
             @Override
@@ -122,6 +125,9 @@ public class IdeaDetailActivity extends AppCompatActivity
 
     @Override
     public void onSuccess(List<Comment> comments) {
+        findViewById(R.id.loading_comments).setVisibility(View.GONE);
+        findViewById(R.id.last_2_comments).setVisibility(View.VISIBLE);
+
         if (comments.size() >= 1) {
             setCommentToView(comments.get(0), findViewById(R.id.comment1));
         } else {
@@ -132,6 +138,15 @@ public class IdeaDetailActivity extends AppCompatActivity
             setCommentToView(comments.get(1), findViewById(R.id.comment2));
         } else {
             findViewById(R.id.comment2).setVisibility(View.GONE);
+        }
+
+        Button commentsButton = (Button)findViewById(R.id.see_all_comments);
+        if (comments.size() == 0) {
+            findViewById(R.id.no_comments).setVisibility(View.VISIBLE);
+            commentsButton.setText(R.string.add_first_comment);
+        } else {
+            findViewById(R.id.no_comments).setVisibility(View.GONE);
+            commentsButton.setText(R.string.see_all_comments);
         }
     }
 

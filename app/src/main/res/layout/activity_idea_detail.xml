@@ -61,21 +61,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:text="Latest comments"
+                android:text="@string/latest_comments"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
 
-            <include layout="@layout/adapter_item_comment" android:id="@+id/comment1"/>
-            <include layout="@layout/ui_element_thin_list_separator"/>
-            <include layout="@layout/adapter_item_comment" android:id="@+id/comment2"/>
+            <include layout="@layout/ui_element_loading" android:id="@+id/loading_comments"/>
+
+            <LinearLayout
+                android:id="@+id/last_2_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/adapter_item_comment" android:id="@+id/comment1"/>
+                <include layout="@layout/ui_element_thin_list_separator"/>
+                <include layout="@layout/adapter_item_comment" android:id="@+id/comment2"/>
+                <include
+                    layout="@layout/ui_element_no_comments"
+                    android:id="@+id/no_comments"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/see_all_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="See all comments"
+                android:text="@string/see_all_comments"
                 android:textColor="@color/comment_action_color_selector"
+                android:textSize="15sp"
                 android:gravity="center"
                 android:background="@android:color/transparent"
                 android:onClick="openAllComments"/>

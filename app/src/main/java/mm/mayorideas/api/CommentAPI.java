@@ -61,7 +61,6 @@ public class CommentAPI {
             final GetCommentsForIdeaListener listener) {
         String url = ServerAPIHelper.getServer()+COMMENT+"/idea/"+ideaID;
 
-
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new TextHttpResponseHandler() {
             @Override
