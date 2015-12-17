@@ -64,12 +64,10 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
         }
 
         public void bind(Activity context, IdeaGETGson idea) {
-            String imageUrl = "http://themestudio.net/wp-content/uploads/2015/06/modern-psd-to-html-online-generator-idea.jpg";
-
             name.setText(idea.getTitle());
-            description.setText(context.getString(R.string.lorem_ipsum));
+            description.setText(idea.getDescription());
             Picasso.with(context)
-                    .load(imageUrl)
+                    .load(idea.getCoverImageUrl())
                     .placeholder(R.drawable.ic_launcher)
                     .error(R.drawable.ic_drawer)
                     .fit()

@@ -65,4 +65,8 @@ public class ImagesAPI {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
+    public static String getImageUrl(int imageID) {
+        return ServerAPIHelper.getServer()+IMAGE+"get/"+imageID;
+    }
 }
