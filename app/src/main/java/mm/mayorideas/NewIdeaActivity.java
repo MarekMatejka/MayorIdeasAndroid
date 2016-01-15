@@ -108,6 +108,7 @@ public class NewIdeaActivity extends AppCompatActivity {
                             ideaTitle.getText().toString(),
                             ideaDescription.getText().toString(),
                             ideaCategory.getSelectedItemPosition() + 1,
+                            mapsHelper.getScreenCenterPosition(),
                             addNewIdeaListener);
                 }
             }
@@ -131,6 +132,7 @@ public class NewIdeaActivity extends AppCompatActivity {
         } else {
             mapsHelper.setUpMapIfNeeded(this, R.id.map);
         }
+        mapsHelper.setAnimateCameraOnLocationChange(false);
     }
 
     @Override

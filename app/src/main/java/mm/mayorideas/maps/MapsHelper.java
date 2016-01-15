@@ -124,8 +124,6 @@ public class MapsHelper implements
         if (mMap != null && location != null) {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             if (animateCameraOnLocationChange) {
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(latLng).title("Ahoj"));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
             } else if (moveCameraOnInitialLocationChange) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
@@ -160,6 +158,10 @@ public class MapsHelper implements
         if (mClusterManager != null) {
             mClusterManager.addItem(new ClusterMarkerItem(lat, lang, title));
         }
+    }
+
+    public LatLng getScreenCenterPosition() {
+        return mMap.getCameraPosition().target;
     }
 
     private final class ClusterMarkerItem implements ClusterItem {

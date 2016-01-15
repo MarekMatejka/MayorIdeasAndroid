@@ -1,26 +1,31 @@
 package mm.mayorideas.gson;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class NewIdeaPOSTGson {
 
     private final String title;
     private final String description;
     private final int categoryID;
-    private final String location;
+    private final double latitude;
+    private final double longitude;
     private final int authorID;
 
-    public NewIdeaPOSTGson(String title, String description, int categoryID, String location, int authorID) {
+    public NewIdeaPOSTGson(String title, String description, int categoryID, LatLng position, int authorID) {
         this.title = title;
         this.description = description;
         this.categoryID = categoryID;
-        this.location = location;
+        this.latitude = position.latitude;
+        this.longitude = position.longitude;
         this.authorID = authorID;
     }
 
-    public NewIdeaPOSTGson(String title, String description, int categoryID) {
+    public NewIdeaPOSTGson(String title, String description, int categoryID, LatLng position) {
         this.title = title;
         this.description = description;
         this.categoryID = categoryID;
-        this.location = "current location";
+        this.latitude = position.latitude;
+        this.longitude = position.longitude;
         this.authorID = 1;
     }
 }

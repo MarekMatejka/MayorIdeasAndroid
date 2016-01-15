@@ -2,6 +2,7 @@ package mm.mayorideas.api;
 
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
@@ -30,10 +31,13 @@ public class IdeaAPI {
             String title,
             String description,
             int categoryID,
+            LatLng position,
             final AddNewIdeaListener listener) {
+        Log.e("position", position.toString());
+
         String url = ServerAPIHelper.getServer()+IDEA+"add";
 
-        NewIdeaPOSTGson postGson = new NewIdeaPOSTGson(title, description, categoryID);
+        NewIdeaPOSTGson postGson = new NewIdeaPOSTGson(title, description, categoryID, position);
 
         StringEntity entity = null;
         try {
