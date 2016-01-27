@@ -29,6 +29,8 @@ public class MapsHelper implements
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private ClusterManager<ClusterMarkerItem> mClusterManager;
+    private LocationListener mLocationListener = null;
+
     private boolean animateCameraOnLocationChange;
     private boolean moveCameraOnInitialLocationChange;
 
@@ -130,7 +132,14 @@ public class MapsHelper implements
                 moveCameraOnInitialLocationChange = false;
             }
 
+            if (mLocationListener != null) {
+                mLocationListener.locationUpdate(latLng);
+            }
         }
+    }
+
+    public void setLocationListener(LocationListener mLocationListener) {
+        this.mLocationListener = mLocationListener;
     }
 
     public void setAnimateCameraOnLocationChange(boolean animateCameraOnLocationChange) {
@@ -162,6 +171,10 @@ public class MapsHelper implements
 
     public LatLng getScreenCenterPosition() {
         return mMap.getCameraPosition().target;
+    }
+
+    public void clearAllMarkers() {
+        mMap.clear();
     }
 
     private final class ClusterMarkerItem implements ClusterItem {
@@ -198,5 +211,9 @@ public class MapsHelper implements
             markerOptions.title(item.getTitle());
             super.onBeforeClusterItemRendered(item, markerOptions);
         }
+    }
+
+    public interface LocationListener {
+        void locationUpdate(LatLng newPosition);
     }
 }
