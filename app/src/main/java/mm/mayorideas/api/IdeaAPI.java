@@ -61,12 +61,12 @@ public class IdeaAPI {
         });
     }
 
-    public interface Get10IdeasListener {
+    public interface GetIdeasListener {
         void onSuccess(List<IdeaGETGson> ideas);
         void onFailure();
     }
 
-    public static void get10Ideas(final Get10IdeasListener listener) {
+    public static void getTop10Ideas(final GetIdeasListener listener) {
         String url = ServerAPIHelper.getServer()+IDEA+"/top10";
 
         url += "?user_id="+User.getUserId();
@@ -75,20 +75,7 @@ public class IdeaAPI {
         client.get(url, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
-                Log.e("response", response);
-                if (response != null && response.length() > 0) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<IdeaGETGson>>() {}.getType();
-                    List<IdeaGETGson> ideas = gson.fromJson(response, type);
-
-                    if(listener != null) {
-                        listener.onSuccess(ideas);
-                    }
-                } else {
-                    if (listener != null) {
-                        listener.onFailure();
-                    }
-                }
+                handleIdeaGETResponse(response, listener);
             }
 
             @Override
@@ -103,7 +90,7 @@ public class IdeaAPI {
     public static void get10ClosestIdeas(
             double latitude,
             double longitude,
-            final Get10IdeasListener listener) {
+            final GetIdeasListener listener) {
         String url = ServerAPIHelper.getServer()+IDEA+"/closest";
 
         url += "?user_id="+User.getUserId();
@@ -114,20 +101,7 @@ public class IdeaAPI {
         client.get(url, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
-                Log.e("response closest", response);
-                if (response != null && response.length() > 0) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<IdeaGETGson>>() {}.getType();
-                    List<IdeaGETGson> ideas = gson.fromJson(response, type);
-
-                    if(listener != null) {
-                        listener.onSuccess(ideas);
-                    }
-                } else {
-                    if (listener != null) {
-                        listener.onFailure();
-                    }
-                }
+                handleIdeaGETResponse(response, listener);
             }
 
             @Override
@@ -137,5 +111,63 @@ public class IdeaAPI {
                 }
             }
         });
+    }
+
+    public static void getMyIdeas(final GetIdeasListener listener) {
+        String url = ServerAPIHelper.getServer()+IDEA+"/my";
+
+        url += "?user_id="+User.getUserId();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String response) {
+                handleIdeaGETResponse(response, listener);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (listener != null) {
+                    listener.onFailure();
+                }
+            }
+        });
+    }
+
+    public static void getFollowingIdeas(final GetIdeasListener listener) {
+        String url = ServerAPIHelper.getServer()+IDEA+"/following";
+
+        url += "?user_id="+User.getUserId();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String response) {
+                handleIdeaGETResponse(response, listener);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (listener != null) {
+                    listener.onFailure();
+                }
+            }
+        });
+    }
+
+    private static void handleIdeaGETResponse(String response, GetIdeasListener listener) {
+        if (response != null && response.length() > 0) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<IdeaGETGson>>() {}.getType();
+            List<IdeaGETGson> ideas = gson.fromJson(response, type);
+
+            if(listener != null) {
+                listener.onSuccess(ideas);
+            }
+        } else {
+            if (listener != null) {
+                listener.onFailure();
+            }
+        }
     }
 }

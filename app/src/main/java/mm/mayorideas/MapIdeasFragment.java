@@ -2,7 +2,6 @@ package mm.mayorideas;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import mm.mayorideas.api.IdeaAPI;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.maps.MapsHelper;
 
-public class MapIdeasFragment extends Fragment implements MapsHelper.LocationListener, IdeaAPI.Get10IdeasListener {
+public class MapIdeasFragment extends Fragment implements MapsHelper.LocationListener, IdeaAPI.GetIdeasListener {
 
     private MapsHelper mapsHelper;
     private LatLng lastLocation = null;
@@ -70,7 +69,6 @@ public class MapIdeasFragment extends Fragment implements MapsHelper.LocationLis
 
     @Override
     public void locationUpdate(LatLng newPosition) {
-        Log.e("map", "location update");
         if (hasMovedSignigicantly(newPosition)) {
             IdeaAPI.get10ClosestIdeas(newPosition.latitude, newPosition.longitude, this);
             lastLocation = newPosition;
@@ -94,7 +92,6 @@ public class MapIdeasFragment extends Fragment implements MapsHelper.LocationLis
 
     @Override
     public void onSuccess(List<IdeaGETGson> ideas) {
-        Log.e("map", "on get ideas success");
         mapsHelper.clearAllMarkers();
         for (IdeaGETGson idea : ideas) {
             mapsHelper.addMarker(idea.getLatitude(), idea.getLongitude(), idea.getTitle());
