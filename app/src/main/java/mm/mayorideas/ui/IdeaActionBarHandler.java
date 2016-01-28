@@ -66,6 +66,9 @@ public class IdeaActionBarHandler {
         if(mIdea.isUserFollowing()) {
             mFollowAction.setSelected(true);
             mFollowAction.setText("{faw-heart}");
+        } else {
+            mFollowAction.setSelected(false);
+            mFollowAction.setText("{faw-heart-o}");
         }
     }
 
