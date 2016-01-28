@@ -93,7 +93,7 @@ public class OverviewActivity extends AppCompatActivity {
 
     private Fragment getFragment(int position) {
         switch (position) {
-            case 0: return Top10IdeasListFragment.newInstance();
+            case 0: return TrendingIdeasListFragment.newInstance();
             case 1: return Top10IdeasListFragment.newInstance();
             case 2: return MapIdeasFragment.newInstance();
             case 3: return MyIdeasListFragment.newInstance();
