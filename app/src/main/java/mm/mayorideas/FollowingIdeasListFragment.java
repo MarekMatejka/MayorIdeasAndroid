@@ -1,5 +1,7 @@
 package mm.mayorideas;
 
+import android.os.Bundle;
+
 import mm.mayorideas.api.IdeaAPI;
 
 public class FollowingIdeasListFragment extends IdeaListFragment {
@@ -7,6 +9,9 @@ public class FollowingIdeasListFragment extends IdeaListFragment {
     public static FollowingIdeasListFragment newInstance() {
         return new FollowingIdeasListFragment();
     }
+
+    @Override
+    protected void handleArguments(Bundle arguments) {}
 
     @Override
     protected void getIdeasToDisplay(IdeaAPI.GetIdeasListener ideasListener) {

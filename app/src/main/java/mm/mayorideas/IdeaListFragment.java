@@ -27,17 +27,17 @@ public abstract class IdeaListFragment extends Fragment implements IdeaAPI.GetId
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        handleArguments(getArguments());
         getIdeasToDisplay(this);
     }
 
+    protected abstract void handleArguments(Bundle arguments);
     protected abstract void getIdeasToDisplay(IdeaAPI.GetIdeasListener ideasListener);
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Top 10 ideas");
-
         View view = inflater.inflate(R.layout.fragment_idea, container, false);
 
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.idea_card_list);

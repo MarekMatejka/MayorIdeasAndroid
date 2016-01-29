@@ -176,6 +176,28 @@ public class IdeaAPI {
         });
     }
 
+    public static void getIdeasByCategory(final int categoryID, final GetIdeasListener listener) {
+        String url = ServerAPIHelper.getServer()+IDEA+"/category";
+
+        url += "/"+categoryID;
+        url += "?user_id="+User.getUserId();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String response) {
+                handleIdeaGETResponse(response, listener);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                if (listener != null) {
+                    listener.onFailure();
+                }
+            }
+        });
+    }
+
     private static void handleIdeaGETResponse(String response, GetIdeasListener listener) {
         if (response != null && response.length() > 0) {
             Gson gson = new Gson();

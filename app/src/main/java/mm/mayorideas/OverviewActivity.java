@@ -2,6 +2,7 @@ package mm.mayorideas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,8 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-public class OverviewActivity extends AppCompatActivity {
+public class OverviewActivity extends AppCompatActivity
+        implements CategoriesListFragment.CategoryClickListener {
 
     private Drawer mResult;
     private FragmentManager mFragmentManager;
@@ -84,11 +86,15 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     private void switchFragments(int position) {
+        switchFragments(getFragment(position), getFragmentTitle(position));
+    }
+
+    private void switchFragments(Fragment fragment, int title) {
         mFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, getFragment(position))
+                .replace(R.id.container, fragment)
                 .commit();
-        getSupportActionBar().setTitle(getFragmentTitle(position));
+        getSupportActionBar().setTitle(title);
     }
 
     private Fragment getFragment(int position) {
@@ -98,8 +104,17 @@ public class OverviewActivity extends AppCompatActivity {
             case 2: return MapIdeasFragment.newInstance();
             case 3: return MyIdeasListFragment.newInstance();
             case 4: return FollowingIdeasListFragment.newInstance();
+            case 5: return setupCategoriesFragment();
+            // case 6: Divider Item = no action
             default: return Top10IdeasListFragment.newInstance();
         }
+    }
+
+    @NonNull
+    private CategoriesListFragment setupCategoriesFragment() {
+        CategoriesListFragment categoriesListFragment = CategoriesListFragment.newInstance();
+        categoriesListFragment.setCategoriesListener(this);
+        return categoriesListFragment;
     }
 
     private int getFragmentTitle(int position) {
@@ -155,5 +170,12 @@ public class OverviewActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onCategoryClicked(int categoryID, int categoryName) {
+        switchFragments(
+                IdeasByCategoryListFragment.newInstance(categoryID),
+                categoryName);
     }
 }

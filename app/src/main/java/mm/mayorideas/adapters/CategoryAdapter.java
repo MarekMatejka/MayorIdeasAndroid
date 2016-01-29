@@ -22,6 +22,11 @@ public class CategoryAdapter extends ArrayAdapter<IdeaCategory> {
         this.mContext = context;
     }
 
+    public CategoryAdapter(Context context, int layout) {
+        super(context, layout, categories);
+        this.mContext = context;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         return createView(position, convertView, parent);

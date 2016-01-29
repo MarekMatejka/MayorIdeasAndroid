@@ -49,4 +49,8 @@ public enum IdeaCategory {
     public boolean equals(IdeaCategory category) {
         return this.id == category.id;
     }
+
+    public int getID() {
+        return this.id;
+    }
 }
