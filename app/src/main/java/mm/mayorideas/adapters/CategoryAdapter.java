@@ -16,15 +16,18 @@ public class CategoryAdapter extends ArrayAdapter<IdeaCategory> {
 
     private final Context mContext;
     private final static IdeaCategory[] categories = IdeaCategory.values();
+    private final int layout;
 
     public CategoryAdapter(Context context) {
         super(context, R.layout.adapter_item_category, categories);
         this.mContext = context;
+        this.layout = R.layout.adapter_item_category;
     }
 
     public CategoryAdapter(Context context, int layout) {
         super(context, layout, categories);
         this.mContext = context;
+        this.layout = layout;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class CategoryAdapter extends ArrayAdapter<IdeaCategory> {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.adapter_item_category, parent, false);
+            convertView = inflater.inflate(this.layout, parent, false);
 
             holder = new Holder();
             holder.categoryIcon = (IconicsImageView) convertView.findViewById(R.id.category_icon);

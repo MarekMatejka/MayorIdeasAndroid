@@ -32,7 +32,7 @@ public class CategoriesListFragment extends Fragment implements AdapterView.OnIt
         View view = inflater.inflate(R.layout.categories_list, container, false);
 
         ListView listView = (ListView)view.findViewById(R.id.categories_list);
-        mAdapter = new CategoryAdapter(getActivity(), R.layout.adapter_item_category);
+        mAdapter = new CategoryAdapter(getActivity(), R.layout.adapter_item_category_fragment);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(this);
 
