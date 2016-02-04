@@ -13,7 +13,11 @@ import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import mm.mayorideas.api.CommentAPI;
 import mm.mayorideas.api.ImagesAPI;
@@ -43,6 +47,37 @@ public class IdeaDetailActivity extends AppCompatActivity
         mIdea = (IdeaGETGson) getIntent().getSerializableExtra(IDEA_ID_TAG);
 
         mSliderShow = (SliderLayout) findViewById(R.id.slider);
+        addAllImagesToSlider();
+        mSliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mSliderShow.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+        mSliderShow.setPresetTransformer(SliderLayout.Transformer.Tablet);
+        mSliderShow.setSliderTransformDuration(500, new LinearInterpolator());
+        mSliderShow.setDuration(5000);
+        mSliderShow.startAutoCycle();
+
+        mIdeaStatusBarHandler = new IdeaStatusBarHandler(this, mIdea);
+        IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this, mIdea, mIdeaStatusBarHandler);
+
+        initializeIdea();
+    }
+
+    private void initializeIdea() {
+        TextView ideaTitle = (TextView)findViewById(R.id.idea_title);
+        ideaTitle.setText(mIdea.getTitle());
+
+        TextView authorAndDate = (TextView)findViewById(R.id.idea_author_and_time);
+        authorAndDate.setText(formatAuthorAndDate(mIdea.getAuthorName(), mIdea.getDateCreated()));
+
+        TextView ideaDescription = (TextView)findViewById(R.id.idea_description);
+        ideaDescription.setText(mIdea.getDescription());
+    }
+
+    private String formatAuthorAndDate(String authorName, Timestamp dateCreated) {
+        DateFormat dateFormat = new SimpleDateFormat("EEE dd.MM.yyyy", Locale.UK);
+        return "by "+authorName+", "+dateFormat.format(dateCreated);
+    }
+
+    private void addAllImagesToSlider() {
         ImagesAPI.getImageIdsForIdea(mIdea.getId(), new SimpleNumberListListener() {
             @Override
             public void onSuccess(List<Integer> values) {
@@ -65,16 +100,6 @@ public class IdeaDetailActivity extends AppCompatActivity
                 Log.e("Error", "getting image ids");
             }
         });
-
-        mSliderShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mSliderShow.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
-        mSliderShow.setPresetTransformer(SliderLayout.Transformer.Tablet);
-        mSliderShow.setSliderTransformDuration(500, new LinearInterpolator());
-        mSliderShow.setDuration(5000);
-        mSliderShow.startAutoCycle();
-
-        mIdeaStatusBarHandler = new IdeaStatusBarHandler(this, mIdea);
-        IdeaActionBarHandler ideaActionBarHandler = new IdeaActionBarHandler(this, mIdea, mIdeaStatusBarHandler);
     }
 
     private void setCommentToView(Comment comment, View v) {
@@ -130,7 +155,7 @@ public class IdeaDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSuccess(List<Comment> comments) {
+    public void onGetCommentsSuccess(List<Comment> comments) {
         findViewById(R.id.loading_comments).setVisibility(View.GONE);
         findViewById(R.id.last_2_comments).setVisibility(View.VISIBLE);
 
@@ -157,7 +182,7 @@ public class IdeaDetailActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFailure() {
+    public void onGetCommentsFailure() {
         Log.e("Error", "downloading comments");
     }
 }

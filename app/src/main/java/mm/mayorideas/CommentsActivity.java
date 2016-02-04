@@ -65,13 +65,13 @@ public class CommentsActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onSuccess(List<Comment> comments) {
+    public void onGetCommentsSuccess(List<Comment> comments) {
         adapter.addAll(comments);
         showOrHideComments(true, comments.size() > 0);
     }
 
     @Override
-    public void onFailure() {
+    public void onGetCommentsFailure() {
         Log.e("Error", "downloading all comments");
     }
 }

@@ -40,20 +40,20 @@ public class CommentAPI {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e("error", "" + responseString);
 //                if (listener != null)
-//                    listener.onFailure();
+//                    listener.onGetCommentsFailure();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
 //                if (listener != null && !responseString.equals("-1"))
-//                    listener.onSuccess(Integer.parseInt(responseString));
+//                    listener.onGetCommentsSuccess(Integer.parseInt(responseString));
             }
         });
     }
 
     public interface GetCommentsForIdeaListener {
-        void onSuccess(List<Comment> comments);
-        void onFailure();
+        void onGetCommentsSuccess(List<Comment> comments);
+        void onGetCommentsFailure();
     }
 
     public static void getAllCommentsForIdea(
@@ -72,11 +72,11 @@ public class CommentAPI {
                     List<Comment> comments = gson.fromJson(response, type);
 
                     if(listener != null) {
-                        listener.onSuccess(comments);
+                        listener.onGetCommentsSuccess(comments);
                     }
                 } else {
                     if (listener != null) {
-                        listener.onFailure();
+                        listener.onGetCommentsFailure();
                     }
                 }
             }
@@ -84,7 +84,7 @@ public class CommentAPI {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 if (listener != null) {
-                    listener.onFailure();
+                    listener.onGetCommentsFailure();
                 }
             }
         });
@@ -106,11 +106,11 @@ public class CommentAPI {
                     List<Comment> comments = gson.fromJson(response, type);
 
                     if(listener != null) {
-                        listener.onSuccess(comments);
+                        listener.onGetCommentsSuccess(comments);
                     }
                 } else {
                     if (listener != null) {
-                        listener.onFailure();
+                        listener.onGetCommentsFailure();
                     }
                 }
             }
@@ -118,7 +118,7 @@ public class CommentAPI {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 if (listener != null) {
-                    listener.onFailure();
+                    listener.onGetCommentsFailure();
                 }
             }
         });
