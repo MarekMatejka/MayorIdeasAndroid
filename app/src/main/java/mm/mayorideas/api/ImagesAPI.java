@@ -49,7 +49,7 @@ public class ImagesAPI {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                if (responseString != null && !responseString.equals("-1")) {
+                if (responseString != null && !responseString.equals("-1") && !responseString.isEmpty()) {
                     if (listener != null) {
                         listener.onSuccess(Integer.parseInt(responseString));
                     }
