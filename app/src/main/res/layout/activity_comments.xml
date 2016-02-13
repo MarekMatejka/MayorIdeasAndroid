@@ -22,7 +22,8 @@
             android:layout_weight="4"
             android:layout_gravity="center_horizontal"
             android:theme="@style/CommentEditText"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:textColor="@android:color/black"/>
 
         <com.mikepenz.iconics.view.IconicsButton
             android:id="@+id/add_comment"

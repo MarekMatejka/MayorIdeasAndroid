@@ -26,7 +26,8 @@
                 android:id="@+id/idea_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/idea_title" />
+                android:hint="@string/idea_title"
+                android:textColor="@android:color/black"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
         <android.support.v7.widget.RecyclerView
@@ -57,7 +58,8 @@
                 android:id="@+id/idea_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/idea_description" />
+                android:hint="@string/idea_description"
+                android:textColor="@android:color/black"/>
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
         <RelativeLayout
