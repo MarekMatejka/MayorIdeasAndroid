@@ -161,12 +161,14 @@ public class IdeaDetailActivity extends AppCompatActivity
 
         if (comments.size() >= 1) {
             setCommentToView(comments.get(0), findViewById(R.id.comment1));
+            findViewById(R.id.comment1).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.comment1).setVisibility(View.GONE);
         }
 
         if (comments.size() == 2) {
             setCommentToView(comments.get(1), findViewById(R.id.comment2));
+            findViewById(R.id.comment2).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.comment2).setVisibility(View.GONE);
         }

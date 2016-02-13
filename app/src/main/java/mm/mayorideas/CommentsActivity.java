@@ -61,6 +61,7 @@ public class CommentsActivity extends AppCompatActivity implements
                             new Timestamp(System.currentTimeMillis())),
                     0);
             commentBox.setText("");
+            showOrHideComments(true, true);
         }
     }
 
