@@ -1,6 +1,7 @@
 package mm.mayorideas.utils;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.Holder;
 import com.orhanobut.dialogplus.ViewHolder;
 
+import mm.mayorideas.NewUserActivity;
 import mm.mayorideas.R;
 import mm.mayorideas.api.LoginAPI;
 import mm.mayorideas.gson.LoginDetailsResponse;
@@ -21,7 +23,7 @@ public class LoginUtil {
 
     private enum TextType {INFO, WARNING}
 
-    public static void showLoginDialog(Context context, int text) {
+    public static void showLoginDialog(Activity context, int text) {
         Holder holder = new ViewHolder(R.layout.dialog_login);
         DialogPlus dialog = DialogPlus.newDialog(context)
                 .setContentHolder(holder)
@@ -36,7 +38,7 @@ public class LoginUtil {
         dialog.show();
     }
 
-    private static void setText(Context context, View view, TextType textType, int textResource) {
+    private static void setText(Activity context, View view, TextType textType, int textResource) {
         TextView text = (TextView)view.findViewById(R.id.login_dialog_text);
         text.setText(textResource);
         if (textType == TextType.INFO) {
@@ -47,7 +49,7 @@ public class LoginUtil {
     }
 
     private static void setupButtons(
-            final Context context,
+            final Activity context,
             final View view,
             final DialogPlus dialog) {
         Button login = (Button)view.findViewById(R.id.login_dialog_login);
@@ -81,8 +83,9 @@ public class LoginUtil {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("signup", "signup");
-                //open signup Activity
+                Intent intent = new Intent(context, NewUserActivity.class);
+                context.startActivity(intent);
+                context.finish();
             }
         });
     }

@@ -22,8 +22,12 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import mm.mayorideas.objects.User;
+
 public class OverviewActivity extends AppCompatActivity
         implements CategoriesListFragment.CategoryClickListener {
+
+    private static User lastUser = User.getCurrentUser();
 
     private Drawer mResult;
     private FragmentManager mFragmentManager;
@@ -36,17 +40,32 @@ public class OverviewActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        createDrawer(toolbar);
+        createDrawer(toolbar, lastUser);
 
         mFragmentManager = getSupportFragmentManager();
         switchFragments(0);
     }
 
-    private void createDrawer(Toolbar toolbar) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (lastUser.getID() != User.getCurrentUser().getID()) {
+            lastUser = User.getCurrentUser();
+            createDrawer(lastUser);
+        }
+    }
+
+    private void createDrawer(User user) {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        createDrawer(toolbar, user);
+    }
+
+    private void createDrawer(Toolbar toolbar, User user) {
         mResult = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withAccountHeader(createAccountHeader())
+                .withAccountHeader(createAccountHeader(user))
                 .addDrawerItems(
                         createDrawerItem(GoogleMaterial.Icon.gmd_fire, R.string.hot_ideas, R.color.flame),
                         createDrawerItem(FontAwesome.Icon.faw_star, R.string.top_ideas, R.color.yellow),
@@ -72,14 +91,14 @@ public class OverviewActivity extends AppCompatActivity
         mResult.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
     }
 
-    private AccountHeader createAccountHeader() {
+    private AccountHeader createAccountHeader(User user) {
        return new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.color.mayorideas_blue)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withName("Marek Matejka")
-                                .withEmail("marek@matejka.com")
+                                .withName(user.getName())
+                                .withEmail(user.getUsername())
                                 .withIcon(R.drawable.ic_launcher)
                 )
                .withSelectionListEnabledForSingleProfile(false)

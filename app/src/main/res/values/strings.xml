@@ -64,4 +64,14 @@
     <string name="login_necessary_voting">You cannot vote on idea unless you are logged in.</string>
     <string name="login_necessary_following">You cannot start following an idea unless you are logged in.</string>
     <string name="incorrect_login">Incorrect username/password combination. Please check your login details.</string>
+    <string name="register_name">Your full name</string>
+    <string name="register_password_check">Your password again</string>
+    <string name="register_button_text">Register</string>
+    <string name="registering">Registering</string>
+    <string name="username_empty_error">Username must not be empty!</string>
+    <string name="name_empty_error">Name must not be empty.</string>
+    <string name="password_empty_error">Password must not be empty.</string>
+    <string name="passwords_not_matching">Passwords do not match.</string>
+    <string name="password_too_short">Password must be at least 6 characters long.</string>
+    <string name="new_user_activity_title">Register new user</string>
 </resources>

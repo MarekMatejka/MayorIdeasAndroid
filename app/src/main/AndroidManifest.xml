@@ -36,6 +36,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="mm.mayorideas.OverviewActivity" />
         </activity>
+        <activity
+            android:name=".NewUserActivity"
+            android:label="@string/new_user_activity_title"
+            android:parentActivityName=".OverviewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mm.mayorideas.OverviewActivity" />
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"

@@ -1,7 +1,6 @@
 package mm.mayorideas.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -26,7 +25,7 @@ public class IdeaActionBarHandler {
 
     @Nullable private final IdeaStatusBarHandler mStatusBarHandler;
 
-    private final Context context;
+    private final Activity context;
     private IdeaGETGson mIdea;
 
     public IdeaActionBarHandler(Activity activity, IdeaGETGson idea, @Nullable IdeaStatusBarHandler statusBarHandler) {
