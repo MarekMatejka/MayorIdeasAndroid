@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import mm.mayorideas.api.ImagesAPI;
+import mm.mayorideas.objects.IdeaState;
 
 public class IdeaGETGson implements Serializable {
 
@@ -23,6 +24,7 @@ public class IdeaGETGson implements Serializable {
     private final int userVote;
     private final boolean isUserFollowing;
     private final int coverImageID;
+    private final IdeaState ideaState;
 
     public IdeaGETGson(
             int id,
@@ -40,7 +42,8 @@ public class IdeaGETGson implements Serializable {
             int numOfComments,
             int userVote,
             boolean isUserFollowing,
-            int coverImageID) {
+            int coverImageID,
+            IdeaState ideaState) {
         this.id = id;
         this.title = title;
         this.categoryID = categoryID;
@@ -57,6 +60,7 @@ public class IdeaGETGson implements Serializable {
         this.userVote = userVote;
         this.isUserFollowing = isUserFollowing;
         this.coverImageID = coverImageID;
+        this.ideaState = ideaState;
     }
 
     public int getId() {
@@ -125,5 +129,9 @@ public class IdeaGETGson implements Serializable {
 
     public String getCoverImageUrl() {
         return ImagesAPI.getImageUrl(coverImageID);
+    }
+
+    public IdeaState getIdeaState() {
+        return ideaState;
     }
 }

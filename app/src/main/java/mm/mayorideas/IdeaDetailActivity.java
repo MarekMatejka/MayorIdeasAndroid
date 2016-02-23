@@ -70,6 +70,9 @@ public class IdeaDetailActivity extends AppCompatActivity
 
         TextView ideaDescription = (TextView)findViewById(R.id.idea_description);
         ideaDescription.setText(mIdea.getDescription());
+
+        View ideaState = findViewById(R.id.idea_detail_idea_state);
+        ideaState.setBackgroundResource(mIdea.getIdeaState().getColor());
     }
 
     private String formatAuthorAndDate(String authorName, Timestamp dateCreated) {

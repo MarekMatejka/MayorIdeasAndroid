@@ -15,6 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"/>
 
+        <View
+            android:id="@+id/idea_detail_idea_state"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/idea_state_indicator_height"/>
+
         <include layout="@layout/ui_element_idea_status_bar" />
         <include layout="@layout/ui_element_idea_actions_bar"/>
 

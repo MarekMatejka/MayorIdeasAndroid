@@ -60,6 +60,12 @@
 
                 </RelativeLayout>
 
+                <View
+                    android:id="@+id/idea_card_idea_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/idea_state_indicator_height"
+                    android:background="@android:color/transparent"/>
+
                 <TextView
                     android:id="@+id/idea_card_description"
                     android:layout_width="match_parent"

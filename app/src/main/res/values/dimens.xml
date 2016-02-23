@@ -10,4 +10,5 @@
     <dimen name="idea_image_size">200dp</dimen>
     <dimen name="map_height_new_idea">200dp</dimen>
     <dimen name="images_new_idea_horizontal_spacing">7dp</dimen>
+    <dimen name="idea_state_indicator_height">5dp</dimen>
 </resources>

@@ -50,6 +50,7 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
         private TextView name;
         private ImageView image;
         private TextView description;
+        private View ideaState;
         View ideaCardBody;
 
         public ViewHolder(View v) {
@@ -59,6 +60,7 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
             name = (TextView) v.findViewById(R.id.idea_card_title);
             image = (ImageView) v.findViewById(R.id.idea_card_image);
             description = (TextView) v.findViewById(R.id.idea_card_description);
+            ideaState = v.findViewById(R.id.idea_card_idea_state);
 
             ideaCardBody = v.findViewById(R.id.idea_card_body);
         }
@@ -66,10 +68,11 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
         public void bind(Activity context, IdeaGETGson idea) {
             name.setText(idea.getTitle());
             description.setText(idea.getDescription());
+            ideaState.setBackgroundResource(idea.getIdeaState().getColor());
             Picasso.with(context)
                     .load(idea.getCoverImageUrl())
                     .placeholder(R.drawable.ic_launcher)
-                    .error(R.drawable.ic_drawer)
+                    .error(R.drawable.ic_launcher)
                     .fit()
                     .centerCrop()
                     .into(image);
