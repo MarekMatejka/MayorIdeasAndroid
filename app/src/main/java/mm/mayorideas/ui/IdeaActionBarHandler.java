@@ -1,6 +1,7 @@
 package mm.mayorideas.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -14,6 +15,7 @@ import mm.mayorideas.api.VoteAPI;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.User;
 import mm.mayorideas.objects.Vote;
+import mm.mayorideas.utils.LoginUtil;
 
 public class IdeaActionBarHandler {
 
@@ -24,6 +26,7 @@ public class IdeaActionBarHandler {
 
     @Nullable private final IdeaStatusBarHandler mStatusBarHandler;
 
+    private final Context context;
     private IdeaGETGson mIdea;
 
     public IdeaActionBarHandler(Activity activity, IdeaGETGson idea, @Nullable IdeaStatusBarHandler statusBarHandler) {
@@ -32,6 +35,7 @@ public class IdeaActionBarHandler {
         this.mDislikeAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_dislike);
         this.mFollowAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_follow);
 
+        this.context = activity;
         this.mIdea = idea;
         this.mStatusBarHandler = statusBarHandler;
 
@@ -44,6 +48,7 @@ public class IdeaActionBarHandler {
         this.mDislikeAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_dislike);
         this.mFollowAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_follow);
 
+        this.context = activity;
         this.mIdea = idea;
         this.mStatusBarHandler = statusBarHandler;
 
@@ -76,6 +81,11 @@ public class IdeaActionBarHandler {
         mCommentAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!User.isUserLoggedIn()) {
+                    LoginUtil.showLoginDialog(context, R.string.login_necessary_comments);
+                    return;
+                }
+
                 //open the comment section for this idea
                 Intent i = new Intent(activity, CommentsActivity.class);
                 i.putExtra(CommentsActivity.IDEA_ID_TAG, mIdea);
@@ -88,6 +98,11 @@ public class IdeaActionBarHandler {
         mLikeAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!User.isUserLoggedIn()) {
+                    LoginUtil.showLoginDialog(context, R.string.login_necessary_voting);
+                    return;
+                }
+
                 if (mDislikeAction.isSelected()) {
                     removeDislike();
                     mDislikeAction.setSelected(false);
@@ -107,6 +122,11 @@ public class IdeaActionBarHandler {
         mDislikeAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!User.isUserLoggedIn()) {
+                    LoginUtil.showLoginDialog(context, R.string.login_necessary_voting);
+                    return;
+                }
+
                 if (mLikeAction.isSelected()) {
                     removeLike();
                     mLikeAction.setSelected(false);
@@ -126,6 +146,11 @@ public class IdeaActionBarHandler {
         mFollowAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!User.isUserLoggedIn()) {
+                    LoginUtil.showLoginDialog(context, R.string.login_necessary_following);
+                    return;
+                }
+
                 if (!mFollowAction.isSelected()) {
                     addFollowing();
                     mFollowAction.setText("{faw-heart}");
@@ -143,7 +168,7 @@ public class IdeaActionBarHandler {
             mStatusBarHandler.addLike();
         }
         //call HTTP method to add a like to the idea
-        VoteAPI.castVote(User.getUserId(), mIdea.getId(), Vote.LIKE);
+        VoteAPI.castVote(User.getCurrentUser().getID(), mIdea.getId(), Vote.LIKE);
     }
 
     private void removeLike() {
@@ -151,7 +176,7 @@ public class IdeaActionBarHandler {
             mStatusBarHandler.removeLike();
         }
         //call HTTP method to remove a like from the idea
-        VoteAPI.deleteVote(User.getUserId(), mIdea.getId());
+        VoteAPI.deleteVote(User.getCurrentUser().getID(), mIdea.getId());
     }
 
     private void addDislike() {
@@ -159,7 +184,7 @@ public class IdeaActionBarHandler {
             mStatusBarHandler.addDislike();
         }
         //call HTTP method to add a dislike to the idea
-        VoteAPI.castVote(User.getUserId(), mIdea.getId(), Vote.DISLIKE);
+        VoteAPI.castVote(User.getCurrentUser().getID(), mIdea.getId(), Vote.DISLIKE);
     }
 
     private void removeDislike() {
@@ -167,16 +192,16 @@ public class IdeaActionBarHandler {
             mStatusBarHandler.removeDislike();
         }
         //call HTTP method to remove a dislike from the idea
-        VoteAPI.deleteVote(User.getUserId(), mIdea.getId());
+        VoteAPI.deleteVote(User.getCurrentUser().getID(), mIdea.getId());
     }
 
     private void addFollowing() {
         //add the idea to the list of ideas the user is following
-        FollowAPI.followIdea(User.getUserId(), mIdea.getId());
+        FollowAPI.followIdea(User.getCurrentUser().getID(), mIdea.getId());
     }
 
     private void removeFollowing() {
         //remove the idea from the list of ideas the user is following
-        FollowAPI.unfollowIdea(User.getUserId(), mIdea.getId());
+        FollowAPI.unfollowIdea(User.getCurrentUser().getID(), mIdea.getId());
     }
 }

@@ -2,14 +2,39 @@ package mm.mayorideas.objects;
 
 public class User {
 
-    private final static int USER_ID = 1;
-    private final static String USER_NAME = "Marek";
+    private static User currentUser;
 
-    public static int getUserId() {
-        return USER_ID;
+    private final int ID;
+    private final String username;
+    private final String name;
+
+    public User(int ID, String username, String name) {
+        this.ID = ID;
+        this.username = username;
+        this.name = name;
     }
 
-    public static String getUserName() {
-        return USER_NAME;
+    public static void setCurrentUser(User newCurrentUser) {
+        currentUser = newCurrentUser;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public static boolean isUserLoggedIn() {
+        return currentUser != null;
+    }
+
+    public static User getCurrentUser() {
+        return currentUser != null ? currentUser : new User(-1, "guest", "guest");
     }
 }

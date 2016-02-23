@@ -41,4 +41,5 @@ dependencies {
     compile('com.mikepenz:materialdrawer:4.5.1@aar') {
         transitive = true
     }
+    compile 'com.orhanobut:dialogplus:1.11@aar'
 }

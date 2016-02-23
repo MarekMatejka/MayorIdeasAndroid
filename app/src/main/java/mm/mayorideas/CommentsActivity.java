@@ -16,6 +16,7 @@ import mm.mayorideas.api.CommentAPI;
 import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Comment;
 import mm.mayorideas.objects.User;
+import mm.mayorideas.utils.LoginUtil;
 
 public class CommentsActivity extends AppCompatActivity implements
         CommentAPI.GetCommentsForIdeaListener {
@@ -47,16 +48,21 @@ public class CommentsActivity extends AppCompatActivity implements
     }
 
     public void addComment(View v) {
+        if (!User.isUserLoggedIn()) {
+            LoginUtil.showLoginDialog(this, R.string.login_necessary_comments);
+            return;
+        }
+
         EditText commentBox = (EditText) findViewById(R.id.comment_text_box);
         String commentText = commentBox.getText().toString();
         if (commentText.length() > 0) {
-            CommentAPI.addComment(User.getUserId(), mIdea.getId(), commentText);
+            CommentAPI.addComment(User.getCurrentUser().getID(), mIdea.getId(), commentText);
             adapter.insert(
                     new Comment(
                             -1,
-                            User.getUserId(),
+                            User.getCurrentUser().getID(),
                             mIdea.getId(),
-                            User.getUserName(),
+                            User.getCurrentUser().getName(),
                             commentText,
                             new Timestamp(System.currentTimeMillis())),
                     0);

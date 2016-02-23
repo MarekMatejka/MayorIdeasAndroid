@@ -53,4 +53,15 @@
     <string name="add_first_comment">Add the first one!</string>
     <string name="see_all_comments">See all comments</string>
     <string name="loading">Loading data</string>
+    <string name="my_account">My account</string>
+    <string name="login_username">Your email</string>
+    <string name="login_password">Your password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="login">Login</string>
+    <string name="welcome_to_mayor_ideas">Welcome to Mayor Ideas</string>
+    <string name="login_necessary_my_ideas">You have to be logged in to see ideas that you have added.</string>
+    <string name="login_necessary_comments">You cannot add comments unless you are logged in.</string>
+    <string name="login_necessary_voting">You cannot vote on idea unless you are logged in.</string>
+    <string name="login_necessary_following">You cannot start following an idea unless you are logged in.</string>
+    <string name="incorrect_login">Incorrect username/password combination. Please check your login details.</string>
 </resources>

@@ -55,7 +55,9 @@ public class OverviewActivity extends AppCompatActivity
                         createDrawerItem(FontAwesome.Icon.faw_heart, R.string.following, android.R.color.holo_red_dark),
                         createDrawerItem(FontAwesome.Icon.faw_tags, R.string.all_categories, R.color.mayorideas_blue_dark),
                         new DividerDrawerItem(),
-                        createDrawerItem(GoogleMaterial.Icon.gmd_info, R.string.about, android.R.color.darker_gray)
+                        createDrawerItem(GoogleMaterial.Icon.gmd_info, R.string.about, android.R.color.darker_gray),
+                        new DividerDrawerItem(),
+                        createDrawerItem(FontAwesome.Icon.faw_user, R.string.my_account, android.R.color.darker_gray)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

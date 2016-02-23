@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:float="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mayorideas_blue"
+        android:textColor="@android:color/white"
+        android:text="@string/welcome_to_mayor_ideas"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        android:padding="15dp"/>
+
+    <TextView
+        android:id="@+id/login_dialog_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="5dp"
+        float:fletTextAppearance="@style/FloatLabeledEditTextStyle">
+
+        <EditText
+            android:id="@+id/login_dialog_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_username"
+            android:textColor="@android:color/black"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:nextFocusForward="@+id/login_dialog_password">
+            <requestFocus/>
+        </EditText>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        float:fletTextAppearance="@style/FloatLabeledEditTextStyle">
+
+        <EditText
+            android:id="@+id/login_dialog_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_password"
+            android:inputType="textPassword"
+            android:textColor="@android:color/black"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/login_dialog_signup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_up"
+            android:textColor="@android:color/darker_gray"
+            style="?android:buttonBarButtonStyle"/>
+
+        <Button
+            android:id="@+id/login_dialog_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/login"
+            android:textStyle="bold"
+            android:textColor="@color/mayorideas_blue_dark"
+            style="?android:buttonBarButtonStyle"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

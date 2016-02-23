@@ -69,7 +69,7 @@ public class IdeaAPI {
     public static void getTop10Ideas(final GetIdeasListener listener) {
         String url = ServerAPIHelper.getServer()+IDEA+"/top10";
 
-        url += "?user_id="+User.getUserId();
+        url += "?user_id="+User.getCurrentUser().getID();
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new TextHttpResponseHandler() {
@@ -93,7 +93,7 @@ public class IdeaAPI {
             final GetIdeasListener listener) {
         String url = ServerAPIHelper.getServer()+IDEA+"/closest";
 
-        url += "?user_id="+User.getUserId();
+        url += "?user_id="+User.getCurrentUser().getID();
         url += "&latitude="+latitude;
         url += "&longitude="+longitude;
 
@@ -116,7 +116,7 @@ public class IdeaAPI {
     public static void getMyIdeas(final GetIdeasListener listener) {
         String url = ServerAPIHelper.getServer()+IDEA+"/my";
 
-        url += "?user_id="+User.getUserId();
+        url += "?user_id="+User.getCurrentUser().getID();
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new TextHttpResponseHandler() {
@@ -137,7 +137,7 @@ public class IdeaAPI {
     public static void getFollowingIdeas(final GetIdeasListener listener) {
         String url = ServerAPIHelper.getServer()+IDEA+"/following";
 
-        url += "?user_id="+User.getUserId();
+        url += "?user_id="+User.getCurrentUser().getID();
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new TextHttpResponseHandler() {
@@ -158,7 +158,7 @@ public class IdeaAPI {
     public static void getTrendingIdeas(final GetIdeasListener listener) {
         String url = ServerAPIHelper.getServer()+IDEA+"/trending";
 
-        url += "?user_id="+User.getUserId();
+        url += "?user_id="+User.getCurrentUser().getID();
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new TextHttpResponseHandler() {
@@ -180,7 +180,7 @@ public class IdeaAPI {
         String url = ServerAPIHelper.getServer()+IDEA+"/category";
 
         url += "/"+categoryID;
-        url += "?user_id="+User.getUserId();
+        url += "?user_id="+User.getCurrentUser().getID();
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new TextHttpResponseHandler() {

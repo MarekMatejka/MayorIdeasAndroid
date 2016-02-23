@@ -3,6 +3,8 @@ package mm.mayorideas;
 import android.os.Bundle;
 
 import mm.mayorideas.api.IdeaAPI;
+import mm.mayorideas.objects.User;
+import mm.mayorideas.utils.LoginUtil;
 
 public class MyIdeasListFragment extends IdeaListFragment {
 
@@ -15,6 +17,10 @@ public class MyIdeasListFragment extends IdeaListFragment {
 
     @Override
     protected void getIdeasToDisplay(IdeaAPI.GetIdeasListener ideasListener) {
-        IdeaAPI.getMyIdeas(ideasListener);
+        if (User.isUserLoggedIn()) {
+            IdeaAPI.getMyIdeas(ideasListener);
+        } else {
+            LoginUtil.showLoginDialog(getActivity(), R.string.login_necessary_my_ideas);
+        }
     }
 }
