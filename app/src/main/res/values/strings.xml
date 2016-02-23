@@ -74,4 +74,8 @@
     <string name="passwords_not_matching">Passwords do not match.</string>
     <string name="password_too_short">Password must be at least 6 characters long.</string>
     <string name="new_user_activity_title">Register new user</string>
+    <string name="empty_list_following">"You are not following any ideas yet. Take a look at trending, new or ideas close to you and click the 'heart' icon to start following them. "</string>
+    <string name="empty_list_category">There are no ideas in this category yet. Add the first one by clicking the \'Plus\' button in the bottom right corner of your screen.</string>
+    <string name="empty_list_my_ideas">You have not added any ideas yet. Add the first one by clicking the \'Plus\' icon in the bottom right corner of your screen</string>
+    <string name="empty_list_no_ideas">Be the first one to add an idea! Click the \'Plus\' icon in the bottom right corner of your screen and let us know what your idea is.</string>
 </resources>

@@ -17,4 +17,9 @@ public class FollowingIdeasListFragment extends IdeaListFragment {
     protected void getIdeasToDisplay(IdeaAPI.GetIdeasListener ideasListener) {
         IdeaAPI.getFollowingIdeas(ideasListener);
     }
+
+    @Override
+    protected int getEmptyListText() {
+        return R.string.empty_list_following;
+    }
 }

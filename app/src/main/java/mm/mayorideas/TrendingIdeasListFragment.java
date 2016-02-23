@@ -17,4 +17,9 @@ public class TrendingIdeasListFragment extends IdeaListFragment {
     protected void getIdeasToDisplay(IdeaAPI.GetIdeasListener ideasListener) {
         IdeaAPI.getTrendingIdeas(ideasListener);
     }
+
+    @Override
+    protected int getEmptyListText() {
+        return R.string.empty_list_no_ideas;
+    }
 }

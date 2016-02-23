@@ -17,10 +17,14 @@ public class MyIdeasListFragment extends IdeaListFragment {
 
     @Override
     protected void getIdeasToDisplay(IdeaAPI.GetIdeasListener ideasListener) {
-        if (User.isUserLoggedIn()) {
-            IdeaAPI.getMyIdeas(ideasListener);
-        } else {
+        if (!User.isUserLoggedIn()) {
             LoginUtil.showLoginDialog(getActivity(), R.string.login_necessary_my_ideas);
         }
+        IdeaAPI.getMyIdeas(ideasListener);
+    }
+
+    @Override
+    protected int getEmptyListText() {
+        return R.string.empty_list_my_ideas;
     }
 }
