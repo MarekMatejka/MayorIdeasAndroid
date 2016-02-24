@@ -49,7 +49,7 @@ public class CommentsActivity extends AppCompatActivity implements
 
     public void addComment(View v) {
         if (!User.isUserLoggedIn()) {
-            LoginUtil.showLoginDialog(this, R.string.login_necessary_comments);
+            LoginUtil.showLoginDialog(this, R.string.login_necessary_comments, null);
             return;
         }
 

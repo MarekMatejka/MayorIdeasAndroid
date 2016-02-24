@@ -6,8 +6,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.mikepenz.iconics.view.IconicsButton;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnDismissListener;
 
 import mm.mayorideas.CommentsActivity;
+import mm.mayorideas.OverviewActivity;
 import mm.mayorideas.R;
 import mm.mayorideas.api.FollowAPI;
 import mm.mayorideas.api.VoteAPI;
@@ -27,6 +30,18 @@ public class IdeaActionBarHandler {
 
     private final Activity context;
     private IdeaGETGson mIdea;
+
+    /**
+     * Called when the login dialog is dismissed.
+     */
+    private OnDismissListener onLoginDialogDismissListener = new OnDismissListener() {
+        @Override
+        public void onDismiss(DialogPlus dialog) {
+            if (context instanceof OverviewActivity) {
+                ((OverviewActivity)context).onResume();
+            }
+        }
+    };
 
     public IdeaActionBarHandler(Activity activity, IdeaGETGson idea, @Nullable IdeaStatusBarHandler statusBarHandler) {
         this.mCommentAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_comment);
@@ -81,7 +96,7 @@ public class IdeaActionBarHandler {
             @Override
             public void onClick(View v) {
                 if (!User.isUserLoggedIn()) {
-                    LoginUtil.showLoginDialog(context, R.string.login_necessary_comments);
+                    LoginUtil.showLoginDialog(context, R.string.login_necessary_comments, onLoginDialogDismissListener);
                     return;
                 }
 
@@ -98,7 +113,7 @@ public class IdeaActionBarHandler {
             @Override
             public void onClick(View v) {
                 if (!User.isUserLoggedIn()) {
-                    LoginUtil.showLoginDialog(context, R.string.login_necessary_voting);
+                    LoginUtil.showLoginDialog(context, R.string.login_necessary_voting, onLoginDialogDismissListener);
                     return;
                 }
 
@@ -122,7 +137,7 @@ public class IdeaActionBarHandler {
             @Override
             public void onClick(View v) {
                 if (!User.isUserLoggedIn()) {
-                    LoginUtil.showLoginDialog(context, R.string.login_necessary_voting);
+                    LoginUtil.showLoginDialog(context, R.string.login_necessary_voting, onLoginDialogDismissListener);
                     return;
                 }
 
@@ -146,7 +161,7 @@ public class IdeaActionBarHandler {
             @Override
             public void onClick(View v) {
                 if (!User.isUserLoggedIn()) {
-                    LoginUtil.showLoginDialog(context, R.string.login_necessary_following);
+                    LoginUtil.showLoginDialog(context, R.string.login_necessary_following, onLoginDialogDismissListener);
                     return;
                 }
 

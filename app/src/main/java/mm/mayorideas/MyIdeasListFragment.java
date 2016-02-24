@@ -18,7 +18,7 @@ public class MyIdeasListFragment extends IdeaListFragment {
     @Override
     protected void getIdeasToDisplay(IdeaAPI.GetIdeasListener ideasListener) {
         if (!User.isUserLoggedIn()) {
-            LoginUtil.showLoginDialog(getActivity(), R.string.login_necessary_my_ideas);
+            LoginUtil.showLoginDialog(getActivity(), R.string.login_necessary_my_ideas, null);
         }
         IdeaAPI.getMyIdeas(ideasListener);
     }

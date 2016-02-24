@@ -2,6 +2,7 @@ package mm.mayorideas.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.Holder;
+import com.orhanobut.dialogplus.OnDismissListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import mm.mayorideas.NewUserActivity;
@@ -23,12 +25,13 @@ public class LoginUtil {
 
     private enum TextType {INFO, WARNING}
 
-    public static void showLoginDialog(Activity context, int text) {
+    public static void showLoginDialog(Activity context, int text, @Nullable OnDismissListener listener) {
         Holder holder = new ViewHolder(R.layout.dialog_login);
         DialogPlus dialog = DialogPlus.newDialog(context)
                 .setContentHolder(holder)
                 .setGravity(Gravity.CENTER)
                 .setCancelable(true)
+                .setOnDismissListener(listener)
                 .create();
 
         View view = holder.getInflatedView();
