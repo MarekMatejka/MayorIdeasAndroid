@@ -13,8 +13,8 @@ import java.util.List;
 
 import mm.mayorideas.adapters.CommentsAdapter;
 import mm.mayorideas.api.CommentAPI;
-import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Comment;
+import mm.mayorideas.objects.Idea;
 import mm.mayorideas.objects.User;
 import mm.mayorideas.utils.LoginUtil;
 
@@ -24,14 +24,14 @@ public class CommentsActivity extends AppCompatActivity implements
     public static final String IDEA_ID_TAG = "idea_id";
 
     private CommentsAdapter adapter;
-    private IdeaGETGson mIdea;
+    private Idea mIdea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-        mIdea = (IdeaGETGson) getIntent().getSerializableExtra(IDEA_ID_TAG);
+        mIdea = (Idea) getIntent().getSerializableExtra(IDEA_ID_TAG);
 
         ListView listView = (ListView)findViewById(R.id.comments_list);
         adapter = new CommentsAdapter(this, new LinkedList<Comment>());

@@ -14,7 +14,7 @@ import mm.mayorideas.OverviewActivity;
 import mm.mayorideas.R;
 import mm.mayorideas.api.FollowAPI;
 import mm.mayorideas.api.VoteAPI;
-import mm.mayorideas.gson.IdeaGETGson;
+import mm.mayorideas.objects.Idea;
 import mm.mayorideas.objects.User;
 import mm.mayorideas.objects.Vote;
 import mm.mayorideas.utils.LoginUtil;
@@ -29,7 +29,7 @@ public class IdeaActionBarHandler {
     @Nullable private final IdeaStatusBarHandler mStatusBarHandler;
 
     private final Activity context;
-    private IdeaGETGson mIdea;
+    private Idea mIdea;
 
     /**
      * Called when the login dialog is dismissed.
@@ -43,7 +43,7 @@ public class IdeaActionBarHandler {
         }
     };
 
-    public IdeaActionBarHandler(Activity activity, IdeaGETGson idea, @Nullable IdeaStatusBarHandler statusBarHandler) {
+    public IdeaActionBarHandler(Activity activity, Idea idea, @Nullable IdeaStatusBarHandler statusBarHandler) {
         this.mCommentAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_comment);
         this.mLikeAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_like);
         this.mDislikeAction = (IconicsButton)activity.findViewById(R.id.idea_action_bar_dislike);
@@ -56,7 +56,7 @@ public class IdeaActionBarHandler {
         setupActionBar(activity);
     }
 
-    public IdeaActionBarHandler(Activity activity, IdeaGETGson idea, View v, @Nullable IdeaStatusBarHandler statusBarHandler) {
+    public IdeaActionBarHandler(Activity activity, Idea idea, View v, @Nullable IdeaStatusBarHandler statusBarHandler) {
         this.mCommentAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_comment);
         this.mLikeAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_like);
         this.mDislikeAction = (IconicsButton)v.findViewById(R.id.idea_action_bar_dislike);

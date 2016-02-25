@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import mm.mayorideas.R;
-import mm.mayorideas.gson.IdeaGETGson;
+import mm.mayorideas.objects.Idea;
 import mm.mayorideas.objects.IdeaCategory;
 
 public class IdeaStatusBarHandler {
@@ -23,7 +23,7 @@ public class IdeaStatusBarHandler {
     private int mScore;
     private int mVotesCount;
 
-    public IdeaStatusBarHandler(Activity activity, IdeaGETGson idea) {
+    public IdeaStatusBarHandler(Activity activity, Idea idea) {
         this.mActivity = activity;
 
         this.mCategoryIcon = (IconicsImageView)activity.findViewById(R.id.idea_status_bar_category);
@@ -41,7 +41,7 @@ public class IdeaStatusBarHandler {
         setupVotesCountText();
     }
 
-    public IdeaStatusBarHandler(Activity activity, View view, IdeaGETGson idea) {
+    public IdeaStatusBarHandler(Activity activity, View view, Idea idea) {
         this.mActivity = activity;
 
         this.mCategoryIcon = (IconicsImageView)view.findViewById(R.id.idea_status_bar_category);

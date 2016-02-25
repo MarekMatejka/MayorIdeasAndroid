@@ -23,8 +23,8 @@ import mm.mayorideas.api.CommentAPI;
 import mm.mayorideas.api.ImagesAPI;
 import mm.mayorideas.api.listeners.SimpleNumberListListener;
 import mm.mayorideas.api.listeners.SimpleNumberValueListener;
-import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.objects.Comment;
+import mm.mayorideas.objects.Idea;
 import mm.mayorideas.ui.IdeaActionBarHandler;
 import mm.mayorideas.ui.IdeaStatusBarHandler;
 
@@ -34,7 +34,7 @@ public class IdeaDetailActivity extends AppCompatActivity
     public static final String IDEA_ID_TAG = "idea_id";
 
     private SliderLayout mSliderShow;
-    private IdeaGETGson mIdea;
+    private Idea mIdea;
     private IdeaStatusBarHandler mIdeaStatusBarHandler;
     private int mImagesCount;
 
@@ -44,7 +44,7 @@ public class IdeaDetailActivity extends AppCompatActivity
         setContentView(R.layout.activity_idea_detail);
 
         mImagesCount = 0;
-        mIdea = (IdeaGETGson) getIntent().getSerializableExtra(IDEA_ID_TAG);
+        mIdea = (Idea) getIntent().getSerializableExtra(IDEA_ID_TAG);
 
         mSliderShow = (SliderLayout) findViewById(R.id.slider);
         addAllImagesToSlider();

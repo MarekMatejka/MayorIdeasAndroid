@@ -11,8 +11,8 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 
 import mm.mayorideas.api.IdeaAPI;
-import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.maps.MapsHelper;
+import mm.mayorideas.objects.Idea;
 
 public class MapIdeasFragment extends Fragment implements MapsHelper.LocationListener, IdeaAPI.GetIdeasListener {
 
@@ -69,13 +69,13 @@ public class MapIdeasFragment extends Fragment implements MapsHelper.LocationLis
 
     @Override
     public void locationUpdate(LatLng newPosition) {
-        if (hasMovedSignigicantly(newPosition)) {
+        if (hasMovedSignificantly(newPosition)) {
             IdeaAPI.get10ClosestIdeas(newPosition.latitude, newPosition.longitude, this);
             lastLocation = newPosition;
         }
     }
 
-    private boolean hasMovedSignigicantly(LatLng newPosition) {
+    private boolean hasMovedSignificantly(LatLng newPosition) {
         return lastLocation == null || distanceBetween2LocationsInKM(lastLocation, newPosition) >= 0.5;
     }
 
@@ -91,10 +91,14 @@ public class MapIdeasFragment extends Fragment implements MapsHelper.LocationLis
     }
 
     @Override
-    public void onSuccess(List<IdeaGETGson> ideas) {
+    public void onSuccess(List<Idea> ideas) {
         mapsHelper.clearAllMarkers();
-        for (IdeaGETGson idea : ideas) {
-            mapsHelper.addMarker(idea.getLatitude(), idea.getLongitude(), idea.getTitle());
+        addAllMarkers(ideas);
+    }
+
+    private void addAllMarkers(List<Idea> ideas) {
+        for (Idea idea : ideas) {
+            mapsHelper.addMarker(idea);
         }
     }
 

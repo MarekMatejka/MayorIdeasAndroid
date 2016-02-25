@@ -14,8 +14,8 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
-import mm.mayorideas.gson.IdeaGETGson;
 import mm.mayorideas.gson.NewIdeaPOSTGson;
+import mm.mayorideas.objects.Idea;
 import mm.mayorideas.objects.User;
 
 public class IdeaAPI {
@@ -62,7 +62,7 @@ public class IdeaAPI {
     }
 
     public interface GetIdeasListener {
-        void onSuccess(List<IdeaGETGson> ideas);
+        void onSuccess(List<Idea> ideas);
         void onFailure();
     }
 
@@ -201,8 +201,8 @@ public class IdeaAPI {
     private static void handleIdeaGETResponse(String response, GetIdeasListener listener) {
         if (response != null && response.length() > 0) {
             Gson gson = new Gson();
-            Type type = new TypeToken<List<IdeaGETGson>>() {}.getType();
-            List<IdeaGETGson> ideas = gson.fromJson(response, type);
+            Type type = new TypeToken<List<Idea>>() {}.getType();
+            List<Idea> ideas = gson.fromJson(response, type);
 
             if(listener != null) {
                 listener.onSuccess(ideas);

@@ -15,7 +15,7 @@ import java.util.List;
 
 import mm.mayorideas.adapters.IdeaListAdapter;
 import mm.mayorideas.api.IdeaAPI;
-import mm.mayorideas.gson.IdeaGETGson;
+import mm.mayorideas.objects.Idea;
 
 public abstract class IdeaListFragment extends Fragment implements IdeaAPI.GetIdeasListener {
 
@@ -53,7 +53,7 @@ public abstract class IdeaListFragment extends Fragment implements IdeaAPI.GetId
     }
 
     @Override
-    public void onSuccess(List<IdeaGETGson> ideas) {
+    public void onSuccess(List<Idea> ideas) {
         showEmptyListText(ideas.isEmpty());
         mAdapter.setData(ideas);
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -17,9 +18,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
+
+import mm.mayorideas.objects.Idea;
 
 public class MapsHelper implements
         GoogleApiClient.ConnectionCallbacks,
@@ -28,7 +30,7 @@ public class MapsHelper implements
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
-    private ClusterManager<ClusterMarkerItem> mClusterManager;
+    private ClusterManager<Idea> mClusterManager;
     private LocationListener mLocationListener = null;
 
     private boolean animateCameraOnLocationChange;
@@ -161,11 +163,17 @@ public class MapsHelper implements
         mMap.setOnCameraChangeListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         mClusterManager.setRenderer(new OwnIconRendered(context, mMap, mClusterManager));
+        mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<Idea>() {
+            @Override
+            public void onClusterItemInfoWindowClick(Idea idea) {
+                Log.e("click", "info window = "+idea.getTitle());
+            }
+        });
     }
 
-    public void addMarker(double lat, double lang, String title) {
+    public void addMarker(Idea idea) {
         if (mClusterManager != null) {
-            mClusterManager.addItem(new ClusterMarkerItem(lat, lang, title));
+            mClusterManager.addItem(idea);
         }
     }
 
@@ -177,39 +185,20 @@ public class MapsHelper implements
         mMap.clear();
     }
 
-    private final class ClusterMarkerItem implements ClusterItem {
-        private final LatLng position;
-        private final String title;
-
-        public ClusterMarkerItem(double lat, double lng, String title) {
-            this.position = new LatLng(lat, lng);
-            this.title = title;
-        }
-
-        @Override
-        public LatLng getPosition() {
-            return this.position;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-    }
-
-    private final class OwnIconRendered extends DefaultClusterRenderer<ClusterMarkerItem> {
+    private final class OwnIconRendered extends DefaultClusterRenderer<Idea> {
 
         public OwnIconRendered(Context context,
                                GoogleMap map,
-                               ClusterManager<ClusterMarkerItem> clusterManager) {
+                               ClusterManager<Idea> clusterManager) {
             super(context, map, clusterManager);
         }
 
         @Override
-        protected void onBeforeClusterItemRendered(ClusterMarkerItem item, MarkerOptions markerOptions) {
-            //markerOptions.icon(item.getIcon());
-            //markerOptions.snippet(item.getSnippet());
-            markerOptions.title(item.getTitle());
-            super.onBeforeClusterItemRendered(item, markerOptions);
+        protected void onBeforeClusterItemRendered(Idea idea, MarkerOptions markerOptions) {
+            //markerOptions.icon(idea.getIcon());
+            //markerOptions.snippet(idea.getSnippet());
+            markerOptions.title(idea.getTitle());
+            super.onBeforeClusterItemRendered(idea, markerOptions);
         }
     }
 

@@ -13,11 +13,11 @@ import com.squareup.picasso.Picasso;
 
 import mm.mayorideas.IdeaDetailActivity;
 import mm.mayorideas.R;
-import mm.mayorideas.gson.IdeaGETGson;
+import mm.mayorideas.objects.Idea;
 import mm.mayorideas.ui.IdeaActionBarHandler;
 import mm.mayorideas.ui.IdeaStatusBarHandler;
 
-public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAdapter.ViewHolder> {
+public class IdeaListAdapter extends AbstractListAdapter<Idea, IdeaListAdapter.ViewHolder> {
 
     private Activity mContext;
 
@@ -65,7 +65,7 @@ public class IdeaListAdapter extends AbstractListAdapter<IdeaGETGson, IdeaListAd
             ideaCardBody = v.findViewById(R.id.idea_card_body);
         }
 
-        public void bind(Activity context, IdeaGETGson idea) {
+        public void bind(Activity context, Idea idea) {
             name.setText(idea.getTitle());
             description.setText(idea.getDescription());
             ideaState.setBackgroundResource(idea.getIdeaState().getColor());
