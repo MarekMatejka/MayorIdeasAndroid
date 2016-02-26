@@ -1,12 +1,12 @@
 package mm.mayorideas.maps;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -17,10 +17,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import mm.mayorideas.IdeaDetailActivity;
 import mm.mayorideas.objects.Idea;
 
 public class MapsHelper implements
@@ -35,6 +40,8 @@ public class MapsHelper implements
 
     private boolean animateCameraOnLocationChange;
     private boolean moveCameraOnInitialLocationChange;
+    private Map<LatLng, Idea> mIdeas;
+    private Context mContext;
 
     public MapsHelper(Context context, int mapId) {
         buildGoogleApiClient(context);
@@ -61,6 +68,8 @@ public class MapsHelper implements
     public void setUpMapIfNeeded(Context context, int mapId, @Nullable Fragment fragment) {
         if (context instanceof FragmentActivity) {
             if (mMap == null) {
+                mContext = context;
+                mIdeas = new HashMap<>();
                 SupportMapFragment supportMapFragment;
                 if (fragment == null) {
                     FragmentActivity fragmentActivity = (FragmentActivity) context;
@@ -162,18 +171,22 @@ public class MapsHelper implements
         mClusterManager = new ClusterManager<>(context, mMap);
         mMap.setOnCameraChangeListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
-        mClusterManager.setRenderer(new OwnIconRendered(context, mMap, mClusterManager));
-        mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<Idea>() {
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public void onClusterItemInfoWindowClick(Idea idea) {
-                Log.e("click", "info window = "+idea.getTitle());
+            public void onInfoWindowClick(Marker marker) {
+                Idea clickedIdea = mIdeas.get(marker.getPosition());
+                Intent i = new Intent(mContext, IdeaDetailActivity.class);
+                i.putExtra(IdeaDetailActivity.IDEA_ID_TAG, clickedIdea);
+                mContext.startActivity(i);
             }
         });
+        mClusterManager.setRenderer(new OwnIconRendered(context, mMap, mClusterManager));
     }
 
     public void addMarker(Idea idea) {
         if (mClusterManager != null) {
             mClusterManager.addItem(idea);
+            mIdeas.put(idea.getPosition(), idea);
         }
     }
 
@@ -183,6 +196,7 @@ public class MapsHelper implements
 
     public void clearAllMarkers() {
         mMap.clear();
+        mIdeas.clear();
     }
 
     private final class OwnIconRendered extends DefaultClusterRenderer<Idea> {
