@@ -2,6 +2,7 @@ package mm.mayorideas.objects;
 
 public class User {
 
+    public static final String DELIMITER = ",";
     private static User currentUser;
 
     private final int ID;
@@ -36,5 +37,15 @@ public class User {
 
     public static User getCurrentUser() {
         return currentUser != null ? currentUser : new User(-1, "guest", "guest");
+    }
+
+    public static User parse(String userRecord) {
+        //TODO: make sure that when the user creates the account he is not using comma
+        String[] details = userRecord.split(DELIMITER);
+        return new User(Integer.parseInt(details[0]), details[1], details[2]);
+    }
+
+    public static String toRecord(User user) {
+        return user.getID() + DELIMITER + user.getUsername() + DELIMITER + user.getName();
     }
 }

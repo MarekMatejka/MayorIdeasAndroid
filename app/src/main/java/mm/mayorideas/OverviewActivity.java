@@ -23,6 +23,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import mm.mayorideas.objects.User;
+import mm.mayorideas.utils.LoginUtil;
 
 public class OverviewActivity extends AppCompatActivity
         implements CategoriesListFragment.CategoryClickListener {
@@ -49,6 +50,7 @@ public class OverviewActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        LoginUtil.readAndSetCurrentUser(this);
         if (lastUser.getID() != User.getCurrentUser().getID()) {
             lastUser = User.getCurrentUser();
             createDrawer(lastUser);

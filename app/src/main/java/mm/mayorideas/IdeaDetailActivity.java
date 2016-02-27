@@ -27,6 +27,7 @@ import mm.mayorideas.objects.Comment;
 import mm.mayorideas.objects.Idea;
 import mm.mayorideas.ui.IdeaActionBarHandler;
 import mm.mayorideas.ui.IdeaStatusBarHandler;
+import mm.mayorideas.utils.LoginUtil;
 
 public class IdeaDetailActivity extends AppCompatActivity
         implements CommentAPI.GetCommentsForIdeaListener {
@@ -137,6 +138,8 @@ public class IdeaDetailActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        LoginUtil.readAndSetCurrentUser(this);
+
         findViewById(R.id.loading_comments).setVisibility(View.VISIBLE);
         findViewById(R.id.last_2_comments).setVisibility(View.GONE);
         CommentAPI.getLast2CommentsForIdea(mIdea.getId(), this);

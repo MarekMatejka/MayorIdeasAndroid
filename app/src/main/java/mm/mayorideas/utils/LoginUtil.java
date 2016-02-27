@@ -1,9 +1,9 @@
 package mm.mayorideas.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +14,10 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.Holder;
 import com.orhanobut.dialogplus.OnDismissListener;
 import com.orhanobut.dialogplus.ViewHolder;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 import mm.mayorideas.NewUserActivity;
 import mm.mayorideas.R;
@@ -63,15 +67,15 @@ public class LoginUtil {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("login","login");
                 LoginAPI.login(
                         username.getText().toString(),
                         password.getText().toString(),
                         new LoginAPI.LoginListener() {
                             @Override
                             public void onLoginSuccess(LoginDetailsResponse response) {
-                                Log.e("login", response.toString());
-                                User.setCurrentUser(response.convertToUser());
+                                User newCurrentUser = response.convertToUser();
+                                User.setCurrentUser(newCurrentUser);
+                                saveCurrentUser(context, newCurrentUser);
                                 dialog.dismiss();
                             }
 
@@ -91,5 +95,75 @@ public class LoginUtil {
                 context.finish();
             }
         });
+    }
+
+    private static final String FILENAME = "user.mm";
+
+    public static void readAndSetCurrentUser(Context context) {
+        String userText = readFile(context);
+        if (userText != null) {
+            User user = User.parse(userText);
+            User.setCurrentUser(user);
+        } else {
+            User.setCurrentUser(null);
+        }
+    }
+
+    public static void saveCurrentUser(Context context, User currentUser) {
+        if (currentUser != null) {
+            writeFile(context, User.toRecord(currentUser));
+        }
+    }
+
+    public static void deleteCurrentUser(Context context) {
+        context.deleteFile(FILENAME);
+    }
+
+    private static @Nullable String readFile(Context context) {
+        if (!fileExists(context)) {
+            return null;
+        }
+
+        try {
+            DataInputStream in = new DataInputStream(context.openFileInput(FILENAME));
+            String result = in.readUTF();
+            in.close();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static boolean fileExists(Context context) {
+        return context.getFileStreamPath(FILENAME).exists();
+    }
+
+    private static boolean writeFile(Context context, String content) {
+        try {
+            context.deleteFile(FILENAME);
+            DataOutputStream out = new DataOutputStream(
+                    context.openFileOutput(
+                            FILENAME,
+                            Context.MODE_PRIVATE));
+            out.writeUTF(content);
+            out.close();
+            return true;
+        } catch (IOException e) {
+            createEmptyFile(context, FILENAME);
+            writeFile(context, content);
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private static void createEmptyFile(Context context, String filename) {
+        try {
+            DataOutputStream out = new DataOutputStream(
+                    context.openFileOutput(
+                            filename,
+                            Context.MODE_PRIVATE));
+            out.close();
+        } catch (IOException e) {e.printStackTrace();}
     }
 }

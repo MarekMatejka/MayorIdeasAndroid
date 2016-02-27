@@ -21,6 +21,7 @@ import mm.mayorideas.api.ImagesAPI;
 import mm.mayorideas.api.listeners.SimpleNumberValueListener;
 import mm.mayorideas.maps.MapsHelper;
 import mm.mayorideas.ui.HorizontalSpaceItemDecoration;
+import mm.mayorideas.utils.LoginUtil;
 
 import static mm.mayorideas.adapters.IdeaImagesAdapter.OnIdeaImageItemClickListener;
 
@@ -127,6 +128,8 @@ public class NewIdeaActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        LoginUtil.readAndSetCurrentUser(this);
+
         if (mapsHelper == null) {
             mapsHelper = new MapsHelper(this, R.id.map);
         } else {

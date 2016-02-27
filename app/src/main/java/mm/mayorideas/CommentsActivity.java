@@ -41,6 +41,12 @@ public class CommentsActivity extends AppCompatActivity implements
         CommentAPI.getAllCommentsForIdea(mIdea.getId(), this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LoginUtil.readAndSetCurrentUser(this);
+    }
+
     private void showOrHideComments(boolean show, boolean hasComments) {
         findViewById(R.id.loading_comments_list).setVisibility(show ? View.GONE : View.VISIBLE);
         findViewById(R.id.comments_list).setVisibility((show && hasComments) ? View.VISIBLE : View.GONE);

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import mm.mayorideas.api.LoginAPI;
 import mm.mayorideas.gson.LoginDetailsResponse;
 import mm.mayorideas.objects.User;
+import mm.mayorideas.utils.LoginUtil;
 
 public class NewUserActivity extends AppCompatActivity implements LoginAPI.LoginListener {
 
@@ -32,6 +33,12 @@ public class NewUserActivity extends AppCompatActivity implements LoginAPI.Login
         name = (EditText)findViewById(R.id.new_user_name);
         password = (EditText)findViewById(R.id.new_user_password);
         passwordCheck = (EditText)findViewById(R.id.new_user_password_check);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LoginUtil.readAndSetCurrentUser(this);
     }
 
     private boolean validateFields() {
@@ -82,7 +89,9 @@ public class NewUserActivity extends AppCompatActivity implements LoginAPI.Login
 
     @Override
     public void onLoginSuccess(LoginDetailsResponse response) {
-        User.setCurrentUser(response.convertToUser());
+        User newCurrentUser = response.convertToUser();
+        User.setCurrentUser(newCurrentUser);
+        LoginUtil.saveCurrentUser(this, newCurrentUser);
         Intent intent = new Intent(this, OverviewActivity.class);
         startActivity(intent);
         finish();
