@@ -13,7 +13,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="category_prompt">Choose a category</string>
-    <string name="idea_title">Idea title</string>
+    <string name="idea_title">Idea name</string>
     <string name="category_title">Category</string>
     <string name="idea_description">Idea description</string>
     <string name="submit_idea">Submit idea</string>
@@ -84,5 +84,5 @@
     <string name="ideas_title">Ideas</string>
     <string name="votes_title">Votes</string>
     <string name="comments_title">Comments</string>
-    <string name="following_count">Follows</string>
+    <string name="following_title">Follows</string>
 </resources>

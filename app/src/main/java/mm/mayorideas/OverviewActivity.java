@@ -26,7 +26,8 @@ import mm.mayorideas.objects.User;
 import mm.mayorideas.utils.LoginUtil;
 
 public class OverviewActivity extends AppCompatActivity
-        implements CategoriesListFragment.CategoryClickListener {
+        implements CategoriesListFragment.CategoryClickListener,
+        MyAccountFragment.OnUserStatClickedListener {
 
     private static User lastUser = User.getCurrentUser();
 
@@ -131,7 +132,7 @@ public class OverviewActivity extends AppCompatActivity
             // case 6: Divider Item = no action
             //case 7: return AboutFragment.newInstance();
             //case 8: Divider Item = no action;
-            case 9: return MyAccountFragment.newInstance();
+            case 9: return setupMyAccountFragment();
             default: return Top10IdeasListFragment.newInstance();
         }
     }
@@ -141,6 +142,13 @@ public class OverviewActivity extends AppCompatActivity
         CategoriesListFragment categoriesListFragment = CategoriesListFragment.newInstance();
         categoriesListFragment.setCategoriesListener(this);
         return categoriesListFragment;
+    }
+
+    @NonNull
+    private MyAccountFragment setupMyAccountFragment() {
+        MyAccountFragment myAccountFragment = MyAccountFragment.newInstance();
+        myAccountFragment.setOnUserStatClickedListener(this);
+        return myAccountFragment;
     }
 
     private int getFragmentTitle(int position) {
@@ -154,7 +162,7 @@ public class OverviewActivity extends AppCompatActivity
             //case 6: Divider Item = no action
             case 7: return R.string.about;
             //case 8: Divider Item = no action
-            case 8: return R.string.my_account;
+            case 9: return R.string.my_account;
             default: return R.string.hot_ideas;
         }
     }
@@ -205,5 +213,14 @@ public class OverviewActivity extends AppCompatActivity
         switchFragments(
                 IdeasByCategoryListFragment.newInstance(categoryID),
                 categoryName);
+    }
+
+    @Override
+    public void onUserStatClicked(IdeaListFragment goToFragment) {
+        if (goToFragment instanceof MyIdeasListFragment) {
+            switchFragments(3);
+        } else if (goToFragment instanceof FollowingIdeasListFragment) {
+            switchFragments(4);
+        }
     }
 }
