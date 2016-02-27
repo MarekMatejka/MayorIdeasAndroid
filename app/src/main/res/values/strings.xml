@@ -79,4 +79,10 @@
     <string name="username_contains_comma_error">The username must not contain a comma (\',\').</string>
     <string name="name_contains_comma_error">Name must not contain a comma (\',\').</string>
     <string name="login_welcome">"Good to see you "</string>
+    <string name="username_title">Username</string>
+    <string name="email_title">Email</string>
+    <string name="ideas_title">Ideas</string>
+    <string name="votes_title">Votes</string>
+    <string name="comments_title">Comments</string>
+    <string name="following_count">Follows</string>
 </resources>

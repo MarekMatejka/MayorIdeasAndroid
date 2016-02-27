@@ -129,6 +129,9 @@ public class OverviewActivity extends AppCompatActivity
             case 4: return FollowingIdeasListFragment.newInstance();
             case 5: return setupCategoriesFragment();
             // case 6: Divider Item = no action
+            //case 7: return AboutFragment.newInstance();
+            //case 8: Divider Item = no action;
+            case 9: return MyAccountFragment.newInstance();
             default: return Top10IdeasListFragment.newInstance();
         }
     }
@@ -150,6 +153,8 @@ public class OverviewActivity extends AppCompatActivity
             case 5: return R.string.all_categories;
             //case 6: Divider Item = no action
             case 7: return R.string.about;
+            //case 8: Divider Item = no action
+            case 8: return R.string.my_account;
             default: return R.string.hot_ideas;
         }
     }
