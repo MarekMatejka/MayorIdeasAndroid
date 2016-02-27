@@ -40,7 +40,6 @@ public class User {
     }
 
     public static User parse(String userRecord) {
-        //TODO: make sure that when the user creates the account he is not using comma
         String[] details = userRecord.split(DELIMITER);
         return new User(Integer.parseInt(details[0]), details[1], details[2]);
     }

@@ -85,10 +85,6 @@ public class IdeaDetailActivity extends AppCompatActivity
         ImagesAPI.getImageIdsForIdea(mIdea.getId(), new SimpleNumberListListener() {
             @Override
             public void onSuccess(List<Integer> values) {
-                //TODO: DELETE ONCE ALL IDEAS HAVE IMAGES
-                if (values.isEmpty()) {
-                    values.add(109);
-                }
                 mImagesCount = values.size();
                 if (mImagesCount == 1) {
                     mSliderShow.stopAutoCycle();

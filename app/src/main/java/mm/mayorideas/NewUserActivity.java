@@ -48,11 +48,17 @@ public class NewUserActivity extends AppCompatActivity implements LoginAPI.Login
         if (usernameText.isEmpty()) {
             username.setError(getString(R.string.username_empty_error));
             success = false;
+        } else if (usernameText.contains(User.DELIMITER)) {
+            username.setError(getString(R.string.username_contains_comma_error));
+            success = false;
         }
 
         nameText = name.getText().toString().trim();
         if (nameText.isEmpty()) {
             name.setError(getString(R.string.name_empty_error));
+            success = false;
+        } else if (nameText.contains(User.DELIMITER)) {
+            name.setError(getString(R.string.name_contains_comma_error));
             success = false;
         }
 

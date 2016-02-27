@@ -43,8 +43,6 @@
     <string name="about">About</string>
     <string name="ideas_on_map">Ideas on a map</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="empty_title_error">Title must not be empty!</string>
     <string name="empty_description_error">Description must not be empty!</string>
     <string name="no_picture_error">Every idea must have at least one picture.</string>
@@ -78,4 +76,6 @@
     <string name="empty_list_category">There are no ideas in this category yet. Add the first one by clicking the \'Plus\' button in the bottom right corner of your screen.</string>
     <string name="empty_list_my_ideas">You have not added any ideas yet. Add the first one by clicking the \'Plus\' icon in the bottom right corner of your screen</string>
     <string name="empty_list_no_ideas">Be the first one to add an idea! Click the \'Plus\' icon in the bottom right corner of your screen and let us know what your idea is.</string>
+    <string name="username_contains_comma_error">The username must not contain a comma (\',\').</string>
+    <string name="name_contains_comma_error">Name must not contain a comma (\',\').</string>
 </resources>
