@@ -78,4 +78,5 @@
     <string name="empty_list_no_ideas">Be the first one to add an idea! Click the \'Plus\' icon in the bottom right corner of your screen and let us know what your idea is.</string>
     <string name="username_contains_comma_error">The username must not contain a comma (\',\').</string>
     <string name="name_contains_comma_error">Name must not contain a comma (\',\').</string>
+    <string name="login_welcome">"Good to see you "</string>
 </resources>

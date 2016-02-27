@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.Holder;
@@ -77,6 +78,14 @@ public class LoginUtil {
                                 User.setCurrentUser(newCurrentUser);
                                 saveCurrentUser(context, newCurrentUser);
                                 dialog.dismiss();
+                                Toast.makeText(
+                                        context,
+                                        context.getString(
+                                                R.string.login_welcome)+
+                                                newCurrentUser.getName()+
+                                                "!",
+                                        Toast.LENGTH_LONG)
+                                        .show();
                             }
 
                             @Override
