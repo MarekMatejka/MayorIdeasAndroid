@@ -16,10 +16,11 @@ import mm.mayorideas.gson.UserStats;
 import mm.mayorideas.objects.User;
 import mm.mayorideas.utils.LoginUtil;
 
-public class MyAccountFragment extends Fragment implements UserAPI.OnUserStatsReceivedListener {
+public class MyAccountFragment extends Fragment {
 
     private OnUserStatClickedListener mListener;
     private View fragmentLayout;
+    private IconicsButton loginBtn;
 
     public MyAccountFragment() {
         // Required empty public constructor
@@ -33,7 +34,7 @@ public class MyAccountFragment extends Fragment implements UserAPI.OnUserStatsRe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (User.isUserLoggedIn()) {
-            UserAPI.getStatsForUser(User.getCurrentUser().getID(), this);
+            UserAPI.getStatsForUser(User.getCurrentUser().getID(), mUserStatsListener);
         }
     }
 
@@ -42,39 +43,40 @@ public class MyAccountFragment extends Fragment implements UserAPI.OnUserStatsRe
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_my_account, container, false);
-        IconicsButton login = (IconicsButton)layout.findViewById(R.id.user_login);
-        login.setOnClickListener(new View.OnClickListener() {
+        loginBtn = (IconicsButton)layout.findViewById(R.id.user_login);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginOrLogout();
             }
         });
-
         fragmentLayout = layout;
+        setupFragment();
+        return layout;
+    }
+
+    private void setupFragment() {
         User user = User.getCurrentUser();
-
         if (user.getID() != -1) {
-            layout.findViewById(R.id.user_details).setVisibility(View.VISIBLE);
-            layout.findViewById(R.id.user_not_logged_in).setVisibility(View.GONE);
-            login.setText(R.string.logout);
+            fragmentLayout.findViewById(R.id.user_details).setVisibility(View.VISIBLE);
+            fragmentLayout.findViewById(R.id.user_not_logged_in).setVisibility(View.GONE);
+            loginBtn.setText(R.string.logout);
 
-            TextView name = (TextView) layout.findViewById(R.id.account_name);
+            TextView name = (TextView) fragmentLayout.findViewById(R.id.account_name);
             name.setText(user.getName());
 
-            TextView username = (TextView) layout.findViewById(R.id.account_username);
+            TextView username = (TextView) fragmentLayout.findViewById(R.id.account_username);
             username.setText(user.getUsername());
 
-            createUserStat(layout.findViewById(R.id.user_ideas), UserStat.IDEA, 0);
-            createUserStat(layout.findViewById(R.id.user_comments), UserStat.COMMENT, 0);
-            createUserStat(layout.findViewById(R.id.user_votes), UserStat.VOTES, 0);
-            createUserStat(layout.findViewById(R.id.user_follows), UserStat.FOLLOWS, 0);
+            createUserStat(fragmentLayout.findViewById(R.id.user_ideas), UserStat.IDEA, 0);
+            createUserStat(fragmentLayout.findViewById(R.id.user_comments), UserStat.COMMENT, 0);
+            createUserStat(fragmentLayout.findViewById(R.id.user_votes), UserStat.VOTES, 0);
+            createUserStat(fragmentLayout.findViewById(R.id.user_follows), UserStat.FOLLOWS, 0);
         } else {
-            layout.findViewById(R.id.user_details).setVisibility(View.GONE);
-            layout.findViewById(R.id.user_not_logged_in).setVisibility(View.VISIBLE);
-            login.setText(R.string.login_or_signup);
+            fragmentLayout.findViewById(R.id.user_details).setVisibility(View.GONE);
+            fragmentLayout.findViewById(R.id.user_not_logged_in).setVisibility(View.VISIBLE);
+            loginBtn.setText(R.string.login_or_signup);
         }
-
-        return layout;
     }
 
     private void createUserStat(View layout, final UserStat stat, int statValue) {
@@ -108,31 +110,36 @@ public class MyAccountFragment extends Fragment implements UserAPI.OnUserStatsRe
     private void loginOrLogout() {
         if (User.isUserLoggedIn()) {
             LoginUtil.logout(getContext());
-            fragmentLayout.invalidate();
+            ((OverviewActivity)getActivity()).onResume();
+            setupFragment();
         } else {
             LoginUtil.showLoginDialog(getActivity(), R.string.login_to_start, new OnDismissListener() {
                 @Override
                 public void onDismiss(DialogPlus dialog) {
                     if (User.isUserLoggedIn()) {
-                        fragmentLayout.invalidate();
+                        ((OverviewActivity)getActivity()).onResume();
+                        setupFragment();
+                        UserAPI.getStatsForUser(User.getCurrentUser().getID(), mUserStatsListener);
                     }
                 }
             });
         }
     }
 
-    @Override
-    public void onUserStatsReceivedSuccessfully(UserStats stats) {
-        createUserStat(fragmentLayout.findViewById(R.id.user_ideas), UserStat.IDEA, stats.getIdeas());
-        createUserStat(fragmentLayout.findViewById(R.id.user_comments), UserStat.COMMENT, stats.getComments());
-        createUserStat(fragmentLayout.findViewById(R.id.user_votes), UserStat.VOTES, stats.getVotes());
-        createUserStat(fragmentLayout.findViewById(R.id.user_follows), UserStat.FOLLOWS, stats.getFollows());
-    }
+    private final UserAPI.OnUserStatsReceivedListener mUserStatsListener = new UserAPI.OnUserStatsReceivedListener() {
+        @Override
+        public void onUserStatsReceivedSuccessfully(UserStats stats) {
+            createUserStat(fragmentLayout.findViewById(R.id.user_ideas), UserStat.IDEA, stats.getIdeas());
+            createUserStat(fragmentLayout.findViewById(R.id.user_comments), UserStat.COMMENT, stats.getComments());
+            createUserStat(fragmentLayout.findViewById(R.id.user_votes), UserStat.VOTES, stats.getVotes());
+            createUserStat(fragmentLayout.findViewById(R.id.user_follows), UserStat.FOLLOWS, stats.getFollows());
+        }
 
-    @Override
-    public void onUserStatsReceivedUnsuccessfully() {
+        @Override
+        public void onUserStatsReceivedUnsuccessfully() {
 
-    }
+        }
+    };
 
     private enum UserStat {
         IDEA(R.string.ideas_title, R.color.mayorideas_blue, MyIdeasListFragment.newInstance()),
