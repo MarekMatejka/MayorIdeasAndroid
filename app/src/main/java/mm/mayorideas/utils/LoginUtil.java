@@ -121,7 +121,12 @@ public class LoginUtil {
         }
     }
 
-    public static void deleteCurrentUser(Context context) {
+    public static void logout(Context context) {
+        deleteCurrentUser(context);
+        User.setCurrentUser(null);
+    }
+
+    private static void deleteCurrentUser(Context context) {
         context.deleteFile(FILENAME);
     }
 

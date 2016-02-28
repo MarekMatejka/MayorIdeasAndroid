@@ -29,7 +29,7 @@
     <string name="infrastructure">Infrastructure</string>
 
     <string name="title_activity_maps_test">Map</string>
-    <string name="title_activity_idea_detail">IdeaDetailActivity</string>
+    <string name="title_activity_idea_detail">Idea Details</string>
 
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
@@ -85,4 +85,8 @@
     <string name="votes_title">Votes</string>
     <string name="comments_title">Comments</string>
     <string name="following_title">Follows</string>
+    <string name="login_necessary_user_details">Please login or signup in order to see your account details.</string>
+    <string name="logout">{faw-sign-out} LOG OUT</string>
+    <string name="login_or_signup">{faw-sign-in} LOG IN / SIGN UP</string>
+    <string name="login_to_start">Login or Sign up to start using Mayor Ideas with all its features. It\'s FREE!</string>
 </resources>

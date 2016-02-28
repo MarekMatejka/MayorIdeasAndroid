@@ -36,7 +36,7 @@ public class User {
     }
 
     public static User getCurrentUser() {
-        return currentUser != null ? currentUser : new User(-1, "guest", "guest");
+        return currentUser != null ? currentUser : new User(-1, "", "Guest");
     }
 
     public static User parse(String userRecord) {

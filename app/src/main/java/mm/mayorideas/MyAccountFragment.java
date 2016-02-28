@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.mikepenz.iconics.view.IconicsButton;
 
 import mm.mayorideas.objects.User;
+import mm.mayorideas.utils.LoginUtil;
 
 public class MyAccountFragment extends Fragment {
 
@@ -33,19 +34,36 @@ public class MyAccountFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_my_account, container, false);
+        IconicsButton login = (IconicsButton)layout.findViewById(R.id.user_login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginOrLogout();
+            }
+        });
 
         User user = User.getCurrentUser();
 
-        TextView name = (TextView)layout.findViewById(R.id.account_name);
-        name.setText(user.getName());
+        if (user.getID() != -1) {
+            layout.findViewById(R.id.user_details).setVisibility(View.VISIBLE);
+            layout.findViewById(R.id.user_not_logged_in).setVisibility(View.GONE);
+            login.setText(R.string.logout);
 
-        TextView username = (TextView)layout.findViewById(R.id.account_username);
-        username.setText(user.getUsername());
+            TextView name = (TextView) layout.findViewById(R.id.account_name);
+            name.setText(user.getName());
 
-        createUserStat(layout.findViewById(R.id.user_ideas), UserStat.IDEA, 25);
-        createUserStat(layout.findViewById(R.id.user_comments), UserStat.COMMENT, 25);
-        createUserStat(layout.findViewById(R.id.user_votes), UserStat.VOTES, 25);
-        createUserStat(layout.findViewById(R.id.user_follows), UserStat.FOLLOWS, 25);
+            TextView username = (TextView) layout.findViewById(R.id.account_username);
+            username.setText(user.getUsername());
+
+            createUserStat(layout.findViewById(R.id.user_ideas), UserStat.IDEA, 25);
+            createUserStat(layout.findViewById(R.id.user_comments), UserStat.COMMENT, 25);
+            createUserStat(layout.findViewById(R.id.user_votes), UserStat.VOTES, 25);
+            createUserStat(layout.findViewById(R.id.user_follows), UserStat.FOLLOWS, 25);
+        } else {
+            layout.findViewById(R.id.user_details).setVisibility(View.GONE);
+            layout.findViewById(R.id.user_not_logged_in).setVisibility(View.VISIBLE);
+            login.setText(R.string.login_or_signup);
+        }
 
         return layout;
     }
@@ -66,7 +84,7 @@ public class MyAccountFragment extends Fragment {
                 }
             });
         } else {
-            goTo.setVisibility(View.GONE);
+            goTo.setVisibility(View.INVISIBLE);
         }
 
         name.setText(getText(stat.getName()));
@@ -76,6 +94,14 @@ public class MyAccountFragment extends Fragment {
 
     public void setOnUserStatClickedListener(OnUserStatClickedListener listener) {
         this.mListener = listener;
+    }
+
+    private void loginOrLogout() {
+        if (User.isUserLoggedIn()) {
+            LoginUtil.logout(getContext());
+        } else {
+            LoginUtil.showLoginDialog(getActivity(), R.string.login_to_start, null);
+        }
     }
 
     private enum UserStat {
