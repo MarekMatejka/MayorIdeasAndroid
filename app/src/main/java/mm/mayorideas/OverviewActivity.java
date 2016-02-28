@@ -39,6 +39,8 @@ public class OverviewActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
+        loadUser();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,6 +53,10 @@ public class OverviewActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        loadUser();
+    }
+
+    private void loadUser() {
         LoginUtil.readAndSetCurrentUser(this);
         if (lastUser.getID() != User.getCurrentUser().getID()) {
             lastUser = User.getCurrentUser();

@@ -74,6 +74,7 @@ public class CommentsActivity extends AppCompatActivity implements
                     0);
             commentBox.setText("");
             showOrHideComments(true, true);
+            mIdea.setNumOfComments(mIdea.getNumOfComments()+1);
         }
     }
 

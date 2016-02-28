@@ -183,6 +183,9 @@ public class IdeaActionBarHandler {
         }
         //call HTTP method to add a like to the idea
         VoteAPI.castVote(User.getCurrentUser().getID(), mIdea.getId(), Vote.LIKE);
+        mIdea.setUserVote(Vote.LIKE.getVote());
+        mIdea.setScore(mIdea.getScore()+1);
+        mIdea.setNumOfVotes(mIdea.getNumOfVotes()+1);
     }
 
     private void removeLike() {
@@ -191,6 +194,9 @@ public class IdeaActionBarHandler {
         }
         //call HTTP method to remove a like from the idea
         VoteAPI.deleteVote(User.getCurrentUser().getID(), mIdea.getId());
+        mIdea.setUserVote(Vote.NO_VOTE.getVote());
+        mIdea.setScore(mIdea.getScore()-1);
+        mIdea.setNumOfVotes(mIdea.getNumOfVotes()-1);
     }
 
     private void addDislike() {
@@ -199,6 +205,9 @@ public class IdeaActionBarHandler {
         }
         //call HTTP method to add a dislike to the idea
         VoteAPI.castVote(User.getCurrentUser().getID(), mIdea.getId(), Vote.DISLIKE);
+        mIdea.setUserVote(Vote.DISLIKE.getVote());
+        mIdea.setScore(mIdea.getScore()-1);
+        mIdea.setNumOfVotes(mIdea.getNumOfVotes()+1);
     }
 
     private void removeDislike() {
@@ -207,15 +216,20 @@ public class IdeaActionBarHandler {
         }
         //call HTTP method to remove a dislike from the idea
         VoteAPI.deleteVote(User.getCurrentUser().getID(), mIdea.getId());
+        mIdea.setUserVote(Vote.NO_VOTE.getVote());
+        mIdea.setScore(mIdea.getScore()+1);
+        mIdea.setNumOfVotes(mIdea.getNumOfVotes()-1);
     }
 
     private void addFollowing() {
         //add the idea to the list of ideas the user is following
         FollowAPI.followIdea(User.getCurrentUser().getID(), mIdea.getId());
+        mIdea.setIsUserFollowing(true);
     }
 
     private void removeFollowing() {
         //remove the idea from the list of ideas the user is following
         FollowAPI.unfollowIdea(User.getCurrentUser().getID(), mIdea.getId());
+        mIdea.setIsUserFollowing(false);
     }
 }

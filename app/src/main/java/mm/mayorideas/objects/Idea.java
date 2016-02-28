@@ -20,11 +20,11 @@ public class Idea implements Serializable, ClusterItem {
     private final int authorID;
     private final String authorName;
     private final Timestamp dateCreated;
-    private final int score;
-    private final int numOfVotes;
-    private final int numOfComments;
-    private final int userVote;
-    private final boolean isUserFollowing;
+    private int score;
+    private int numOfVotes;
+    private int numOfComments;
+    private int userVote;
+    private boolean isUserFollowing;
     private final int coverImageID;
     private final IdeaState ideaState;
 
@@ -140,5 +140,25 @@ public class Idea implements Serializable, ClusterItem {
     @Override
     public LatLng getPosition() {
         return new LatLng(latitude, longitude);
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setNumOfVotes(int numOfVotes) {
+        this.numOfVotes = numOfVotes;
+    }
+
+    public void setNumOfComments(int numOfComments) {
+        this.numOfComments = numOfComments;
+    }
+
+    public void setUserVote(int userVote) {
+        this.userVote = userVote;
+    }
+
+    public void setIsUserFollowing(boolean isUserFollowing) {
+        this.isUserFollowing = isUserFollowing;
     }
 }
