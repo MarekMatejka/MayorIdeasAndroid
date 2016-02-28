@@ -2,6 +2,7 @@ package mm.mayorideas;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,10 +18,11 @@ import mm.mayorideas.adapters.IdeaListAdapter;
 import mm.mayorideas.api.IdeaAPI;
 import mm.mayorideas.objects.Idea;
 
-public abstract class IdeaListFragment extends Fragment implements IdeaAPI.GetIdeasListener {
+public abstract class IdeaListFragment extends Fragment implements IdeaAPI.GetIdeasListener, SwipeRefreshLayout.OnRefreshListener {
 
     private IdeaListAdapter mAdapter;
     protected TextView emptyListText;
+    private SwipeRefreshLayout mRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,10 @@ public abstract class IdeaListFragment extends Fragment implements IdeaAPI.GetId
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_idea, container, false);
 
+        mRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
+        mRefreshLayout.setColorSchemeColors(R.color.mayorideas_blue);
+        mRefreshLayout.setOnRefreshListener(this);
+
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.idea_card_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mAdapter = new IdeaListAdapter(getActivity());
@@ -56,6 +62,7 @@ public abstract class IdeaListFragment extends Fragment implements IdeaAPI.GetId
     public void onSuccess(List<Idea> ideas) {
         showEmptyListText(ideas.isEmpty());
         mAdapter.setData(ideas);
+        mRefreshLayout.setRefreshing(false);
     }
 
     protected void showEmptyListText(boolean show) {
@@ -69,5 +76,10 @@ public abstract class IdeaListFragment extends Fragment implements IdeaAPI.GetId
 
     @Override
     public void onFailure() {
+    }
+
+    @Override
+    public void onRefresh() {
+        getIdeasToDisplay(this);
     }
 }
