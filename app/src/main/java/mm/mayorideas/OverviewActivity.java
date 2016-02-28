@@ -77,9 +77,9 @@ public class OverviewActivity extends AppCompatActivity
                         createDrawerItem(FontAwesome.Icon.faw_heart, R.string.following, android.R.color.holo_red_dark),
                         createDrawerItem(FontAwesome.Icon.faw_tags, R.string.all_categories, R.color.mayorideas_blue_dark),
                         new DividerDrawerItem(),
-                        createDrawerItem(GoogleMaterial.Icon.gmd_info, R.string.about, android.R.color.darker_gray),
+                        createDrawerItem(FontAwesome.Icon.faw_user, R.string.my_account, android.R.color.darker_gray),
                         new DividerDrawerItem(),
-                        createDrawerItem(FontAwesome.Icon.faw_user, R.string.my_account, android.R.color.darker_gray)
+                        createDrawerItem(GoogleMaterial.Icon.gmd_info, R.string.about, android.R.color.darker_gray)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -130,9 +130,9 @@ public class OverviewActivity extends AppCompatActivity
             case 4: return FollowingIdeasListFragment.newInstance();
             case 5: return setupCategoriesFragment();
             // case 6: Divider Item = no action
-            //case 7: return AboutFragment.newInstance();
+            case 7: return setupMyAccountFragment();
             //case 8: Divider Item = no action;
-            case 9: return setupMyAccountFragment();
+            //case 9: return AboutFragment.newInstance();
             default: return Top10IdeasListFragment.newInstance();
         }
     }
@@ -160,9 +160,9 @@ public class OverviewActivity extends AppCompatActivity
             case 4: return R.string.following;
             case 5: return R.string.all_categories;
             //case 6: Divider Item = no action
-            case 7: return R.string.about;
+            case 7: return R.string.my_account;
             //case 8: Divider Item = no action
-            case 9: return R.string.my_account;
+            case 9: return R.string.about;
             default: return R.string.hot_ideas;
         }
     }
