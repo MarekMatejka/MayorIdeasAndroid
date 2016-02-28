@@ -8,13 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mikepenz.iconics.view.IconicsButton;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnDismissListener;
 
+import mm.mayorideas.api.UserAPI;
+import mm.mayorideas.gson.UserStats;
 import mm.mayorideas.objects.User;
 import mm.mayorideas.utils.LoginUtil;
 
-public class MyAccountFragment extends Fragment {
+public class MyAccountFragment extends Fragment implements UserAPI.OnUserStatsReceivedListener {
 
     private OnUserStatClickedListener mListener;
+    private View fragmentLayout;
 
     public MyAccountFragment() {
         // Required empty public constructor
@@ -27,6 +32,9 @@ public class MyAccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (User.isUserLoggedIn()) {
+            UserAPI.getStatsForUser(User.getCurrentUser().getID(), this);
+        }
     }
 
     @Override
@@ -42,6 +50,7 @@ public class MyAccountFragment extends Fragment {
             }
         });
 
+        fragmentLayout = layout;
         User user = User.getCurrentUser();
 
         if (user.getID() != -1) {
@@ -55,10 +64,10 @@ public class MyAccountFragment extends Fragment {
             TextView username = (TextView) layout.findViewById(R.id.account_username);
             username.setText(user.getUsername());
 
-            createUserStat(layout.findViewById(R.id.user_ideas), UserStat.IDEA, 25);
-            createUserStat(layout.findViewById(R.id.user_comments), UserStat.COMMENT, 25);
-            createUserStat(layout.findViewById(R.id.user_votes), UserStat.VOTES, 25);
-            createUserStat(layout.findViewById(R.id.user_follows), UserStat.FOLLOWS, 25);
+            createUserStat(layout.findViewById(R.id.user_ideas), UserStat.IDEA, 0);
+            createUserStat(layout.findViewById(R.id.user_comments), UserStat.COMMENT, 0);
+            createUserStat(layout.findViewById(R.id.user_votes), UserStat.VOTES, 0);
+            createUserStat(layout.findViewById(R.id.user_follows), UserStat.FOLLOWS, 0);
         } else {
             layout.findViewById(R.id.user_details).setVisibility(View.GONE);
             layout.findViewById(R.id.user_not_logged_in).setVisibility(View.VISIBLE);
@@ -99,9 +108,30 @@ public class MyAccountFragment extends Fragment {
     private void loginOrLogout() {
         if (User.isUserLoggedIn()) {
             LoginUtil.logout(getContext());
+            fragmentLayout.invalidate();
         } else {
-            LoginUtil.showLoginDialog(getActivity(), R.string.login_to_start, null);
+            LoginUtil.showLoginDialog(getActivity(), R.string.login_to_start, new OnDismissListener() {
+                @Override
+                public void onDismiss(DialogPlus dialog) {
+                    if (User.isUserLoggedIn()) {
+                        fragmentLayout.invalidate();
+                    }
+                }
+            });
         }
+    }
+
+    @Override
+    public void onUserStatsReceivedSuccessfully(UserStats stats) {
+        createUserStat(fragmentLayout.findViewById(R.id.user_ideas), UserStat.IDEA, stats.getIdeas());
+        createUserStat(fragmentLayout.findViewById(R.id.user_comments), UserStat.COMMENT, stats.getComments());
+        createUserStat(fragmentLayout.findViewById(R.id.user_votes), UserStat.VOTES, stats.getVotes());
+        createUserStat(fragmentLayout.findViewById(R.id.user_follows), UserStat.FOLLOWS, stats.getFollows());
+    }
+
+    @Override
+    public void onUserStatsReceivedUnsuccessfully() {
+
     }
 
     private enum UserStat {
