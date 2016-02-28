@@ -89,4 +89,48 @@
     <string name="logout">{faw-sign-out} LOG OUT</string>
     <string name="login_or_signup">{faw-sign-in} LOG IN / SIGN UP</string>
     <string name="login_to_start">Login or Sign up to start using Mayor Ideas with all its features. It\'s FREE!</string>
+
+    <!-- LIBRARY DEFINITIONS -->
+    <string name="define_floatlabelededittext"></string>
+    <string name="library_floatlabelededittext_author">Henrik Sandström</string>
+    <string name="library_floatlabelededittext_libraryName">Float Labeled EditText</string>
+    <string name="library_floatlabelededittext_libraryDescription">Simple implementation of a Float Labeled EditText: An Android ViewGroup which uses a child EditText and puts the hint on top of the EditText when it is populated with text.</string>
+    <string name="library_floatlabelededittext_libraryVersion">0.0.6</string>
+    <string name="library_floatlabelededittext_isOpenSource">true</string>
+    <string name="library_floatlabelededittext_repositoryLink">https://github.com/wrapp/floatlabelededittext</string>
+    <string name="library_floatlabelededittext_licenseId">apache_2_0</string>
+
+    <string name="define_asynchronoushttpclientforandroid"></string>
+    <string name="library_asynchronoushttpclientforandroid_author">James Smith</string>
+    <string name="library_asynchronoushttpclientforandroid_authorWebsite">http://loopj.com/</string>
+    <string name="library_asynchronoushttpclientforandroid_libraryName">Asynchronous Http Client for Android</string>
+    <string name="library_asynchronoushttpclientforandroid_libraryDescription">An asynchronous, callback-based Http client for Android built on top of Apache\'s HttpClient libraries.</string>
+    <string name="library_asynchronoushttpclientforandroid_libraryWebsite">http://loopj.com/android-async-http/</string>
+    <string name="library_asynchronoushttpclientforandroid_libraryVersion">1.4.9</string>
+    <string name="library_asynchronoushttpclientforandroid_isOpenSource">true</string>
+    <string name="library_asynchronoushttpclientforandroid_repositoryLink">https://github.com/loopj/android-async-http</string>
+    <string name="library_asynchronoushttpclientforandroid_licenseId">apache_2_0</string>
+
+    <string name="define_androidimageslider"></string>
+    <string name="library_androidimageslider_author">daimajia</string>
+    <string name="library_androidimageslider_libraryName">Android Image Slider</string>
+    <string name="library_androidimageslider_libraryDescription">This is an amazing image slider for the Android platform. I decided to open source this because there is really not an attractive, convenient slider widget in Android.</string>
+    <string name="library_androidimageslider_libraryVersion">1.1.5</string>
+    <string name="library_androidimageslider_isOpenSource">true</string>
+    <string name="library_androidimageslider_repositoryLink">https://github.com/daimajia/AndroidImageSlider</string>
+    <string name="library_androidimageslider_licenseId">mit</string>
+
+    <string name="define_dialogplus"></string>
+    <string name="library_dialogplus_author">Orhan Obut</string>
+    <string name="library_dialogplus_libraryName">DialogPlus</string>
+    <string name="library_dialogplus_libraryDescription">Advanced dialog solution for android</string>
+    <string name="library_dialogplus_libraryVersion">1.11</string>
+    <string name="library_dialogplus_isOpenSource">true</string>
+    <string name="library_dialogplus_repositoryLink">https://github.com/orhanobut/dialogplus</string>
+    <string name="library_dialogplus_licenseId">apache_2_0</string>
+
+    <!-- END OF LIBRARY DEFINITIONS -->
+
+    <string name="mayor_ideas_about">Mayor Ideas is a crowdsourcing platform for citizen ideas and issues.</string>
+
 </resources>

@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.mikepenz.aboutlibraries.LibsBuilder;
+import com.mikepenz.aboutlibraries.ui.LibsSupportFragment;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.typeface.IIcon;
@@ -138,9 +140,22 @@ public class OverviewActivity extends AppCompatActivity
             // case 6: Divider Item = no action
             case 7: return setupMyAccountFragment();
             //case 8: Divider Item = no action;
-            //case 9: return AboutFragment.newInstance();
+            case 9: return setupAboutFragment();
             default: return Top10IdeasListFragment.newInstance();
         }
+    }
+
+    private LibsSupportFragment setupAboutFragment() {
+        return new LibsBuilder()
+                    .withAboutIconShown(true)
+                    .withAboutVersionShown(true)
+                    .withAboutDescription(getString(R.string.mayor_ideas_about))
+                    .withLibraries(
+                            "define_floatlabelededittext",
+                            "define_asynchronoushttpclientforandroid",
+                            "define_androidimageslider",
+                            "define_dialogplus")
+                    .supportFragment();
     }
 
     @NonNull
