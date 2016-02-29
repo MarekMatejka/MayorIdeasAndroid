@@ -93,19 +93,19 @@ public class MapsHelper implements
         startLocationUpdates();
     }
 
+    public boolean isClientReady() {
+        return mGoogleApiClient != null && mGoogleApiClient.isConnected();
+    }
+
     public void startLocationUpdates() {
-        if(mGoogleApiClient.isConnected()) {
+        if(isClientReady()) {
             LocationServices.FusedLocationApi.requestLocationUpdates(
                     mGoogleApiClient, createLocationRequest(), this);
         }
     }
 
-    public boolean canStartLocationUpdates() {
-        return mGoogleApiClient != null && mGoogleApiClient.isConnected();
-    }
-
     public void stopLocationUpdates() {
-        if (mGoogleApiClient.isConnected()) {
+        if (isClientReady()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
@@ -116,14 +116,6 @@ public class MapsHelper implements
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return locationRequest;
-    }
-
-    private void getLocation() {
-        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mMap != null && lastLocation != null) {
-            LatLng location = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(location).title("Ahoj"));
-        }
     }
 
     @Override
@@ -159,10 +151,6 @@ public class MapsHelper implements
 
     public void setAnimateCameraOnLocationChange(boolean animateCameraOnLocationChange) {
         this.animateCameraOnLocationChange = animateCameraOnLocationChange;
-    }
-
-    public void setMoveCameraOnInitialLocationChange(boolean moveCameraOnInitialLocationChange) {
-        this.moveCameraOnInitialLocationChange = moveCameraOnInitialLocationChange;
     }
 
     public void connectMap() {
