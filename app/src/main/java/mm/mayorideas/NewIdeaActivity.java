@@ -3,10 +3,14 @@ package mm.mayorideas;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -198,6 +202,27 @@ public class NewIdeaActivity extends AppCompatActivity {
             if (imagesAdapter.getItemCount() == 4) {
                 imagesAdapter.deleteEntity(3);
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_new_idea, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.open_camera) {
+            Log.e("camera", "clicked");
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivity(intent);
+            onPause();
+            //startActivityForResult(intent, 1);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 }

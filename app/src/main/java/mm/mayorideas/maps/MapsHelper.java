@@ -94,8 +94,10 @@ public class MapsHelper implements
     }
 
     public void startLocationUpdates() {
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, createLocationRequest(), this);
+        if(mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient, createLocationRequest(), this);
+        }
     }
 
     public boolean canStartLocationUpdates() {
@@ -103,7 +105,9 @@ public class MapsHelper implements
     }
 
     public void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        if (mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
     }
 
     private LocationRequest createLocationRequest() {

@@ -132,5 +132,6 @@
     <!-- END OF LIBRARY DEFINITIONS -->
 
     <string name="mayor_ideas_about">Mayor Ideas is a crowdsourcing platform for citizen ideas and issues.</string>
+    <string name="open_camera">Camera</string>
 
 </resources>
