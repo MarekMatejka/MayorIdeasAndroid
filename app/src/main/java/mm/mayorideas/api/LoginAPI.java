@@ -21,7 +21,7 @@ public class LoginAPI {
     public static void login(String username, String password, final LoginListener listener) {
         String url = ServerAPIHelper.getServer() + LOGIN;
 
-        LoginDetailsPOSTGson loginDetails = new LoginDetailsPOSTGson(username, password);
+        LoginDetailsPOSTGson loginDetails = new LoginDetailsPOSTGson(username, password, true);
         StringEntity entity = null;
         try {
             Gson gson = new Gson();
