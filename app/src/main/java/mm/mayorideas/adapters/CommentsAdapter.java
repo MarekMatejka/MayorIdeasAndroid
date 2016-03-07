@@ -43,10 +43,16 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
 
         Comment comment = comments.get(position);
         holder.personName.setText(comment.getUserName());
+        holder.personName.setTextColor(getNameColor(comment.isByCitizen()));
         holder.commentText.setText(comment.getText());
         holder.commentAdded.setText(comment.getDateCreated());
 
         return convertView;
+    }
+
+    private int getNameColor(boolean isByCitizen) {
+        int color = isByCitizen ? android.R.color.darker_gray : R.color.mayorideas_blue;
+        return context.getResources().getColor(color);
     }
 
     private static class Holder {

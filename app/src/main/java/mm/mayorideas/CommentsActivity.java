@@ -70,7 +70,8 @@ public class CommentsActivity extends AppCompatActivity implements
                             mIdea.getId(),
                             User.getCurrentUser().getName(),
                             commentText,
-                            new Timestamp(System.currentTimeMillis())),
+                            new Timestamp(System.currentTimeMillis()),
+                            true),
                     0);
             commentBox.setText("");
             showOrHideComments(true, true);

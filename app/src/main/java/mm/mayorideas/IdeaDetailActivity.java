@@ -108,8 +108,14 @@ public class IdeaDetailActivity extends AppCompatActivity
         TextView commentAdded = (TextView)v.findViewById(R.id.comment_added);
 
         name.setText(comment.getUserName());
+        name.setTextColor(getNameColor(comment));
         commentText.setText(comment.getText());
         commentAdded.setText(comment.getDateCreated());
+    }
+
+    private int getNameColor(Comment comment) {
+        int color = comment.isByCitizen() ? android.R.color.darker_gray : R.color.mayorideas_blue;
+        return getResources().getColor(color);
     }
 
     private void addImageToSlider(SliderLayout sliderShow, String url) {
