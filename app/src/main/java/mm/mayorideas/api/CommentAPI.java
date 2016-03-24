@@ -16,6 +16,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import mm.mayorideas.api.listeners.SimpleNumberValueListener;
 import mm.mayorideas.gson.NewCommentPOSTGson;
 import mm.mayorideas.objects.Comment;
+import mm.mayorideas.security.AESEncryptor;
 
 public class CommentAPI {
 
@@ -66,19 +67,7 @@ public class CommentAPI {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
                 Log.e("all comments", response);
-                if (response != null && response.length() > 0 && !response.equals("null")) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<Comment>>() {}.getType();
-                    List<Comment> comments = gson.fromJson(response, type);
-
-                    if(listener != null) {
-                        listener.onGetCommentsSuccess(comments);
-                    }
-                } else {
-                    if (listener != null) {
-                        listener.onGetCommentsFailure();
-                    }
-                }
+                handleResponse(response, listener);
             }
 
             @Override
@@ -100,19 +89,7 @@ public class CommentAPI {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
                 Log.e("last 2 comments", response);
-                if (response != null && response.length() > 0 && !response.equals("null")) {
-                    Gson gson = new Gson();
-                    Type type = new TypeToken<List<Comment>>() {}.getType();
-                    List<Comment> comments = gson.fromJson(response, type);
-
-                    if(listener != null) {
-                        listener.onGetCommentsSuccess(comments);
-                    }
-                } else {
-                    if (listener != null) {
-                        listener.onGetCommentsFailure();
-                    }
-                }
+                handleResponse(response, listener);
             }
 
             @Override
@@ -122,6 +99,23 @@ public class CommentAPI {
                 }
             }
         });
+    }
+
+    private static void handleResponse(String response, GetCommentsForIdeaListener listener) {
+        if (response != null && response.length() > 0 && !response.equals("null")) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Comment>>() {}.getType();
+            List<Comment> comments = gson.fromJson(response, type);
+            comments = decryptNames(comments);
+
+            if(listener != null) {
+                listener.onGetCommentsSuccess(comments);
+            }
+        } else {
+            if (listener != null) {
+                listener.onGetCommentsFailure();
+            }
+        }
     }
 
     public static void getNumberOfCommentsForIdea(
@@ -151,5 +145,13 @@ public class CommentAPI {
                 }
             }
         });
+    }
+
+    private static List<Comment> decryptNames(List<Comment> comments) {
+        AESEncryptor aes = new AESEncryptor();
+        for (Comment comment : comments) {
+            comment.setUserName(aes.decrypt(comment.getUserName()));
+        }
+        return comments;
     }
 }

@@ -9,7 +9,7 @@ public class Comment {
     private final int ID;
     private final int userID;
     private final int ideaID;
-    private final String userName;
+    private String userName;
     private final String text;
     private final Timestamp dateCreated;
     private final boolean isByCitizen;
@@ -38,6 +38,10 @@ public class Comment {
 
     public String getUserName() {
         return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getText() {

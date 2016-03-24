@@ -1,5 +1,7 @@
 package mm.mayorideas.objects;
 
+import mm.mayorideas.security.AESEncryptor;
+
 public class User {
 
     public static final String DELIMITER = ",";
@@ -40,11 +42,20 @@ public class User {
     }
 
     public static User parse(String userRecord) {
+        AESEncryptor aes = new AESEncryptor();
         String[] details = userRecord.split(DELIMITER);
-        return new User(Integer.parseInt(details[0]), details[1], details[2]);
+        return new User(
+                Integer.parseInt(details[0]),
+                aes.decrypt(details[1]),
+                aes.decrypt(details[2]));
     }
 
     public static String toRecord(User user) {
-        return user.getID() + DELIMITER + user.getUsername() + DELIMITER + user.getName();
+        AESEncryptor aes = new AESEncryptor();
+        return  user.getID() +
+                DELIMITER +
+                aes.encrypt(user.getUsername()) +
+                DELIMITER +
+                aes.encrypt(user.getName());
     }
 }

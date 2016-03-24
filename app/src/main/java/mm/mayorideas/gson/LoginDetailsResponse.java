@@ -1,12 +1,13 @@
 package mm.mayorideas.gson;
 
 import mm.mayorideas.objects.User;
+import mm.mayorideas.security.AESEncryptor;
 
 public class LoginDetailsResponse {
 
     private final int ID;
-    private final String username;
-    private final String name;
+    private String username;
+    private String name;
 
     public LoginDetailsResponse(int ID, String username, String name) {
         this.ID = ID;
@@ -28,6 +29,12 @@ public class LoginDetailsResponse {
 
     public User convertToUser() {
         return new User(ID, username, name);
+    }
+
+    public void decrypt() {
+        AESEncryptor aes = new AESEncryptor();
+        this.username = aes.decrypt(this.username);
+        this.name = aes.decrypt(this.name);
     }
 
     @Override

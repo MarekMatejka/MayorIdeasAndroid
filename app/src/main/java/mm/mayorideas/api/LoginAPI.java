@@ -13,6 +13,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import mm.mayorideas.gson.LoginDetailsPOSTGson;
 import mm.mayorideas.gson.LoginDetailsResponse;
 import mm.mayorideas.gson.RegisterUserPOSTGson;
+import mm.mayorideas.security.AESEncryptor;
+import mm.mayorideas.security.SHA256Encryptor;
 
 public class LoginAPI {
 
@@ -21,7 +23,12 @@ public class LoginAPI {
     public static void login(String username, String password, final LoginListener listener) {
         String url = ServerAPIHelper.getServer() + LOGIN;
 
-        LoginDetailsPOSTGson loginDetails = new LoginDetailsPOSTGson(username, password, true);
+        AESEncryptor aes = new AESEncryptor();
+        SHA256Encryptor sha = new SHA256Encryptor();
+        LoginDetailsPOSTGson loginDetails = new LoginDetailsPOSTGson(
+                                                    aes.encrypt(username),
+                                                    sha.encrypt(password),
+                                                    true);
         StringEntity entity = null;
         try {
             Gson gson = new Gson();
@@ -43,7 +50,9 @@ public class LoginAPI {
                 if (listener != null) {
                     if (!responseString.equals("{}") && !responseString.isEmpty()) {
                         Gson gson = new Gson();
-                        listener.onLoginSuccess(gson.fromJson(responseString, LoginDetailsResponse.class));
+                        LoginDetailsResponse response = gson.fromJson(responseString, LoginDetailsResponse.class);
+                        response.decrypt();
+                        listener.onLoginSuccess(response);
                     } else {
                         listener.onLoginFailure();
                     }
@@ -59,7 +68,13 @@ public class LoginAPI {
             final LoginListener listener) {
         String url = ServerAPIHelper.getServer() + LOGIN + "register";
 
-        RegisterUserPOSTGson registerUser = new RegisterUserPOSTGson(username, password, name);
+        AESEncryptor aes = new AESEncryptor();
+        SHA256Encryptor sha = new SHA256Encryptor();
+
+        RegisterUserPOSTGson registerUser = new RegisterUserPOSTGson(
+                                                    aes.encrypt(username),
+                                                    sha.encrypt(password),
+                                                    aes.encrypt(name));
         StringEntity entity = null;
         try {
             Gson gson = new Gson();
@@ -81,7 +96,9 @@ public class LoginAPI {
                 if (listener != null) {
                     if (!responseString.equals("{}") && !responseString.isEmpty()) {
                         Gson gson = new Gson();
-                        listener.onLoginSuccess(gson.fromJson(responseString, LoginDetailsResponse.class));
+                        LoginDetailsResponse response = gson.fromJson(responseString, LoginDetailsResponse.class);
+                        response.decrypt();
+                        listener.onLoginSuccess(response);
                     } else {
                         listener.onLoginFailure();
                     }

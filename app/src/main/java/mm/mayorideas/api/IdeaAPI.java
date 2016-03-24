@@ -17,6 +17,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import mm.mayorideas.gson.NewIdeaPOSTGson;
 import mm.mayorideas.objects.Idea;
 import mm.mayorideas.objects.User;
+import mm.mayorideas.security.AESEncryptor;
 
 public class IdeaAPI {
 
@@ -203,6 +204,7 @@ public class IdeaAPI {
             Gson gson = new Gson();
             Type type = new TypeToken<List<Idea>>() {}.getType();
             List<Idea> ideas = gson.fromJson(response, type);
+            ideas = decryptNames(ideas);
 
             if(listener != null) {
                 listener.onSuccess(ideas);
@@ -212,5 +214,13 @@ public class IdeaAPI {
                 listener.onFailure();
             }
         }
+    }
+
+    private static List<Idea> decryptNames(List<Idea> ideas) {
+        AESEncryptor aes = new AESEncryptor();
+        for (Idea idea : ideas) {
+            idea.setAuthorName(aes.decrypt(idea.getAuthorName()));
+        }
+        return ideas;
     }
 }

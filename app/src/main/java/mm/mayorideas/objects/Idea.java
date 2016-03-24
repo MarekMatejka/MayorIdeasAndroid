@@ -18,7 +18,7 @@ public class Idea implements Serializable, ClusterItem {
     private final double latitude;
     private final double longitude;
     private final int authorID;
-    private final String authorName;
+    private String authorName;
     private final Timestamp dateCreated;
     private int score;
     private int numOfVotes;
@@ -103,6 +103,10 @@ public class Idea implements Serializable, ClusterItem {
 
     public String getAuthorName() {
         return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public Timestamp getDateCreated() {
