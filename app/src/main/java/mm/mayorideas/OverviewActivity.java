@@ -199,8 +199,12 @@ public class OverviewActivity extends AppCompatActivity
     }
 
     public void addNewIdea(View v) {
-        Intent intent = new Intent(this, NewIdeaActivity.class);
-        startActivity(intent);
+        if (User.isUserLoggedIn()) {
+            Intent intent = new Intent(this, NewIdeaActivity.class);
+            startActivity(intent);
+        } else {
+            LoginUtil.showLoginDialog(this, R.string.login_necessary_new_idea, null);
+        }
     }
 
     @Override

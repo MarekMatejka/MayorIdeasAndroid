@@ -2,6 +2,8 @@ package mm.mayorideas.gson;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import mm.mayorideas.objects.User;
+
 public class NewIdeaPOSTGson {
 
     private final String title;
@@ -26,6 +28,6 @@ public class NewIdeaPOSTGson {
         this.categoryID = categoryID;
         this.latitude = position.latitude;
         this.longitude = position.longitude;
-        this.authorID = 1;
+        this.authorID = User.getCurrentUser().getID();
     }
 }

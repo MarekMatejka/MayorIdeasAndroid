@@ -133,5 +133,6 @@
 
     <string name="mayor_ideas_about">Mayor Ideas is a crowdsourcing platform for citizen ideas and issues.</string>
     <string name="open_camera">Camera</string>
+    <string name="login_necessary_new_idea">You have to be logged in to be able to add a new idea.</string>
 
 </resources>
