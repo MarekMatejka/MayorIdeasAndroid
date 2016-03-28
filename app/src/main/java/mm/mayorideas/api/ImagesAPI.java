@@ -23,7 +23,7 @@ import mm.mayorideas.api.listeners.SimpleNumberValueListener;
 
 public class ImagesAPI {
 
-    private static final int LONG_TIMEOUT = 20000;
+    private static final int LONG_TIMEOUT = 30000;
     private static final String IMAGE = "image/";
 
     public static void sendImage(
