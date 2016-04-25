@@ -16,6 +16,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 import mm.mayorideas.security.exception.EncryptionException;
 
+/**
+ * Based on previous group work.
+ * Source: https://github.com/MarekMatejkaKCL/SEG-3_Android_App/blob/master/Questionnaire/src/com/seg/questionnaire/backend/connectivity/SocketThread.java
+ */
 public final class AESEncryptor implements Encryptor{
 
     public IvParameterSpec getIv() {

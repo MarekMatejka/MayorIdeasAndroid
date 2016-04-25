@@ -6,6 +6,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Inspired by Per-Erik Bergman.
+ * Source: https://www.jayway.com/2014/12/23/android-recyclerview-simple-list/
+ */
 public abstract class AbstractListAdapter<V, K extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<K> {
 

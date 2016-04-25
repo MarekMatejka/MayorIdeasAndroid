@@ -4,6 +4,10 @@ import java.security.MessageDigest;
 
 import mm.mayorideas.security.exception.EncryptionException;
 
+/**
+ * Based on previous group work.
+ * Source: https://github.com/begleynk/SEG3-Server/blob/master/src/Helpers/PasswordEncryptor.java
+ */
 public class SHA256Encryptor implements Encryptor {
 
     private static final String salt = "eFmVkKCL16GaEgW";
